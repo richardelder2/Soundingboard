@@ -8,8 +8,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BIN_NAME = path.basename(process.argv[1], '.js') || 'soundboard';
-const APP_NAME = 'Soundboard';
+const BIN_NAME = path.basename(process.argv[1], '.js') || 'soundingboard';
+const APP_NAME = 'Soundingboard';
 
 export function readText(p) {
   return fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, '');
@@ -94,7 +94,7 @@ function copyRecursiveSync(src, dest) {
 }
 
 function handleInit(targetFolder) {
-  printHeader('Initializing Soundboard Workspace');
+  printHeader('Initializing Soundingboard Workspace');
   
   const templateDir = path.dirname(__dirname);
   
@@ -110,7 +110,7 @@ function handleInit(targetFolder) {
     console.log('\x1b[33mWarning: You are running init inside the template repository itself.\x1b[0m');
     console.log('Each novel must live in its own separate project folder.');
     console.log('To initialize a clean novel workspace in a dedicated folder, run:');
-    console.log(`  node "${path.join(templateDir, 'scripts', 'soundboard.js')}" init <folder_name>`);
+    console.log(`  node "${path.join(templateDir, 'scripts', 'soundingboard.js')}" init <folder_name>`);
     console.log('Or create a blank directory elsewhere, cd into it, and run init.');
     return;
   }
@@ -199,7 +199,7 @@ function handleInit(targetFolder) {
 }
 
 function handleStatus(stageFilter) {
-  printHeader('Soundboard Stage Pipeline Status');
+  printHeader('Soundingboard Stage Pipeline Status');
 
   const filterArg = stageFilter || args.find(a => a.startsWith('--stage='));
   const stageTarget = filterArg ? filterArg.replace('--stage=', '').replace(/^0?/, '').padStart(2, '0') : null;
@@ -306,7 +306,7 @@ function printManuscriptStatus() {
 }
 
 function handleBrief() {
-  printHeader('Soundboard Project Brief & State Dump (ICM §5.2)');
+  printHeader('Soundingboard Project Brief & State Dump (ICM §5.2)');
   const manifestPath = 'manuscript.json';
   if (!fs.existsSync(manifestPath)) {
     console.log('No manuscript.json found. Run Stage 01 onboarding or Stage 02 planning first.\n');
@@ -413,7 +413,7 @@ async function handleDiagnostic(subCmd, extraArgs = []) {
   };
 
   if (!subCmd || subCmd === 'list' || subCmd === '--help' || subCmd === 'help') {
-    printHeader('Soundboard Diagnostics Suite');
+    printHeader('Soundingboard Diagnostics Suite');
     console.log(`
 Available diagnostics:
   node scripts/${binName}.js diag audit [path]         Full AI prose tell & rhythm scan
@@ -485,7 +485,7 @@ function handleWizard(type, extraArgs = []) {
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
-    printHeader('Soundboard Creative Wizards');
+    printHeader('Soundingboard Creative Wizards');
     console.log(`
 Available interactive wizards:
   node scripts/${binName}.js wizard onboard [--blueprint=<name>]   Start novel onboarding session
@@ -522,7 +522,7 @@ Available interactive wizards:
         console.error(`Blueprint not found. Tried: ${candidates.join(', ')}`);
         process.exit(1);
       }
-      env.SOUNDBOARD_BLUEPRINT = resolved;
+      env.SOUNDINGBOARD_BLUEPRINT = resolved;
       env.SB_BLUEPRINT = resolved;
       env.SAGA_BLUEPRINT = resolved;
     }
@@ -560,7 +560,7 @@ function handlePack(type, extraArgs = []) {
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
-    printHeader('Soundboard Context Packers');
+    printHeader('Soundingboard Context Packers');
     console.log(`
 Available context packers:
   node scripts/${BIN_NAME}.js pack unstuck [chapter]              Pack context for getting unstuck
@@ -678,11 +678,11 @@ function handleCanon(action, extraArgs = []) {
       unverified.forEach(u => {
         console.log(`  • Line ${u.lineNum} (Ch ${u.chapter}): ${u.text}`);
       });
-      console.log('\nRun "soundboard gate <chapter>" upon audit completion to promote tags to verified status.\n');
+      console.log('\nRun "soundingboard gate <chapter>" upon audit completion to promote tags to verified status.\n');
     }
   } else {
     console.log(`
-Soundboard Canon State Commands:
+Soundingboard Canon State Commands:
   node scripts/${binName}.js canon query <entity>    Query canon facts for a specific character, object, or rule
   node scripts/${binName}.js canon check              Audit canon for [unverified chN] tags needing promotion
     `);
@@ -1564,7 +1564,7 @@ Usage:
   `);
 }
 
-if (process.argv[1] && (process.argv[1].endsWith('soundboard.js') || process.argv[1].endsWith('saga.js') || process.argv[1].endsWith('sb.js'))) {
+if (process.argv[1] && (process.argv[1].endsWith('soundingboard.js') || process.argv[1].endsWith('saga.js') || process.argv[1].endsWith('sb.js'))) {
 switch (command) {
   case 'init':
     handleInit(subCommand);

@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-subplot-collision.js <chapter_number>
 # or:
-node scripts/soundboard.js pack subplot-collision <chapter_number>
+node scripts/soundingboard.js pack subplot-collision <chapter_number>
 ```
 Use the output (`TARGET CHAPTER BEATS`, `ACTIVE SECONDARY THREADS`, `ACTIVE SCENE DRAFT EXCERPT`, `CRISIS & MORAL AMBIVALENCE GUIDELINES`) to find intersecting pressure points.
 

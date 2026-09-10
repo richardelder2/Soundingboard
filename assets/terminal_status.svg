@@ -38,10 +38,10 @@
     <circle cx='34' cy='29' r='6' class='dot-red'/>
     <circle cx='54' cy='29' r='6' class='dot-yellow'/>
     <circle cx='74' cy='29' r='6' class='dot-green'/>
-    <text x='430' y='33' class='title'>soundboard status — Production Telemetry Console</text>
+    <text x='430' y='33' class='title'>soundingboard status — Production Telemetry Console</text>
 
     <g transform='translate(32, 80)' class='code'>
-      <text y='0'><tspan class='prompt'>author@soundboard-studio</tspan><tspan class='dim'>:~$</tspan> <tspan class='cmd'>soundboard status</tspan></text>
+      <text y='0'><tspan class='prompt'>author@soundingboard-studio</tspan><tspan class='dim'>:~$</tspan> <tspan class='cmd'>soundingboard status</tspan></text>
       
       <text y='32' class='header'>[SAGA PRODUCTION PIPELINE]</text>
       <text y='54' class='text'>  Stage 01 · Onboarding         <tspan class='pass'>✔ COMPLETE</tspan>   <tspan class='dim'>(Bible, Cast, Trope Stack, Allowlist)</tspan></text>
@@ -61,7 +61,7 @@
       <text y='328' class='text'>  Total Words: <tspan class='gold'>13,915</tspan> / 85,000  ·  Avg Cadence: <tspan class='pass'>14.6 w/s</tspan>  ·  Canon Truths: <tspan class='pass'>84 verified</tspan></text>
 
       <text y='358' class='header'>[CONCIERGE NEXT ACTION]</text>
-      <text y='380' class='text'>  Execute <tspan class='cmd'>soundboard audit stages/03_drafting/output/chapters/ch04.md</tspan></text>
+      <text y='380' class='text'>  Execute <tspan class='cmd'>soundingboard audit stages/03_drafting/output/chapters/ch04.md</tspan></text>
     </g>
   </g>
 </svg>

@@ -1,6 +1,6 @@
-# Soundboard Pipeline Context Routing (Layer 1)
+# Soundingboard Pipeline Context Routing (Layer 1)
 
-This contract defines the execution flow of the Soundboard novel engineering pipeline. Each stage runs sequentially, consumes the outputs of the previous stage, and writes to its own output directory per Interpretable Context Methodology (ICM).
+This contract defines the execution flow of the Soundingboard novel engineering pipeline. Each stage runs sequentially, consumes the outputs of the previous stage, and writes to its own output directory per Interpretable Context Methodology (ICM).
 
 ## Stage Connection Routing Map
 
@@ -34,10 +34,10 @@ graph TD
      - `04_beat_sheets`: Chapter beat sheets with linked entity nodes.
 
 3. **`stages/03_drafting/`**
-   - **Inputs**: `stages/02_planning/output/beats/` (via `soundboard pack-chapter <N>`), `_config/voice.md`
+   - **Inputs**: `stages/02_planning/output/beats/` (via `soundingboard pack-chapter <N>`), `_config/voice.md`
    - **Outputs**: `stages/03_drafting/output/chapters/`
    - **Processes**:
-     - `01_context_prep`: Run `soundboard pack-chapter <N>` to prepare minimal token-disciplined context kit (<6,000 tokens).
+     - `01_context_prep`: Run `soundingboard pack-chapter <N>` to prepare minimal token-disciplined context kit (<6,000 tokens).
      - `02_prose_drafting`: Author solo-drafts or agent co-drafts against voice kit.
      - `03_fact_harvest`: Harvest newly established facts tagged `[unverified chN]` into canon.
 
@@ -45,11 +45,11 @@ graph TD
    - **Inputs**: `stages/03_drafting/output/chapters/`
    - **Outputs**: `stages/04_diagnostics_edits/output/reports/`, `stages/04_diagnostics_edits/output/verdicts/`, `stages/04_diagnostics_edits/output/playbooks/`
    - **Processes**:
-     - `01_mechanical_lint`: Zero-token script scan (`soundboard audit`, `soundboard continuity`) emitting `scan.json`.
+     - `01_mechanical_lint`: Zero-token script scan (`soundingboard audit`, `soundingboard continuity`) emitting `scan.json`.
      - `02_canon_verification`: Verify facts against living canon (`canon_check.json`).
      - `03_rubric_audit`: Evaluate narrative authenticity dials and theme suppression (`rubric.json`).
      - `04_trope_delivery`: Obligatory scene ledger delivery proof (`ledger_delivery.json`).
-     - `05_gate_authorization`: Run `soundboard gate <chapter>` to formally promote status to `passed`.
+     - `05_gate_authorization`: Run `soundingboard gate <chapter>` to formally promote status to `passed`.
 
 5. **`stages/05_publishing/`**
    - **Inputs**: `stages/03_drafting/output/chapters/` (verified via Stage 04 gate proofs)

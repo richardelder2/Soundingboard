@@ -2,7 +2,7 @@
 
 ## Overview: Literature as an Engineered Art
 
-Soundboard ships with a self-validating, token-disciplined library of **114 narrative craft modules** located in `_config/okf_craft/`. Rather than relying on generic LLM instincts, Soundboard provides your conversational agent with explicit, codified dramaturgical equations from the masters of the craft.
+Soundingboard ships with a self-validating, token-disciplined library of **114 narrative craft modules** located in `_config/okf_craft/`. Rather than relying on generic LLM instincts, Soundingboard provides your conversational agent with explicit, codified dramaturgical equations from the masters of the craft.
 
 Every module adheres to the **Open Knowledge Format (OKF)**:
 - **Token Disciplined:** Strict budget ceiling ($\le 750$ words, $\le 900$ tokens) to minimize context window bloat.
@@ -15,7 +15,7 @@ Every module adheres to the **Open Knowledge Format (OKF)**:
 
 The craft library synthesizes decades of foundational narratology, dramaturgy, and commercial storytelling frameworks:
 
-| Master / Source | Core Contribution in Soundboard | Key Modules |
+| Master / Source | Core Contribution in Soundingboard | Key Modules |
 |---|---|---|
 | **Shawn Coyne** (*The Story Grid*) | Macro story math, 5 Commandments of the Micro-Scene, value shifts, obligatory scene ledgers. | `scene_level_five_commandments_coyne.md`, `story_grid_macro.md` |
 | **John Truby** (*The Anatomy of Story*) | Designing principles, moral arguments vs. plot machinery, 22-step building blocks, 4-corner opposition. | `truby_designing_principle_and_moral_argument.md`, `four_corner_opposition_and_foil_matrix.md` |
@@ -33,7 +33,7 @@ The craft library synthesizes decades of foundational narratology, dramaturgy, a
 
 Authors arrive with diverse craft vocabularies: some plan using *Save the Cat!*, others follow *The Hero's Journey*, *Story Grid*, or *Dan Harmon's Story Circle*. 
 
-Soundboard never forces an author to learn internal taxonomy. Located in `_config/okf_craft/universal_narrative_lexicon_rosetta_stone.md`, the **Rosetta Stone** provides bi-directional translation across major narrative schools:
+Soundingboard never forces an author to learn internal taxonomy. Located in `_config/okf_craft/universal_narrative_lexicon_rosetta_stone.md`, the **Rosetta Stone** provides bi-directional translation across major narrative schools:
 
 | Story Grid (Coyne) | Save the Cat! (Snyder) | Hero's Journey (Campbell/Vogler) | Harmon Story Circle | Truby (22 Building Blocks) | First-Principles Structural Mechanics |
 |---|---|---|---|---|---|
@@ -51,10 +51,10 @@ When you speak to your AI agent in *Save the Cat!* terms ("Let's nail the 'All H
 
 Writers do not search for abstract narratological theories when stuck; they search by emotional and structural **symptoms**.
 
-Soundboard includes an intelligent synonym expansion engine (`_config/okf_craft/synonyms.md`):
+Soundingboard includes an intelligent synonym expansion engine (`_config/okf_craft/synonyms.md`):
 ```bash
 # Query by writer symptom:
-node scripts/soundboard.js craft search "sagging middle"
+node scripts/soundingboard.js craft search "sagging middle"
 ```
 The engine automatically maps "sagging middle" to related craft mechanics:
 - `swain_mru_and_pacing_velocity_equations.md`

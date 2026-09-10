@@ -1,4 +1,4 @@
-# SAGA / Soundboard Project .gitignore
+# SAGA / Soundingboard Project .gitignore
 node_modules/
 .env
 .DS_Store

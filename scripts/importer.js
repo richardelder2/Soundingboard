@@ -17,7 +17,7 @@ function checkPandoc() {
 
 export function importManuscript(sourcePath, options = {}) {
   if (!sourcePath) {
-    console.error('Error: Please specify a file to import (e.g. soundboard import manuscript.md)');
+    console.error('Error: Please specify a file to import (e.g. soundingboard import manuscript.md)');
     process.exitCode = 1;
     return { success: false, error: 'No source file specified' };
   }

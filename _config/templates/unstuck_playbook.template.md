@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-unstuck.js [chapter_number]
 # or:
-node scripts/soundboard.js pack unstuck [chapter_number]
+node scripts/soundingboard.js pack unstuck [chapter_number]
 ```
 Use the resulting context block (`ACTIVE CHAPTER DRAFT TAIL`, `SCENE BEATSHEET`, `PROJECT CANON`, `STRUCTURE PLAN`) as your working memory. Do not manually re-read the entire workspace.
 

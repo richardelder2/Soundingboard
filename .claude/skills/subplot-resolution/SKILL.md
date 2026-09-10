@@ -1,6 +1,6 @@
 ---
 name: subplot-resolution
-description: Audit thread resolution timing, eliminate ending clumping, and enforce the Loose-End Ledger in a Soundboard workspace. Use whenever the author asks to audit subplot endings or check resolution variety.
+description: Audit thread resolution timing, eliminate ending clumping, and enforce the Loose-End Ledger in a Soundingboard workspace. Use whenever the author asks to audit subplot endings or check resolution variety.
 ---
 
 # Subplot Resolution Variety Playbook Skill

@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Shared path & directory resolver for Soundboard diagnostics and wizards.
+ * Shared path & directory resolver for Soundingboard diagnostics and wizards.
  * Prioritizes ICM stage outputs while maintaining backward compatibility with legacy layouts.
  */
 

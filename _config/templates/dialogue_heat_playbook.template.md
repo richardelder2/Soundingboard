@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-dialogue-heat.js [chapter_or_snippet] [character_names...]
 # or:
-node scripts/soundboard.js pack heat [chapter_or_snippet] [character_names...]
+node scripts/soundingboard.js pack heat [chapter_or_snippet] [character_names...]
 ```
 Use the output (`ACTIVE SCENE DRAFT EXCERPT`, `SPEAKER CHARACTER PROFILES`, `AUTHENTICITY GUIDELINES`) to establish each speaker's voice, status, and secrets.
 

@@ -19,7 +19,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-interview.js <character_name>
 # or:
-node scripts/soundboard.js pack interview <character_name>
+node scripts/soundingboard.js pack interview <character_name>
 ```
 Use the output (`TARGET CHARACTER SHEET`, `VOICE EXEMPLARS & STYLE GUIDE`, `CHARACTER ARC MAP`) to calibrate the character's psychological disposition and dialect.
 

@@ -1,6 +1,6 @@
 ---
 name: wwxdu
-description: Stress-test characters by dropping them into extreme or unexpected scenarios in a Soundboard workspace. Use whenever the author asks "what would X do if...", asks to drop-test a character, or test moral limits under pressure.
+description: Stress-test characters by dropping them into extreme or unexpected scenarios in a Soundingboard workspace. Use whenever the author asks "what would X do if...", asks to drop-test a character, or test moral limits under pressure.
 ---
 
 # WWXDU ("What Would X Do Unexpectedly") Playbook Skill

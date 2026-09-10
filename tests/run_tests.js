@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.dirname(__dirname);
 
 console.log('\n\x1b[1m\x1b[36m========================================');
-console.log('       SAGA / Soundboard Test Suite');
+console.log('     SAGA / Soundingboard Test Suite');
 console.log('========================================\x1b[0m\n');
 
 let passed = 0;
@@ -68,7 +68,7 @@ function testOkfLint() {
   assert(missingStages === 0, 'All OKF craft modules have valid stages: frontmatter', `${missingStages} files missing stages`);
 
   // B. Run okf_lint script directly
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   try {
     const lintOut = execSync(`node ${cliScript} okf-lint`, { cwd: rootDir, encoding: 'utf8' });
     assert(lintOut.includes('OKF bundle conforms to specification') || lintOut.includes('clean and valid'), 'OKF bundle conforms to specification (okf-lint exits 0)');
@@ -97,7 +97,7 @@ function testOkfLint() {
 
 // Test 3: Stage packet compilation for stages 01 through 05 and Stage 02 budget
 function testStagePackets() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   ['01', '02', '03', '04', '05'].forEach(st => {
     try {
       const out = execSync(`node ${cliScript} run-stage ${st}`, { cwd: rootDir, encoding: 'utf8' });
@@ -250,7 +250,7 @@ function testCraftRemediationLinks() {
 
 // Test 8: Intelligent Craft Search & Synonym Retrieval (T-06)
 function testCraftSearch() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   try {
     // A. Synonym expansion
     const synOut = execSync(`node ${cliScript} craft search "sagging middle" --json`, { cwd: rootDir, encoding: 'utf8' });
@@ -276,7 +276,7 @@ function testCraftSearch() {
 
 // Test 9: Form-Based Routing & Short Fiction Packaging (T-07)
 function testFormRouting() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   try {
     // A. Short story adaptation in Stage 02 packet
     const storyOut = execSync(`node ${cliScript} run-stage 02 --form=short_story`, { cwd: rootDir, encoding: 'utf8' });
@@ -298,7 +298,7 @@ function testFormRouting() {
 
 // Test 10: State Model — Structured Canon, Timeline, Thread Ledger (T-09)
 function testStateModel() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
 
   // A. Structured Canon Query
@@ -423,7 +423,7 @@ async function testManuscriptReport() {
 
 // Test 13: Tolerant JSON Parser and Schema Versioning (T-13)
 async function testTolerantJsonAndVersioning() {
-  const sbUrl = pathToFileURL(path.join(rootDir, 'scripts', 'soundboard.js')).href;
+  const sbUrl = pathToFileURL(path.join(rootDir, 'scripts', 'soundingboard.js')).href;
   const { safeParseJson } = await import(sbUrl);
 
   try {
@@ -447,7 +447,7 @@ async function testTolerantJsonAndVersioning() {
 
 // Test 14: Status Stage Filter (T-13)
 function testStatusStageFilter() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
 
   try {
@@ -460,7 +460,7 @@ function testStatusStageFilter() {
 
 // Test 15: Brief Cold-Start State Dump (T-11)
 function testBriefStateDump() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
 
   const manifestPath = path.join(rootDir, 'manuscript.json');
@@ -480,7 +480,7 @@ function testBriefStateDump() {
     }), 'utf8');
 
     const briefOut = execSync(`node ${cliScript} brief`, execOptions);
-    assert(briefOut.includes('Brief Test Book') && briefOut.includes('1 chapters failed audit') && briefOut.includes('ICM §5.2 State Brief'), 'soundboard brief outputs comprehensive cold-start telemetry facts');
+    assert(briefOut.includes('Brief Test Book') && briefOut.includes('1 chapters failed audit') && briefOut.includes('ICM §5.2 State Brief'), 'soundingboard brief outputs comprehensive cold-start telemetry facts');
   } catch (e) {
     assert(false, 'Brief state dump test failed', e.message);
   } finally {
@@ -491,7 +491,7 @@ function testBriefStateDump() {
 
 // Test 16: Manuscript Ingestion & Importer (T-12)
 function testManuscriptImport() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
 
   const fixturePath = path.join(rootDir, 'tests', 'fixtures', 'import_sample.md');
@@ -528,7 +528,7 @@ function testManuscriptImport() {
 
 // Test 17: Chapter Kit Budget Management & Degradation at Scale (D-01)
 function testChapterKitAtScale() {
-  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundboard.js')) ? 'scripts/soundboard.js' : 'scripts/saga.js';
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
   const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
 
   const canonDir = path.join(rootDir, 'stages', '02_planning', 'output');

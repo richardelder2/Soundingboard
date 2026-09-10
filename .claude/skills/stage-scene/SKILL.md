@@ -1,6 +1,6 @@
 ---
 name: stage-scene
-description: Plan scene staging, physical blocking, value shifts, and opening hooks in a Soundboard workspace. Use whenever the author asks to stage a scene, set up chapter beats, or write opening hooks.
+description: Plan scene staging, physical blocking, value shifts, and opening hooks in a Soundingboard workspace. Use whenever the author asks to stage a scene, set up chapter beats, or write opening hooks.
 ---
 
 # Scene Staging Playbook Skill

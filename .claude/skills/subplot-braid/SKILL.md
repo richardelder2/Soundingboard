@@ -1,6 +1,6 @@
 ---
 name: subplot-braid
-description: Calculate thread dormancy and weave secondary storylines into upcoming chapter beats in a Soundboard workspace. Use whenever the author asks to braid subplots, freshen a B-story, or check for neglected narrative threads.
+description: Calculate thread dormancy and weave secondary storylines into upcoming chapter beats in a Soundingboard workspace. Use whenever the author asks to braid subplots, freshen a B-story, or check for neglected narrative threads.
 ---
 
 # Subplot Braiding Playbook Skill

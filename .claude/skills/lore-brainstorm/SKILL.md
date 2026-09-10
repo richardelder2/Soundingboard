@@ -1,6 +1,6 @@
 ---
 name: lore-brainstorm
-description: Brainstorm worldbuilding, sci-fi/magic systems, factions, and character secrets in a Soundboard workspace. Use whenever the author asks to brainstorm lore, worldbuilding, or subplot elements.
+description: Brainstorm worldbuilding, sci-fi/magic systems, factions, and character secrets in a Soundingboard workspace. Use whenever the author asks to brainstorm lore, worldbuilding, or subplot elements.
 ---
 
 # Lore & Worldbuilding Brainstorm Playbook Skill

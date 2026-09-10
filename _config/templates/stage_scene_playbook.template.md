@@ -21,7 +21,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-stage-scene.js <chapter_number>
 # or:
-node scripts/soundboard.js pack scene <chapter_number>
+node scripts/soundingboard.js pack scene <chapter_number>
 ```
 Use the output (`STRUCTURE PLAN REQUIREMENTS`, `PRECEDING CHAPTER ENDING`, `CURRENT BEAT FILE`, `SCENE BEAT STANDARD TEMPLATE`) to maintain continuity.
 

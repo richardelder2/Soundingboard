@@ -1,6 +1,6 @@
 ---
 name: character-dna
-description: Forge complex, multi-layered characters by deconstructing and combining traits from famous fictional characters, historical figures, or real-world personas in a Soundboard workspace. Use whenever the author wants to design a character using "X meets Y", famous archetypes, or real-person inspirations.
+description: Forge complex, multi-layered characters by deconstructing and combining traits from famous fictional characters, historical figures, or real-world personas in a Soundingboard workspace. Use whenever the author wants to design a character using "X meets Y", famous archetypes, or real-person inspirations.
 ---
 
 # Character DNA Playbook Skill

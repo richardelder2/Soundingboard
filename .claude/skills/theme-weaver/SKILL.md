@@ -1,6 +1,6 @@
 ---
 name: theme-weaver
-description: Weave thematic symbolism, physical motifs, and environmental metaphors into scenes in a Soundboard workspace. Use whenever the author asks to deepen themes or add motifs without preaching.
+description: Weave thematic symbolism, physical motifs, and environmental metaphors into scenes in a Soundingboard workspace. Use whenever the author asks to deepen themes or add motifs without preaching.
 ---
 
 # Thematic Resonance & Motif Weaver Playbook Skill

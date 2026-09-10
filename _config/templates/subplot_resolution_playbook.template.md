@@ -28,7 +28,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-subplot-resolution.js [act_or_chapter]
 # or:
-node scripts/soundboard.js pack subplot-resolution [act_or_chapter]
+node scripts/soundingboard.js pack subplot-resolution [act_or_chapter]
 ```
 Use the output (`NARRATIVE THREAD LEDGER`, `RESOLUTION TIMING & CLUMPING AUDIT`, `STRUCTURE PLAN RESOLUTION VARIETY`, `MANUSCRIPT STATE`) to inspect the distribution of endings.
 

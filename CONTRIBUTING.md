@@ -1,13 +1,13 @@
-# Contributing to Soundboard
+# Contributing to Soundingboard
 
-Thank you for your interest in contributing to Soundboard! Soundboard is built on the **Interpretable Context Methodology (ICM)** and the **Open Knowledge Format (OKF)** for token-disciplined, agentic novel writing.
+Thank you for your interest in contributing to Soundingboard! Soundingboard is built on the **Interpretable Context Methodology (ICM)** and the **Open Knowledge Format (OKF)** for token-disciplined, agentic novel writing.
 
 ## Core Architectural Invariants
 
 Before proposing any changes or pull requests, please respect the following non-negotiable principles:
 
 1. **Zero Runtime Dependencies:**
-   - Soundboard maintains `"dependencies": {}` in `package.json`.
+   - Soundingboard maintains `"dependencies": {}` in `package.json`.
    - All tools, parsers, and utilities must run on standard Node.js built-ins (`fs`, `path`, `child_process`, `crypto`).
    - No external npm runtime packages may be added.
 

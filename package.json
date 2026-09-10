@@ -4,16 +4,16 @@
   "description": "Portable, token-efficient novel engineering system using Interpretable Context Methodology and Open Knowledge Format",
   "type": "module",
   "bin": {
-    "soundboard": "./scripts/soundboard.js",
-    "sb": "./scripts/soundboard.js",
+    "soundingboard": "./scripts/soundingboard.js",
+    "sb": "./scripts/soundingboard.js",
     "saga": "./scripts/saga.js"
   },
   "scripts": {
-    "status": "node ./scripts/soundboard.js status",
-    "brief": "node ./scripts/soundboard.js brief",
-    "okf-index": "node ./scripts/soundboard.js okf-index",
-    "okf-lint": "node ./scripts/soundboard.js okf-lint",
-    "audit": "node ./scripts/soundboard.js audit",
+    "status": "node ./scripts/soundingboard.js status",
+    "brief": "node ./scripts/soundingboard.js brief",
+    "okf-index": "node ./scripts/soundingboard.js okf-index",
+    "okf-lint": "node ./scripts/soundingboard.js okf-lint",
+    "audit": "node ./scripts/soundingboard.js audit",
     "test": "node ./tests/run_tests.js"
   },
   "engines": {

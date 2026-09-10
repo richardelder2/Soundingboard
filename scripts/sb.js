@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Short-alias CLI entrypoint shim for Soundboard (`sb`).
- * Forwards execution to soundboard.js.
+ * Short-alias CLI entrypoint shim for Soundingboard (`sb`).
+ * Forwards execution to soundingboard.js.
  */
-import './soundboard.js';
+import './soundingboard.js';

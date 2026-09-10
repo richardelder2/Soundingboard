@@ -25,7 +25,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-subplot-genesis.js [focus_or_theme]
 # or:
-node scripts/soundboard.js pack subplot-genesis [focus_or_theme]
+node scripts/soundingboard.js pack subplot-genesis [focus_or_theme]
 ```
 Use the output (`FOOLSCAP`, `MACRO OUTLINE SPINE`, `EXISTING NARRATIVE THREADS LEDGER`, `CAST PROFILES`, `MANDATORY SUBPLOT RULES`) as your baseline.
 

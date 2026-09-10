@@ -24,7 +24,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-sensory-bloom.js [location_or_chapter]
 # or:
-node scripts/soundboard.js pack bloom [location_or_chapter]
+node scripts/soundingboard.js pack bloom [location_or_chapter]
 ```
 Use the output (`PROJECT SENSORY LEXICON`, `IN-WORLD TERMINOLOGY`, `SETTING SHEET`, `RECENT SCENE CONTEXT`, `AUTHENTICITY SENSATION RULES`) to pull approved sensory words.
 

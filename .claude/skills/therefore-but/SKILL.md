@@ -1,6 +1,6 @@
 ---
 name: therefore-but
-description: Audit beatsheets and plot outlines for causal momentum in a Soundboard workspace. Use whenever the author asks to audit causality, do a Therefore/But pass, or fix episodic "and then" plotting.
+description: Audit beatsheets and plot outlines for causal momentum in a Soundingboard workspace. Use whenever the author asks to audit causality, do a Therefore/But pass, or fix episodic "and then" plotting.
 ---
 
 # Causal Plot Calculus Playbook Skill

@@ -1,6 +1,6 @@
 ---
 name: dialogue-heat
-description: Intensify flat, polite, or expository dialogue in a Soundboard workspace. Use whenever the author asks to heat up dialogue, inject subtext, add status play, or create conversational friction.
+description: Intensify flat, polite, or expository dialogue in a Soundingboard workspace. Use whenever the author asks to heat up dialogue, inject subtext, add status play, or create conversational friction.
 ---
 
 # Dialogue Heat Playbook Skill

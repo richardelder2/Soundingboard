@@ -1,6 +1,6 @@
 ---
 name: sensory-bloom
-description: Expand abstract, generic, or low-viscosity descriptions into rich, concrete sensory prose in a Soundboard workspace. Use whenever the author asks to bloom a passage, add sensory details, or fix white room syndrome.
+description: Expand abstract, generic, or low-viscosity descriptions into rich, concrete sensory prose in a Soundingboard workspace. Use whenever the author asks to bloom a passage, add sensory details, or fix white room syndrome.
 ---
 
 # Sensory Expansion Playbook Skill

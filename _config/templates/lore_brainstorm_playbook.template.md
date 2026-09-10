@@ -21,7 +21,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-brainstorm.js [topic_or_keyword]
 # or:
-node scripts/soundboard.js pack brainstorm [topic_or_keyword]
+node scripts/soundingboard.js pack brainstorm [topic_or_keyword]
 ```
 Use the output (`WORLD BIBLE`, `GENRE BIBLE & TROPE STACK`, `IN-WORLD TERMINOLOGY`, `CAST OVERVIEW`) as your creative constraints.
 

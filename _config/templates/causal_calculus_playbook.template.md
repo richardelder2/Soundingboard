@@ -19,7 +19,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-causality.js <chapter_number_or_beatsheet_path>
 # or:
-node scripts/soundboard.js pack causality <chapter_number_or_beatsheet_path>
+node scripts/soundingboard.js pack causality <chapter_number_or_beatsheet_path>
 ```
 Use the output (`FULL BEATSHEET FILE`, `SEQUENTIAL BEAT PAIRS FOR AUDIT`) to review each transition point.
 

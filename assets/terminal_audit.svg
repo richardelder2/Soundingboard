@@ -39,10 +39,10 @@
     <circle cx='34' cy='29' r='6' class='dot-red'/>
     <circle cx='54' cy='29' r='6' class='dot-yellow'/>
     <circle cx='74' cy='29' r='6' class='dot-green'/>
-    <text x='430' y='33' class='title'>soundboard audit — 4-Gate Narrative Diagnostics</text>
+    <text x='430' y='33' class='title'>soundingboard audit — 4-Gate Narrative Diagnostics</text>
 
     <g transform='translate(32, 80)' class='code'>
-      <text y='0'><tspan class='prompt'>author@soundboard-studio</tspan><tspan class='dim'>:~$</tspan> <tspan class='cmd'>soundboard audit stages/03_drafting/output/chapters/ch03.md</tspan></text>
+      <text y='0'><tspan class='prompt'>author@soundingboard-studio</tspan><tspan class='dim'>:~$</tspan> <tspan class='cmd'>soundingboard audit stages/03_drafting/output/chapters/ch03.md</tspan></text>
       
       <text y='32' class='header'>[AUDITING CHAPTER 03: "The Smuggler's Key" (3,745 words)]</text>
       

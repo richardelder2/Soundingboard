@@ -1,6 +1,6 @@
 ---
 name: 💡 Feature Request
-about: Suggest an idea or capability for Soundboard
+about: Suggest an idea or capability for Soundingboard
 title: "[FEATURE] "
 labels: enhancement
 assignees: ''

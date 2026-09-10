@@ -2,6 +2,6 @@
 
 /**
  * Backward-compatibility CLI entrypoint shim for SAGA-ICM.
- * Forwards execution to soundboard.js.
+ * Forwards execution to soundingboard.js.
  */
-import './soundboard.js';
+import './soundingboard.js';

@@ -4,7 +4,7 @@ title: "Static Narrative Craft OKF Catalog"
 last_indexed: 2026-09-05
 ---
 
-# Soundboard Static Craft Knowledge Catalog
+# Soundingboard Static Craft Knowledge Catalog
 
 - [SAGA-ICM Open Knowledge Format (OKF) Specification](SPECIFICATION.md) — `type: okf_specification`
 - [The Adventure Quest: Environmental Hostility, Resource Attrition & Team Dynamics](adventure_quest_survival_dynamics.md) — `type: craft_structure`

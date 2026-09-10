@@ -1,4 +1,4 @@
-name: Soundboard Audit & Catalog Check
+name: Soundingboard Audit & Catalog Check
 
 on:
   push:

@@ -10,13 +10,13 @@ Large Language Models (LLMs) trained on next-token prediction suffer from deep s
 3. **Single-Track Linear Plotting:** Subplots, thematic counterpoints, and secondary character agendas vanish or collapse into direct servitude of the protagonist's immediate goal.
 4. **Thematic Explicitization (The AI Narrator Tell):** The narration constantly pauses to explain the thematic or philosophical significance of events ("It was a testament to...", "A reminder that in the darkness..."), violating the fundamental contract of dramatic subtext.
 
-Soundboard was engineered specifically to solve these four failure modes at the architecture level—not through superficial prompt-engineering, but through disciplined narrative engineering.
+Soundingboard was engineered specifically to solve these four failure modes at the architecture level—not through superficial prompt-engineering, but through disciplined narrative engineering.
 
 ---
 
 ## The Interpretable Context Methodology (ICM)
 
-Soundboard is built upon the **Interpretable Context Methodology** (*ICM*, Van Clief & McDermott, arXiv:2603.16021). ICM proposes a fundamental architectural shift for AI-assisted creative work: **the file system is the agent's brain**.
+Soundingboard is built upon the **Interpretable Context Methodology** (*ICM*, Van Clief & McDermott, arXiv:2603.16021). ICM proposes a fundamental architectural shift for AI-assisted creative work: **the file system is the agent's brain**.
 
 ### Why Plain Folders Beat Vector Databases (RAG)
 
@@ -26,7 +26,7 @@ Many modern AI tools attempt to solve long-form memory by embedding novel text i
 - **Hallucinated Retcons:** Without an immutable, human-auditable ledger of established facts, the model silently contradicts past chapters.
 
 **The ICM Solution: The Glass Box Architecture**
-- Every memory, rule, character arc, and plot beat in Soundboard lives in plain, human-readable markdown (`.md`) and JSON files on your local drive.
+- Every memory, rule, character arc, and plot beat in Soundingboard lives in plain, human-readable markdown (`.md`) and JSON files on your local drive.
 - You can inspect, edit, or delete any piece of context in VS Code, Obsidian, Notepad, or your favorite editor.
 - The AI agent reads only what is strictly necessary for the active chapter (Token Discipline: $\le 6,000$ tokens per chapter kit), ensuring maximum attention weight is placed on voice, nuance, and character chemistry.
 
@@ -34,19 +34,19 @@ Many modern AI tools attempt to solve long-form memory by embedding novel text i
 
 ## The 4 Principles of Narrative Authenticity
 
-To guarantee that prose produced with Soundboard reads as rich, human-authored literature, the studio enforces four non-negotiable craft dials (`_config/narrative_authenticity.md`):
+To guarantee that prose produced with Soundingboard reads as rich, human-authored literature, the studio enforces four non-negotiable craft dials (`_config/narrative_authenticity.md`):
 
 ### 1. Structural Friction Over Linear Progress
-Human lives and compelling stories do not move in straight lines. Soundboard's Stage 02 planning forces nonlinear information disclosure, Dwight Swain Motivation-Reaction Units (MRUs), and John Truby's 4-corner opposition matrices. Every protagonist victory exacts a tangible moral or physical price.
+Human lives and compelling stories do not move in straight lines. Soundingboard's Stage 02 planning forces nonlinear information disclosure, Dwight Swain Motivation-Reaction Units (MRUs), and John Truby's 4-corner opposition matrices. Every protagonist victory exacts a tangible moral or physical price.
 
 ### 2. Tropes Outrank Dials
-Tropes are not clichés; they are the fundamental contracts of genre fiction. A romance reader expects the "Mirror Scene" and the "Dark Night of the Soul"; a mystery reader demands fair-play evidentiary clues. Soundboard locks in obligatory genre scenes via the *Obligatory Scene Ledger* before a single chapter is drafted.
+Tropes are not clichés; they are the fundamental contracts of genre fiction. A romance reader expects the "Mirror Scene" and the "Dark Night of the Soul"; a mystery reader demands fair-play evidentiary clues. Soundingboard locks in obligatory genre scenes via the *Obligatory Scene Ledger* before a single chapter is drafted.
 
 ### 3. Voice Consistency & Anti-Drift Anchoring
-AI models suffer from stylistic decay: by Chapter 4, third-person limited narration inevitably drifts toward neutral Wikipedia-style summary. Soundboard counters this by packing every chapter kit with a **trailing voice anchor** (the final 500 words of the preceding chapter) alongside curated author exemplars, keeping tone, psychic distance, and sentence rhythm locked into groove.
+AI models suffer from stylistic decay: by Chapter 4, third-person limited narration inevitably drifts toward neutral Wikipedia-style summary. Soundingboard counters this by packing every chapter kit with a **trailing voice anchor** (the final 500 words of the preceding chapter) alongside curated author exemplars, keeping tone, psychic distance, and sentence rhythm locked into groove.
 
 ### 4. Machine-Checkable Quality Verification
-Before any chapter is marked as complete, Soundboard's zero-dependency diagnostic tools analyze the draft across multiple objective dimensions:
+Before any chapter is marked as complete, Soundingboard's zero-dependency diagnostic tools analyze the draft across multiple objective dimensions:
 - **Cadence & Rhythm:** Variance in sentence length and paragraph burstiness.
 - **AI Tell Suppression:** Automated detection of synthetic idioms, normalized by word count and filtered through in-world vocabulary allowlists.
 - **Continuity & Canon Verification:** Verification against all established facts, character traits, and active story threads.
@@ -60,7 +60,7 @@ A central failure of modern AI writing tools is their reliance on **autonomous r
 2. **Sanitizes Intentional Subtext:** Nuanced, ambiguous emotional tensions that the author deliberately left unsaid are clumsily stated out loud by characters.
 3. **Eats Authorial Agency:** The author becomes a passive consumer of the AI's output rather than the active director of their art, destroying psychological ownership of the work.
 
-Soundboard takes the opposite philosophical stance: **The human author always holds the red pen. The AI is an editorial diagnostician, never a unilateral rewriter.**
+Soundingboard takes the opposite philosophical stance: **The human author always holds the red pen. The AI is an editorial diagnostician, never a unilateral rewriter.**
 
 ### The Anatomy of the 4-Phase HITL Revision Cycle
 
@@ -82,7 +82,7 @@ The playbook executes a disciplined 4-phase collaborative cycle:
 ```
 
 #### Phase 1: Objective Diagnosis (No Text Modifications)
-The engine runs mechanical scans (`soundboard audit` and `soundboard continuity`) to identify concrete symptoms: sentence length variance, tell frequency exceeding the 0.50 per 1,000-word ceiling, or proper-noun contradictions against `canon.md`. The manuscript prose remains completely untouched.
+The engine runs mechanical scans (`soundingboard audit` and `soundingboard continuity`) to identify concrete symptoms: sentence length variance, tell frequency exceeding the 0.50 per 1,000-word ceiling, or proper-noun contradictions against `canon.md`. The manuscript prose remains completely untouched.
 
 #### Phase 2: The 3-Option Creative Divergence
 For every single issue identified, the AI agent is contractually forbidden from saying *"I fixed this."* Instead, it must diagnose the underlying dramaturgical friction and offer **2 to 3 distinct creative pathways**:
@@ -99,12 +99,12 @@ Working strictly from the approved checklist, the agent makes targeted, minimal 
 
 ### Preserving Psychological Ownership
 
-A novel is not merely a collection of grammatically correct sentences; it is an intimate externalization of an author's mind, obsessions, and emotional truth. By enforcing the HITL Revision Playbook, Soundboard ensures that every word on every page remains the conscious, deliberate artistic choice of the human writer.
+A novel is not merely a collection of grammatically correct sentences; it is an intimate externalization of an author's mind, obsessions, and emotional truth. By enforcing the HITL Revision Playbook, Soundingboard ensures that every word on every page remains the conscious, deliberate artistic choice of the human writer.
 
 ---
 
 ## The Philosophy of Zero Runtime Dependencies
 
-Soundboard is deliberately constructed with **zero third-party npm dependencies** (`dependencies: {}`). 
+Soundingboard is deliberately constructed with **zero third-party npm dependencies** (`dependencies: {}`). 
 
-Your novel should outlive software startups, cloud platforms, and framework deprecations. Because Soundboard is built entirely on native Node.js and universal markdown standards, a Soundboard novel workspace created today will open and operate perfectly ten years from now.
+Your novel should outlive software startups, cloud platforms, and framework deprecations. Because Soundingboard is built entirely on native Node.js and universal markdown standards, a Soundingboard novel workspace created today will open and operate perfectly ten years from now.

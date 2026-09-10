@@ -1,8 +1,8 @@
-# Soundboard Engine Architecture & Technical Specification
+# Soundingboard Engine Architecture & Technical Specification
 
 ## Architectural Overview
 
-Soundboard is an agent-native, token-disciplined novel engineering studio built upon the **Interpretable Context Methodology (ICM)**. It coordinates multi-agent or agent-author pairs across five stages governed by explicit markdown contracts, a central production ledger (`manuscript.json`), and deterministic zero-dependency CLI tooling.
+Soundingboard is an agent-native, token-disciplined novel engineering studio built upon the **Interpretable Context Methodology (ICM)**. It coordinates multi-agent or agent-author pairs across five stages governed by explicit markdown contracts, a central production ledger (`manuscript.json`), and deterministic zero-dependency CLI tooling.
 
 ```
                   ┌─────────────────────────────────────┐
@@ -80,20 +80,20 @@ The immutable ground truth of narrative facts:
 
 ## 3. The Chapter Production Loop
 
-1. **Kit Assembly (`soundboard pack-chapter <N>`):**
+1. **Kit Assembly (`soundingboard pack-chapter <N>`):**
    - Assembles beats, relevant canon entities, active story threads, and the voice kit (exemplars + trailing 500 words from Chapter $N-1$).
    - Enforces strict token ceilings ($\le 6,000$ tokens total) to maximize reasoning bandwidth for active prose generation.
 2. **Drafting (Stage 03):**
    - Author-First (Solo) or Co-Writing (Agent-Drafted) pathway.
    - Appends newly coined facts tagged `[unverified chN]` to `canon.md`.
 3. **Editorial Audit & HITL Revision Playbook (Stage 04):**
-   - Runs `soundboard audit` (prose tells, cadence variance) and `soundboard continuity` (proper-noun consistency).
+   - Runs `soundingboard audit` (prose tells, cadence variance) and `soundingboard continuity` (proper-noun consistency).
    - **Playbook Generation:** If mechanical or craft diagnostics flag issues, the agent creates `stages/04_diagnostics_edits/output/playbooks/revision_playbook_ch[X].md` based on `_config/templates/revision_playbook.template.md`.
    - **State Transition:** `manuscript.json` marks the chapter as `audited` (or `playbook_active`).
    - **Author Decision Gate:** The agent presents 2–3 creative strategies per finding (e.g., Cut vs. Dramatize vs. Subtext) with author write-in support. Under no circumstances may an agent perform an autonomous rewrite.
    - **Targeted Revision & Re-Audit:** The agent executes edits solely per the author's approved playbook choices, then re-runs diagnostics. Once all gates clear, status advances to `passed` and unverified canon tags are confirmed.
 4. **Publishing Compilation (Stage 05):**
-   - `soundboard compile` scans `manuscript.json` and verification artifacts. If any chapter lacks verified clearance, the compilation halts.
+   - `soundingboard compile` scans `manuscript.json` and verification artifacts. If any chapter lacks verified clearance, the compilation halts.
 
 ---
 
@@ -103,21 +103,21 @@ All CLI commands run in zero-dependency Node.js ($\ge 18$):
 
 | Command | Usage | Description |
 |---|---|---|
-| `soundboard status` | `node scripts/soundboard.js status` | Full telemetry console: pipeline gates, chapter ledger, word counts. |
-| `soundboard brief` | `node scripts/soundboard.js brief` | Dense single-line cold-start facts for agent context initialization. |
-| `soundboard pack-chapter <N>` | `node scripts/soundboard.js pack-chapter 3` | Assembles token-disciplined drafting kit for Chapter N. |
-| `soundboard audit <path>` | `node scripts/soundboard.js audit stages/03_drafting/output/chapters/ch01.md` | Scans for AI tells, sentence cadence, and POV adherence. |
-| `soundboard continuity` | `node scripts/soundboard.js continuity` | Proper-noun near-duplicate and orphaned character detector. |
-| `soundboard canon query "<q>"`| `node scripts/soundboard.js canon query "Elena"` | Extracts tabular canon entity facts on demand. |
-| `soundboard compile` | `node scripts/soundboard.js compile` | Builds gated `manuscript.html` and `.epub` from passed chapters. |
-| `soundboard okf-index` | `npm run okf-index` | Rebuilds static markdown catalogs across OKF craft bundles. |
-| `soundboard okf-lint` | `npm run okf-lint -- --strict` | Audits craft cards for token budgets ($\le 900$ tok) and YAML frontmatter. |
+| `soundingboard status` | `node scripts/soundingboard.js status` | Full telemetry console: pipeline gates, chapter ledger, word counts. |
+| `soundingboard brief` | `node scripts/soundingboard.js brief` | Dense single-line cold-start facts for agent context initialization. |
+| `soundingboard pack-chapter <N>` | `node scripts/soundingboard.js pack-chapter 3` | Assembles token-disciplined drafting kit for Chapter N. |
+| `soundingboard audit <path>` | `node scripts/soundingboard.js audit stages/03_drafting/output/chapters/ch01.md` | Scans for AI tells, sentence cadence, and POV adherence. |
+| `soundingboard continuity` | `node scripts/soundingboard.js continuity` | Proper-noun near-duplicate and orphaned character detector. |
+| `soundingboard canon query "<q>"`| `node scripts/soundingboard.js canon query "Elena"` | Extracts tabular canon entity facts on demand. |
+| `soundingboard compile` | `node scripts/soundingboard.js compile` | Builds gated `manuscript.html` and `.epub` from passed chapters. |
+| `soundingboard okf-index` | `npm run okf-index` | Rebuilds static markdown catalogs across OKF craft bundles. |
+| `soundingboard okf-lint` | `npm run okf-lint -- --strict` | Audits craft cards for token budgets ($\le 900$ tok) and YAML frontmatter. |
 
 ---
 
 ## 5. Multi-Project & Series Architecture
 
-Soundboard workspaces are fully self-contained and cwd-relative. Parallel books cannot contaminate each other.
+Soundingboard workspaces are fully self-contained and cwd-relative. Parallel books cannot contaminate each other.
 
 For multi-book series, a sibling `series/` folder acts as the shared cross-book layer:
 ```
@@ -126,7 +126,7 @@ my-series/
   │   ├── series_canon.md
   │   ├── romance_ladder.md
   │   └── lore_debt_ledger.md
-  book-01/              # Standard Soundboard workspace
-  book-02/              # Standard Soundboard workspace
+  book-01/              # Standard Soundingboard workspace
+  book-02/              # Standard Soundingboard workspace
 ```
 Upon completion of Stage 04 for Book $N$, verified facts and cross-book trackers are promoted to `series/`, giving Book $N+1$ instant, zero-drift series memory.

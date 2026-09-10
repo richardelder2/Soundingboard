@@ -1,6 +1,6 @@
 ---
 name: subplot-genesis
-description: Architect non-cliché secondary storylines and B-stories in a Soundboard workspace to eliminate narrative monomania. Use whenever the author asks to create, plan, or brainstorm subplots.
+description: Architect non-cliché secondary storylines and B-stories in a Soundingboard workspace to eliminate narrative monomania. Use whenever the author asks to create, plan, or brainstorm subplots.
 ---
 
 # Subplot Genesis Playbook Skill

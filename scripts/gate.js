@@ -82,7 +82,7 @@ export function evaluateGate(chapterNum) {
 
 export function handleGate(chId, options = {}) {
   if (!chId) {
-    console.error('Error: Please specify a chapter number (e.g. soundboard gate 1)');
+    console.error('Error: Please specify a chapter number (e.g. soundingboard gate 1)');
     process.exitCode = 1;
     return;
   }
@@ -151,7 +151,7 @@ export function handleGate(chId, options = {}) {
     if (result.failed.length) {
       console.log(`  Failing checks: ${result.failed.join(', ')}`);
     }
-    console.log(`  Remediate the failing checks and re-run "soundboard gate ${num}".\n`);
+    console.log(`  Remediate the failing checks and re-run "soundingboard gate ${num}".\n`);
   }
 
   return result;

@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-wwxdu.js <character_name>
 # or:
-node scripts/soundboard.js pack wwxdu <character_name>
+node scripts/soundingboard.js pack wwxdu <character_name>
 ```
 Use the output (`TARGET CHARACTER SHEET`, `ESTABLISHED CANON FACTS`, `VOICE EXEMPLARS`) to anchor the character's relationships and capabilities.
 

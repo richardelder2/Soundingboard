@@ -27,7 +27,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-character-dna.js [character_name]
 # or:
-node scripts/soundboard.js pack dna [character_name]
+node scripts/soundingboard.js pack dna [character_name]
 ```
 Use the output (`TARGET CHARACTER SCHEMA`, `WORLD BIBLE`, `GENRE TROPE STACK`, `IN-WORLD VOCABULARY`, `CURRENT CAST ROSTER`) to ground the character in your universe and ensure no voice/role overlap with existing cast members.
 

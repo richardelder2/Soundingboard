@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-subplot-braid.js <chapter_number>
 # or:
-node scripts/soundboard.js pack subplot-braid <chapter_number>
+node scripts/soundingboard.js pack subplot-braid <chapter_number>
 ```
 Use the output (`ACTIVE THREADS LEDGER`, `THREAD DORMANCY & STARVATION ANALYSIS`, `TARGET CHAPTER BEATS`, `PRECEDING CHAPTER EXCERPT`) to identify which thread is most starved for attention.
 

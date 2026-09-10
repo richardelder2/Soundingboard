@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/soundboard_logo.png" alt="Soundboard — Narrative Production Studio" width="480" />
+  <img src="assets/soundingboard_logo.png" alt="Soundingboard — Narrative Production Studio" width="480" />
 </p>
 
 <h2 align="center">The Author's Intelligent Sounding Board &amp; Novel Production Studio</h2>
@@ -25,12 +25,12 @@ If you have tried using ChatGPT or Claude in a web browser to write long-form fi
 * **The "AI Prose" Trap:** Left uncalibrated, language models gravitate toward predictable rhythms, melodramatic clichés (*"a testament to..."*, *"shivers down spines"*), and characters who resolve deep conflict with neat, tidy apologies.
 * **Lack of Narrative Architecture:** AI is great at generating sentences, but weak at long-term dramatic pacing, moral stakes, and structural tension.
 
-**Soundboard doesn't pretend to write your book for you.** Writing a good novel still takes real human taste, emotional vulnerability, and hard editorial decisions. 
+**Soundingboard doesn't pretend to write your book for you.** Writing a good novel still takes real human taste, emotional vulnerability, and hard editorial decisions. 
 
-What Soundboard does is provide a **disciplined studio environment on your own computer**—getting you out of fragile web chat windows and into clean, plain markdown files you fully own. It gives your AI agent the memory, structure, and craft rules it needs to be a truly helpful sounding board instead of a chaotic autocomplete engine.
+What Soundingboard does is provide a **disciplined studio environment on your own computer**—getting you out of fragile web chat windows and into clean, plain markdown files you fully own. It gives your AI agent the memory, structure, and craft rules it needs to be a truly helpful sounding board instead of a chaotic autocomplete engine.
 
 <p align="center">
-  <img src="assets/soundboard_hero_banner.jpg" alt="Soundboard Studio Workstation" width="100%" />
+  <img src="assets/soundingboard_hero_banner.jpg" alt="Soundingboard Studio Workstation" width="100%" />
 </p>
 
 ---
@@ -39,11 +39,11 @@ What Soundboard does is provide a **disciplined studio environment on your own c
 
 When you collaborate with an AI coding agent (such as **Claude Code**, **Google Antigravity**, **Cursor**, or **Gemini CLI**), the agent is only as helpful as the context it can see. Overload it with unstructured notes, and it gets confused; starve it of context, and it drifts.
 
-Soundboard acts as the structural spine for your project:
+Soundingboard acts as the structural spine for your project:
 * **You bring the soul, the premise, and the creative vision.**
-* **Soundboard keeps the canon organized, the chapter beats focused, and the voice consistent.**
+* **Soundingboard keeps the canon organized, the chapter beats focused, and the voice consistent.**
 
-Behind the scenes, Soundboard manages:
+Behind the scenes, Soundingboard manages:
 1. **A Single-Source Canon Ledger:** An auditable, plain-text record of established world rules, character traits, and active story threads so facts stay straight across 80,000 words.
 2. **Anti-Drift Voice Anchoring:** Calibrates active chapter drafting against your chosen voice samples and the trailing prose of previous chapters to help prevent stylistic decay.
 3. **114 Modular Craft Guides:** Focused reference modules in `_config/okf_craft/` synthesizing practical techniques from Shawn Coyne (*Story Grid*), John Truby (*Anatomy of Story*), Brandon Sanderson, K.M. Weiland, and Dwight Swain.
@@ -52,10 +52,10 @@ Behind the scenes, Soundboard manages:
 
 ## The 5 Creative Studio Workspaces
 
-Soundboard breaks a book project into five manageable, sequential workspaces:
+Soundingboard breaks a book project into five manageable, sequential workspaces:
 
 <p align="center">
-  <img src="assets/pipeline_workflow.svg" alt="Soundboard 5 Creative Workspaces Flowchart" width="100%" />
+  <img src="assets/pipeline_workflow.svg" alt="Soundingboard 5 Creative Workspaces Flowchart" width="100%" />
 </p>
 
 ### 1. 🛋️ The Discovery Lounge (Stage 01 · Onboarding)
@@ -93,7 +93,7 @@ Once your chapters have passed their editorial checks, a single command compiles
 
 ## Quickstart for Writers
 
-You don't need programming experience, command-line skills, or complicated setup to use Soundboard:
+You don't need programming experience, command-line skills, or complicated setup to use Soundingboard:
 
 1. **Clone or download** this repository to a folder on your computer.
 2. **Open the folder** in **Claude Code**, **Google Antigravity**, **Cursor**, or your preferred agent tool.
@@ -111,21 +111,21 @@ While you focus on the creative story in chat, your agent uses lightweight, zero
 Your agent monitors project progression, word count targets, and chapter states through a clean status summary:
 
 <p align="center">
-  <img src="assets/terminal_status.svg" alt="Soundboard Live Telemetry Console" width="100%" />
+  <img src="assets/terminal_status.svg" alt="Soundingboard Live Telemetry Console" width="100%" />
 </p>
 
 ### The Editorial Diagnostic Scan
 Before marking any chapter as ready, your agent runs a diagnostic sweep to catch continuity slips and cadence issues:
 
 <p align="center">
-  <img src="assets/terminal_audit.svg" alt="Soundboard Editorial Review Suite" width="100%" />
+  <img src="assets/terminal_audit.svg" alt="Soundingboard Editorial Review Suite" width="100%" />
 </p>
 
 ---
 
 ## The 114-Module Craft Reference Library
 
-Soundboard provides your agent with explicit, codified reference cards in `_config/okf_craft/` covering time-tested storytelling principles:
+Soundingboard provides your agent with explicit, codified reference cards in `_config/okf_craft/` covering time-tested storytelling principles:
 * **The Story Grid (Shawn Coyne):** The 5 Commandments of the Micro-Scene and macro value shifts.
 * **The Anatomy of Story (John Truby):** Moral arguments, designing principles, and 4-corner opposition.
 * **Sanderson's Laws of Magic:** Systematic worldbuilding, costs, and escalating consequences.
@@ -148,9 +148,9 @@ For developers, technical authors, or curious creators who want to peek into the
 
 ## Inspiration & Dedication
 
-Soundboard stands on the shoulders of brilliant researchers, open-source pioneers, and a real-life creative partnership:
+Soundingboard stands on the shoulders of brilliant researchers, open-source pioneers, and a real-life creative partnership:
 
-* **For Axie:** Dedicated with love to my partner, **Axie**, an author for whom I have served as a personal sounding board across years of late-night brainstorming, worldbuilding, and plot puzzles. Soundboard was built from that exact creative rhythm—engineered so that AI can finally keep up with her boundless imagination the way a devoted human partner can.
+* **For Axie:** Dedicated with love to my partner, **Axie**, an author for whom I have served as a personal sounding board across years of late-night brainstorming, worldbuilding, and plot puzzles. Soundingboard was built from that exact creative rhythm—engineered so that AI can finally keep up with her boundless imagination the way a devoted human partner can.
 * **Jake Van Clief & William McDermott (ICM):** Boundless credit for the foundational breakthrough of the *Interpretable Context Methodology* ([ICM, arXiv:2603.16021](https://arxiv.org/abs/2603.16021)). Their philosophy—that transparent, plain-text folder architectures and token-disciplined contracts beat black-box vector databases—provides the structural spine of this studio.
 * **Nous Research (`autonovel`):** Gratitude to the team at Nous Research, whose early *autonovel* experiments proved that AI could tackle long-form fiction and inspired the quest to give writers a true, disciplined creative sounding board.
 

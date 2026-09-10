@@ -1,6 +1,6 @@
 ---
 name: unstuck
-description: Overcome writer's block, pacing drag, or scene deadlocks in a Soundboard workspace. Use whenever the author says they are stuck, blocked, don't know what happens next, or asks for narrative forks forward.
+description: Overcome writer's block, pacing drag, or scene deadlocks in a Soundingboard workspace. Use whenever the author says they are stuck, blocked, don't know what happens next, or asks for narrative forks forward.
 ---
 
 # Getting Unstuck Playbook Skill

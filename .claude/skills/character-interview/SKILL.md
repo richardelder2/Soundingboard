@@ -1,6 +1,6 @@
 ---
 name: character-interview
-description: Interrogate characters to discover voice, dialect, and speech rules in a Soundboard workspace. Use whenever the author asks to interview a character, test character dialogue, or build a voice profile.
+description: Interrogate characters to discover voice, dialect, and speech rules in a Soundingboard workspace. Use whenever the author asks to interview a character, test character dialogue, or build a voice profile.
 ---
 
 # Character Voice Interview Playbook Skill

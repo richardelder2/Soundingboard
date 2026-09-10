@@ -1,6 +1,6 @@
 # Author Symptom & Craft Synonym Index
 
-This index maps colloquial craft symptoms, workshop idioms, and reader-facing storytelling problems to authoritative OKF craft modules in `_config/okf_craft/`. The `soundboard craft search` and `saga craft search` commands query this table to perform zero-dependency synonym expansion and semantic retrieval.
+This index maps colloquial craft symptoms, workshop idioms, and reader-facing storytelling problems to authoritative OKF craft modules in `_config/okf_craft/`. The `soundingboard craft search` and `saga craft search` commands query this table to perform zero-dependency synonym expansion and semantic retrieval.
 
 | Author Symptom / Search Query | Target Modules | Primary Focus |
 |---|---|---|

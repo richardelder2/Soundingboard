@@ -20,7 +20,7 @@ Execute the mechanical context packer:
 ```bash
 node scripts/pack-theme-weaver.js [chapter_or_theme]
 # or:
-node scripts/soundboard.js pack theme [chapter_or_theme]
+node scripts/soundingboard.js pack theme [chapter_or_theme]
 ```
 Use the output (`FOOLSCAP CONTROLLING IDEA`, `STRUCTURE PLAN THEME DIALS`, `TARGET CHAPTER EXCERPT`, `AUTHENTICITY RULE 4`) to anchor your suggestions.
 

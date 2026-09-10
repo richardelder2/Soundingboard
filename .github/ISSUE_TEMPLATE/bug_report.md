@@ -1,6 +1,6 @@
 ---
 name: 🐛 Bug Report
-about: Create a report to help us improve Soundboard
+about: Create a report to help us improve Soundingboard
 title: "[BUG] "
 labels: bug
 assignees: ''
@@ -11,7 +11,7 @@ A clear and concise description of what the bug is.
 
 **Where Did It Happen?**
 - Stage: [e.g. 01_onboarding, 02_planning, 03_drafting, 04_diagnostics, 05_publishing]
-- Command / Step: [e.g. `soundboard status`, `soundboard audit`, in chat with Claude/Antigravity]
+- Command / Step: [e.g. `soundingboard status`, `soundingboard audit`, in chat with Claude/Antigravity]
 - OS: [e.g. Windows 11, macOS, Linux]
 - Agent Harness: [e.g. Claude Code, Antigravity, Cursor, Terminal]
 
