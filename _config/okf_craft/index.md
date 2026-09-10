@@ -6,7 +6,7 @@ last_indexed: 2026-09-05
 
 # Soundingboard Static Craft Knowledge Catalog
 
-- [SAGA-ICM Open Knowledge Format (OKF) Specification](SPECIFICATION.md) — `type: okf_specification`
+- [Soundingboard Open Knowledge Format (OKF) Specification](SPECIFICATION.md) — `type: okf_specification`
 - [The Adventure Quest: Environmental Hostility, Resource Attrition & Team Dynamics](adventure_quest_survival_dynamics.md) — `type: craft_structure`
 - [Adversarial Prose Auditing: Slop Density, POV Filter Stripping & Sensory Anchors](adversarial_prose_auditing_and_slop_filtering.md) — `type: craft_rule`
 - [Agent-Safe Editorial Conduct: Minimal Intervention & Canon Invariance](agent_safe_editorial_conduct.md) — `type: craft_rule`

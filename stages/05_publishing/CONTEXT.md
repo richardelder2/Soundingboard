@@ -13,7 +13,7 @@ outputs:
 # Stage 05: Publishing Compiled Outputs
 
 ## Process
-1. Run `node scripts/saga.js compile` (wraps `scripts/compile_manuscript.js`):
+1. Run `node scripts/soundingboard.js compile` (wraps `scripts/compile_manuscript.js`):
    - Compiles chapters in `manuscript.json` order into a single print-serif HTML file (title page, small-caps chapter heads, scene-break glyphs, justified indented paragraphs).
    - **Only chapters with `status: passed` are included** — the Stage 04 gate is enforced here. `--all` overrides for preview builds.
    - When `pandoc` is installed, also exports `manuscript.epub` with title/author metadata.

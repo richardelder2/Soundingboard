@@ -27,7 +27,7 @@ Three execution paths produce **identical artifacts**. Path A is preferred whene
 4. Continue to Trope Discovery (below), then write the Output Artifacts exactly as specified.
 
 ## Path B — Terminal wizard (needs a model backend in `.env`)
-1. Run `node scripts/saga.js wizard onboard [--blueprint=<name>]`.
+1. Run `node scripts/soundingboard.js wizard onboard [--blueprint=<name>]`.
 2. The wizard asks the same questions via readline, coaches via the configured model, and writes the same artifacts (steps 3–4 of Path A still apply if run inside an agent session afterward).
 
 ## Path C — Intake of existing material (agent-led)

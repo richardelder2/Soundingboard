@@ -6,7 +6,7 @@
 <p align="center"><em>A disciplined workspace and structural sounding board for novelists collaborating with AI agents.</em></p>
 
 <p align="center">
-  <a href="https://github.com/richardelder2/saga-icm/actions"><img src="https://img.shields.io/github/actions/workflow/status/richardelder2/saga-icm/audit.yml?branch=main&amp;label=CI%20Audit&amp;logo=github" alt="CI Status" /></a>
+  <a href="https://github.com/richardelder2/Soundingboard/actions"><img src="https://img.shields.io/github/actions/workflow/status/richardelder2/Soundingboard/audit.yml?branch=main&amp;label=CI%20Audit&amp;logo=github" alt="CI Status" /></a>
   <a href="package.json"><img src="https://img.shields.io/badge/dependencies-0%20runtime-brightgreen.svg" alt="Zero Runtime Dependencies" /></a>
   <a href="package.json"><img src="https://img.shields.io/badge/node-%3E%3D18-blue.svg" alt="Node Version" /></a>
   <a href="_config/okf_craft/"><img src="https://img.shields.io/badge/OKF%20Craft-114%20modules-blueviolet.svg" alt="Craft Bundle" /></a>

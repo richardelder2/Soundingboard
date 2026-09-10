@@ -41,7 +41,7 @@ last_modified: 2026-09-04
 14. "Rom-Com Money Scenes: What are 2 irresistible comedic or romantic set-pieces you want to include?
     - The Public Disaster / Festival Mishap:
     - The Intimate Vulnerability scene (getting caught in a downpour, nursing a sprained ankle, drunkenly sharing childhood secrets):"
-15. "The Third-Act Pivot: Soundboard rom-coms ban the cliché 'miscommunication marathon' where adults refuse to talk for five chapters. What is the real, mature external conflict or career dilemma that threatens their future together?"
+15. "The Third-Act Pivot: Soundingboard rom-coms ban the cliché 'miscommunication marathon' where adults refuse to talk for five chapters. What is the real, mature external conflict or career dilemma that threatens their future together?"
 16. "What is the grand, joyful, public or deeply personal gesture that resolves their conflict and delivers the non-negotiable Happily Ever After?"
 
 ## STAGE 6: THE SHAPE OF THE TELLING

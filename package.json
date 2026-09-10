@@ -1,6 +1,6 @@
 {
-  "name": "saga-icm",
-  "version": "1.0.0",
+  "name": "soundingboard",
+  "version": "1.1.0",
   "description": "Portable, token-efficient novel engineering system using Interpretable Context Methodology and Open Knowledge Format",
   "type": "module",
   "bin": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/richardelder2/saga-icm.git"
+    "url": "https://github.com/richardelder2/Soundingboard.git"
   },
   "keywords": [
     "ai-writing",

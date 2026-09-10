@@ -99,19 +99,31 @@ The immutable ground truth of narrative facts:
 
 ## 4. Mechanical CLI Command Reference
 
-All CLI commands run in zero-dependency Node.js ($\ge 18$):
+All CLI commands run in zero-dependency Node.js ($\ge 18$). The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `scripts/sb.js` are fully supported shims for backward compatibility):
 
 | Command | Usage | Description |
 |---|---|---|
-| `soundingboard status` | `node scripts/soundingboard.js status` | Full telemetry console: pipeline gates, chapter ledger, word counts. |
-| `soundingboard brief` | `node scripts/soundingboard.js brief` | Dense single-line cold-start facts for agent context initialization. |
-| `soundingboard pack-chapter <N>` | `node scripts/soundingboard.js pack-chapter 3` | Assembles token-disciplined drafting kit for Chapter N. |
-| `soundingboard audit <path>` | `node scripts/soundingboard.js audit stages/03_drafting/output/chapters/ch01.md` | Scans for AI tells, sentence cadence, and POV adherence. |
-| `soundingboard continuity` | `node scripts/soundingboard.js continuity` | Proper-noun near-duplicate and orphaned character detector. |
-| `soundingboard canon query "<q>"`| `node scripts/soundingboard.js canon query "Elena"` | Extracts tabular canon entity facts on demand. |
-| `soundingboard compile` | `node scripts/soundingboard.js compile` | Builds gated `manuscript.html` and `.epub` from passed chapters. |
-| `soundingboard okf-index` | `npm run okf-index` | Rebuilds static markdown catalogs across OKF craft bundles. |
-| `soundingboard okf-lint` | `npm run okf-lint -- --strict` | Audits craft cards for token budgets ($\le 900$ tok) and YAML frontmatter. |
+| `soundingboard init` | `node scripts/soundingboard.js init [folder] [--form]` | Scaffold a clean workspace (forms: `novel`, `novella`, `short_story`, `series`). |
+| `soundingboard status` | `node scripts/soundingboard.js status [--stage=N]` | Per-stage pipeline telemetry, chapter ledger, and word count progress. |
+| `soundingboard brief` | `node scripts/soundingboard.js brief` | Dense single-line cold-start facts for agent context initialization (alias: `resume`). |
+| `soundingboard run-stage` | `node scripts/soundingboard.js run-stage <id>` | Compile the stage packet (contract + declared inputs) as a single context block. |
+| `soundingboard pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks (`unstuck`, `heat`, `bloom`, etc.). |
+| `soundingboard pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
+| `soundingboard craft` | `node scripts/soundingboard.js craft search <query>` | Search 114 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
+| `soundingboard okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits (alias: `lint`). |
+| `soundingboard okf-index` | `node scripts/soundingboard.js okf-index` | Rebuild static markdown catalogs (`index.md`) across OKF knowledge bundles. |
+| `soundingboard audit` | `node scripts/soundingboard.js audit [path ...]` | Scan chapters for AI prose tells, cadence variance, emotion modes, and dialogue ratios. |
+| `soundingboard continuity` | `node scripts/soundingboard.js continuity [dir]` | Proper-noun continuity scan (detects near-duplicates and orphaned names). |
+| `soundingboard canon` | `node scripts/soundingboard.js canon query "<q>"` / `check` | Query established facts for an entity, or check for unverified canon tags. |
+| `soundingboard timeline` | `node scripts/soundingboard.js timeline` | Verify story chronology and temporal anchors across chapter drafts. |
+| `soundingboard threads` | `node scripts/soundingboard.js threads` | Inspect narrative threads, subplots, open promises, and loose-end ledger. |
+| `soundingboard gate` | `node scripts/soundingboard.js gate <chapter>` | Machine-evaluate Stage 04 gate verdicts (scan, canon, rubric, ledger); sets `passed`. |
+| `soundingboard manuscript-report` | `node scripts/soundingboard.js manuscript-report` | Whole-book diagnostic report: POV distribution, repeating 4-grams, and rhythm contour. |
+| `soundingboard ingest` | `node scripts/soundingboard.js ingest <file\|dir>` | Ingest raw drafts with immutable archiving, provenance hash, and canon harvesting (alias: `import`). |
+| `soundingboard compile` | `node scripts/soundingboard.js compile [--all]` | Compile verified passed chapters into `manuscript.html` (+ `.epub` via pandoc). |
+| `soundingboard export` | `node scripts/soundingboard.js export [--format=...]` | Export compiled manuscript to `.html`, `.epub`, or `.docx`. |
+| `soundingboard diag` | `node scripts/soundingboard.js diag [name] [args]` | Run diagnostic tools directly (rhythm, dialogue, tense, dread, lore, sensory, etc.). |
+| `soundingboard wizard` | `node scripts/soundingboard.js wizard [name] [args]` | Interactive CLI wizards for terminal environments (`onboard`, `unstuck`, `heat`, etc.). |
 
 ---
 

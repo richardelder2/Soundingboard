@@ -1,13 +1,13 @@
 ---
 type: okf_specification
-title: SAGA-ICM Open Knowledge Format (OKF) Specification
+title: Soundingboard Open Knowledge Format (OKF) Specification
 version: 0.3.0
 updated: 2026-09-05
 ---
 
-# SAGA-ICM Open Knowledge Format (OKF) Specification
+# Soundingboard Open Knowledge Format (OKF) Specification
 
-This document defines the schema rules, frontmatter standards, routing taxonomies, and linking conventions for all narrative craft knowledge assets in Soundingboard and SAGA-ICM.
+This document defines the schema rules, frontmatter standards, routing taxonomies, and linking conventions for all narrative craft knowledge assets in Soundingboard.
 
 ## 1. Core Principles
 

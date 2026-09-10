@@ -1,4 +1,4 @@
-# SAGA-ICM Workspace Instructions
+# Soundingboard Workspace Instructions
 
 @AGENTS.md
 

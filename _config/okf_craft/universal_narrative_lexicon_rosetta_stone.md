@@ -45,7 +45,7 @@ The **Universal Narrative Rosetta Stone** maps every major school's terms direct
 ## 2. School-Specific Lexicons & Diagnostic Aliases
 
 ### A. Story Grid Lexicon (Shawn Coyne)
-*   **The 5 Commandments of the Scene:** Inciting Incident $\rightarrow$ Progressive Complication $\rightarrow$ Crisis Question $\rightarrow$ Climax $\rightarrow$ Resolution. Codified in [`scene_level_five_commandments_coyne.md`](file:///C:/Users/richa/saga_icm/_config/okf_craft/scene_level_five_commandments_coyne.md).
+*   **The 5 Commandments of the Scene:** Inciting Incident $\rightarrow$ Progressive Complication $\rightarrow$ Crisis Question $\rightarrow$ Climax $\rightarrow$ Resolution. Codified in [`scene_level_five_commandments_coyne.md`](scene_level_five_commandments_coyne.md).
 *   **Crisis Question (Binary Dilemma):** Must be either *Best Bad Choice* (both options bring painful sacrifice) or *Irreconcilable Goods* (two righteous goals that cannot co-exist).
 *   **Obligatory Scenes & Conventions:** Non-negotiable genre covenants that reader expectations demand. Codified in `setup/genre_bibles/` and OKF genre structures.
 *   **Foolscap Global Story Grid:** 1-page architectural ledger covering global genre, value shifts, controlling idea, and beginning/middle/end hooks. Codified in `stages/02_planning/output/01_macro_arc/foolscap.md`.
@@ -77,13 +77,13 @@ The **Universal Narrative Rosetta Stone** maps every major school's terms direct
 ### E. The Anatomy of Story (John Truby)
 *   **The 22 Building Blocks:** Truby's plot framework tracing internal moral need to final community restoration.
 *   **Psychological Need vs. Moral Need:** Psychological need affects only the self; moral need affects how the character treats others.
-*   **Four-Corner Opposition:** Designing an ensemble where Protagonist, Main Opponent, Secondary Rival, and Wildcard compete for the exact same territory under 4 competing moral worldviews. Codified in [`four_corner_opposition_and_foil_matrix.md`](file:///C:/Users/richa/saga_icm/_config/okf_craft/four_corner_opposition_and_foil_matrix.md).
-
+*   **Four-Corner Opposition:** Designing an ensemble where Protagonist, Main Opponent, Secondary Rival, and Wildcard compete for the exact same territory under 4 competing moral worldviews. Codified in [`four_corner_opposition_and_foil_matrix.md`](four_corner_opposition_and_foil_matrix.md).
+ 
 ### F. Academic & Formal Narratology (Genette, Bordwell, Ryan)
 *   **Fabula vs. Syuzhet:** The chronological, objective raw events (Fabula) vs. the strategic textual arrangement and disclosure on the page (Syuzhet).
-*   **Zero, Internal & External Focalization:** Panoramic narrator vs. character's cognitive filter vs. detached unreadable camera. Codified in [`primitive_focalization_filter_levels.md`](file:///C:/Users/richa/saga_icm/_config/okf_craft/primitive_focalization_filter_levels.md).
-*   **Free Indirect Discourse (FID):** Third-person narration absorbing character idiom without tags. Codified in [`free_indirect_discourse_and_voice_blending.md`](file:///C:/Users/richa/saga_icm/_config/okf_craft/free_indirect_discourse_and_voice_blending.md).
-*   **Paralipsis:** Deliberate lateral withholding within the character's field of vision. Codified in [`irony_typology_and_lateral_omission_paralipsis.md`](file:///C:/Users/richa/saga_icm/_config/okf_craft/irony_typology_and_lateral_omission_paralipsis.md).
+*   **Zero, Internal & External Focalization:** Panoramic narrator vs. character's cognitive filter vs. detached unreadable camera. Codified in [`primitive_focalization_filter_levels.md`](primitive_focalization_filter_levels.md).
+*   **Free Indirect Discourse (FID):** Third-person narration absorbing character idiom without tags. Codified in [`free_indirect_discourse_and_voice_blending.md`](free_indirect_discourse_and_voice_blending.md).
+*   **Paralipsis:** Deliberate lateral withholding within the character's field of vision. Codified in [`irony_typology_and_lateral_omission_paralipsis.md`](irony_typology_and_lateral_omission_paralipsis.md).
 
 ---
 

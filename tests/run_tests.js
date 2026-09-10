@@ -694,6 +694,53 @@ function testChapterKitAtScale() {
   }
 }
 
+// Test 18: Documentation & Markdown Script Invocation Integrity
+function testMarkdownScriptInvocations() {
+  function walkMd(dir) {
+    let res = [];
+    fs.readdirSync(dir).forEach(f => {
+      if (f === '.git' || f === 'node_modules' || f === 'fixtures') return;
+      const p = path.join(dir, f);
+      const stat = fs.statSync(p);
+      if (stat.isDirectory()) res = res.concat(walkMd(p));
+      else if (f.endsWith('.md')) res.push(p);
+    });
+    return res;
+  }
+
+  const mdFiles = walkMd(rootDir);
+  const missingReferences = [];
+  let checkedCount = 0;
+
+  for (const filePath of mdFiles) {
+    const text = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
+    const lines = text.split(/\r?\n/);
+
+    lines.forEach((line, lineIdx) => {
+      const lineRegex = /(?:(?:node|powershell(?:\s+-File)?)\s+['"]?(?:[^\s'"`]*?[\/\\])?scripts[\/\\]([a-zA-Z0-9_\-.<>]+\.[a-zA-Z0-9]+)|`[^`\n]*?scripts[\/\\]([a-zA-Z0-9_\-.<>]+\.[a-zA-Z0-9]+)[^`\n]*`)/g;
+      let match;
+      while ((match = lineRegex.exec(line)) !== null) {
+        const scriptName = match[1] || match[2];
+        if (!scriptName) continue;
+        // Ignore generic template placeholders like <name>.js, [name].js
+        if (scriptName.includes('<') || scriptName.includes('>') || scriptName.includes('[') || scriptName.includes(']')) continue;
+        checkedCount++;
+        const targetPath = path.join(rootDir, 'scripts', scriptName);
+        if (!fs.existsSync(targetPath)) {
+          const relPath = path.relative(rootDir, filePath).replace(/\\/g, '/');
+          missingReferences.push(`${relPath}:${lineIdx + 1} references non-existent script: scripts/${scriptName}`);
+        }
+      }
+    });
+  }
+
+  assert(
+    missingReferences.length === 0,
+    `Markdown command invocations reference valid script paths (${checkedCount} checked, 0 broken)`,
+    missingReferences.join('\n    ')
+  );
+}
+
 // Run all test groups
 testBOM();
 testOkfLint();
@@ -713,6 +760,7 @@ testBriefStateDump();
 testManuscriptImport();
 testDirectoryIngestion();
 testChapterKitAtScale();
+testMarkdownScriptInvocations();
 
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);

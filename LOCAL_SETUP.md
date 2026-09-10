@@ -1,6 +1,6 @@
-# SAGA-ICM Local & Edge Setup Guide
+# Soundingboard Local & Edge Setup Guide
 
-This guide walks you through setting up and running your SAGA Interpretable Context Methodology (ICM) workspace using local edge models (like Gemma or Llama) or cloud fallbacks like OpenRouter.
+This guide walks you through setting up and running your Soundingboard Interpretable Context Methodology (ICM) workspace using local edge models (like Gemma or Llama) or cloud fallbacks like OpenRouter.
 
 ---
 
@@ -30,7 +30,7 @@ To run models locally on your own machine without an internet connection, we rec
 
 ## ⚙️ Step 2: Configure Environment Variables
 
-Create a file named `.env` in the root of your `saga_icm/` project directory:
+Create a file named `.env` in the root of your `soundingboard/` project directory:
 
 ### Option A: Local Ollama / llama.cpp Server (Zero Cost, Offline)
 Set these variables to route prompts to your local model:
@@ -64,7 +64,7 @@ LOCAL_MODEL_NAME=gemma2
 # Provide fallback cloud credentials for heavy reasoning tasks
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
-The SAGA-ICM system will automatically route routine wizard prompts locally to save bandwidth/compute, but switch to the cloud API for heavy structural audits.
+The Soundingboard system will automatically route routine wizard prompts locally to save bandwidth/compute, but switch to the cloud API for heavy structural audits.
 
 ### Option E: Maximize Your Paid CLI Subscriptions (Claude Code & Antigravity CLI)
 If you run this pipeline inside **Claude Code** or **Antigravity CLI** (using your standard $20/month subscription accounts):
@@ -81,16 +81,16 @@ If you run this pipeline inside **Claude Code** or **Antigravity CLI** (using yo
 
 ## 🏗️ Step 3: Scaffold a Clean Novel Project Folder
 
-To ensure your master template repository (wherever you cloned `saga-icm`) remains completely clean and free of narrative files, use the CLI's `init` command to generate a new, blank workspace elsewhere:
+To ensure your master template repository (wherever you cloned `soundingboard`) remains completely clean and free of narrative files, use the CLI's `init` command to generate a new, blank workspace elsewhere:
 
 1. Create a blank folder where you want to write your book (e.g. `~/my_new_novel` or `C:\Users\<you>\my_new_novel`).
 2. Open your terminal inside this new folder:
    ```bash
    cd path/to/my_new_novel
    ```
-3. Run the SAGA-ICM initializer pointing to the template CLI script (use your clone's path):
+3. Run the Soundingboard initializer pointing to the template CLI script (use your clone's path):
    ```bash
-   node "path/to/saga-icm/scripts/saga.js" init
+   node "path/to/soundingboard/scripts/soundingboard.js" init
    ```
 4. Run `npm install` inside your new directory to configure dependencies.
 5. **Launch Claude Code using your chosen profile**:
@@ -111,7 +111,7 @@ To ensure your master template repository (wherever you cloned `saga-icm`) remai
 Once your clean project workspace is scaffolded and the `.env` file is set up, start the interactive onboarding wizard inside Warp or your Obsidian integrated terminal:
 
 ```bash
-node scripts/saga.js wizard onboard
+node scripts/soundingboard.js wizard onboard
 ```
 
 ### What happens next:
@@ -127,7 +127,7 @@ node scripts/saga.js wizard onboard
 At any point, verify which stages of the novel have been completed by running:
 
 ```bash
-node scripts/saga.js status
+node scripts/soundingboard.js status
 ```
 
 This will print the status of all 5 stages along with files generated under their respective `output/` directories.

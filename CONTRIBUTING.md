@@ -32,8 +32,8 @@ Before proposing any changes or pull requests, please respect the following non-
 
 1. **Clone & Setup:**
    ```bash
-   git clone https://github.com/richardelder2/saga-icm.git
-   cd saga-icm
+   git clone https://github.com/richardelder2/Soundingboard.git
+   cd Soundingboard
    npm test
    ```
 

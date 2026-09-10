@@ -1,6 +1,6 @@
 ---
 name: narrative-authenticity
-description: Apply human-authenticity rules (from StoryScope AI-fiction research) while planning, drafting, or reviewing chapters in a SAGA-ICM workspace. Use whenever the user asks to plan an outline, draft a chapter, make prose less AI, humanize writing, check for AI tells, or audit a manuscript. Covers both structural tells (linear plots, explained themes, no subplots) and prose tells (embodied-emotion overload, smell overuse, triads, lexical slop).
+description: Apply human-authenticity rules (from StoryScope AI-fiction research) while planning, drafting, or reviewing chapters in a Soundingboard workspace. Use whenever the user asks to plan an outline, draft a chapter, make prose less AI, humanize writing, check for AI tells, or audit a manuscript. Covers both structural tells (linear plots, explained themes, no subplots) and prose tells (embodied-emotion overload, smell overuse, triads, lexical slop).
 ---
 
 # Narrative Authenticity
@@ -26,7 +26,7 @@ Apply Layer 1 and produce/update `structure_plan.md` with: subplot map (≥2, no
 Obey the chapter's `structure_plan.md` entry plus Layer 2: rotate emotion modes (embodied ≤ ~2 of 5 beats — plainly naming feelings is human), budget senses (smell only when earned), introduce characters in action/dialogue, keep the narrator silent about theme, vary sentence length hard, ration triads and em-dashes. Counter Claude habits (Layer 3): uneven escalation, register shifts, no unplanned epilogue.
 
 ### Reviewing/auditing (Stage 04)
-1. Run `node scripts/saga.js audit [path]` for the mechanical scan (reports land in `stages/04_diagnostics_edits/output/reports/`).
+1. Run `node scripts/soundingboard.js audit [path]` for the mechanical scan (reports land in `stages/04_diagnostics_edits/output/reports/`).
 2. Score structure with `_config/narrative_audit_rubric.md`, quoting evidence per item.
 3. Route fixes: prose failures → line edits; structural failures → Stage 02 re-plan. Never "fix" intentional loose ends listed in the structure plan's ledger.
 
