@@ -123,6 +123,12 @@ The terminal wizards in `scripts/` (`wizard unstuck`, `wizard heat`, `wizard int
 14. **Character DNA & Persona Mashup:** When creating or deepening characters using combinations of famous characters, historical figures, or real people ("X meets Y"):
     - Packer: `node scripts/pack-character-dna.js [character]`
     - Contract: `_config/templates/character_dna_playbook.template.md` (3-donor deconstruction ➔ internal contradiction ➔ world transmutation ➔ character sheet).
+15. **Blind Reader Simulator (The Emotional EKG):** When evaluating a chapter draft cold without authorial omniscience:
+    - Packer: `node scripts/pack-blind-reader.js <chapter_or_file>` (or `node scripts/soundingboard.js pack blind-reader <ch>`)
+    - Contract: `_config/templates/blind_reader_playbook.template.md` (Emotional EKG graph ➔ Trust Thermometer ➔ Prediction Ledger ➔ Friction Log ➔ Page-Turn Verdict).
+16. **Plot Interrogator & Devil's Advocate:** When cross-examining scene turning points, plot logic, and character motives:
+    - Packer: `node scripts/pack-plot-interrogator.js <chapter_or_scene>` (or `node scripts/soundingboard.js pack plot-interrogator <ch>`)
+    - Contract: `_config/templates/plot_interrogator_playbook.template.md` ("Why don't they just..." alternatives ➔ Contrivance Audit ➔ Bulletproof Fix Matrix).
 
 ## Non-negotiable craft rules
 

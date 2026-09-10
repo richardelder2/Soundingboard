@@ -556,7 +556,12 @@ function handlePack(type, extraArgs = []) {
     'subplot-collision': 'pack-subplot-collision.js',
     'subplot-resolution': 'pack-subplot-resolution.js',
     dna: 'pack-character-dna.js',
-    'character-dna': 'pack-character-dna.js'
+    'character-dna': 'pack-character-dna.js',
+    'blind-reader': 'pack-blind-reader.js',
+    reader: 'pack-blind-reader.js',
+    'plot-interrogator': 'pack-plot-interrogator.js',
+    interrogator: 'pack-plot-interrogator.js',
+    devil: 'pack-plot-interrogator.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
@@ -577,6 +582,8 @@ Available context packers:
   node scripts/${BIN_NAME}.js pack subplot-braid <chapter>        Pack thread dormancy & scene braiding context
   node scripts/${BIN_NAME}.js pack subplot-collision <chapter>    Pack mid-book turning point collision context
   node scripts/${BIN_NAME}.js pack subplot-resolution [scope]     Pack resolution clumping & loose-end audit
+  node scripts/${BIN_NAME}.js pack blind-reader <chapter>         Pack cold-reading chapter text with zero hindsight
+  node scripts/${BIN_NAME}.js pack plot-interrogator <chapter>    Pack scene turning points & constraints for plot audit
     `);
     return;
   }
@@ -1645,6 +1652,15 @@ switch (command) {
   case 'pack-dna':
   case 'pack-character-dna':
     handlePack('dna', args.slice(1));
+    break;
+  case 'pack-blind-reader':
+  case 'pack-reader':
+    handlePack('blind-reader', args.slice(1));
+    break;
+  case 'pack-plot-interrogator':
+  case 'pack-interrogator':
+  case 'pack-devil':
+    handlePack('plot-interrogator', args.slice(1));
     break;
   case 'pack-chapter':
     handlePackChapter(subCommand || args[1]);
