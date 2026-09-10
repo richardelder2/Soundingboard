@@ -535,6 +535,63 @@ Available interactive wizards:
   });
 }
 
+function handlePack(type, extraArgs = []) {
+  const packMap = {
+    unstuck: 'pack-unstuck.js',
+    brainstorm: 'pack-brainstorm.js',
+    interview: 'pack-interview.js',
+    heat: 'pack-dialogue-heat.js',
+    'dialogue-heat': 'pack-dialogue-heat.js',
+    bloom: 'pack-sensory-bloom.js',
+    'sensory-bloom': 'pack-sensory-bloom.js',
+    scene: 'pack-stage-scene.js',
+    'stage-scene': 'pack-stage-scene.js',
+    theme: 'pack-theme-weaver.js',
+    'theme-weaver': 'pack-theme-weaver.js',
+    causality: 'pack-causality.js',
+    'therefore-but': 'pack-causality.js',
+    wwxdu: 'pack-wwxdu.js',
+    'subplot-genesis': 'pack-subplot-genesis.js',
+    'subplot-braid': 'pack-subplot-braid.js',
+    'subplot-collision': 'pack-subplot-collision.js',
+    'subplot-resolution': 'pack-subplot-resolution.js',
+    dna: 'pack-character-dna.js',
+    'character-dna': 'pack-character-dna.js'
+  };
+
+  if (!type || type === 'list' || type === '--help' || type === 'help') {
+    printHeader('Soundboard Context Packers');
+    console.log(`
+Available context packers:
+  node scripts/${BIN_NAME}.js pack unstuck [chapter]              Pack context for getting unstuck
+  node scripts/${BIN_NAME}.js pack brainstorm [topic]             Pack lore & worldbuilding context
+  node scripts/${BIN_NAME}.js pack interview <character>          Pack character voice context
+  node scripts/${BIN_NAME}.js pack heat [chapter] [chars...]      Pack dialogue tension context
+  node scripts/${BIN_NAME}.js pack bloom [location|ch]            Pack sensory & setting context
+  node scripts/${BIN_NAME}.js pack scene <chapter>                Pack scene staging context
+  node scripts/${BIN_NAME}.js pack theme [ch|theme]               Pack thematic resonance context
+  node scripts/${BIN_NAME}.js pack causality <chapter|file>       Pack beat pairs for causal audit
+  node scripts/${BIN_NAME}.js pack wwxdu <character>              Pack character scenario context
+  node scripts/${BIN_NAME}.js pack dna [character]                Pack character DNA & persona mashup context
+  node scripts/${BIN_NAME}.js pack subplot-genesis [theme]        Pack context for architecting subplots
+  node scripts/${BIN_NAME}.js pack subplot-braid <chapter>        Pack thread dormancy & scene braiding context
+  node scripts/${BIN_NAME}.js pack subplot-collision <chapter>    Pack mid-book turning point collision context
+  node scripts/${BIN_NAME}.js pack subplot-resolution [scope]     Pack resolution clumping & loose-end audit
+    `);
+    return;
+  }
+
+  const scriptFile = packMap[type];
+  if (!scriptFile) {
+    console.error(`Unknown context packer: "${type}". Run "node scripts/${BIN_NAME}.js pack list" to see available packers.`);
+    return;
+  }
+
+  const scriptFullPath = path.join(__dirname, scriptFile);
+  const child = fork(scriptFullPath, extraArgs, { stdio: 'inherit' });
+  child.on('close', code => process.exit(code || 0));
+}
+
 async function handleAudit(customArgs) {
   const { runAudit } = await import('./narrative_audit.js');
   const auditArgs = customArgs !== undefined ? customArgs : args.slice(1);
@@ -1490,6 +1547,7 @@ Usage:
   node scripts/${BIN_NAME}.js diag [name] [args]     Run diagnostic tools (rhythm, dialogue, tense, etc.)
   node scripts/${BIN_NAME}.js wizard [name] [args]   Run creative wizards (onboard, unstuck, heat, etc.)
   node scripts/${BIN_NAME}.js run-stage <stage_id>   Compile the stage packet for the executing agent
+  node scripts/${BIN_NAME}.js pack <name> [args]     Assemble mechanical context pack (unstuck, heat, scene, etc.)
   node scripts/${BIN_NAME}.js pack-chapter <N>       Assemble token-disciplined drafting kit for Chapter N
   node scripts/${BIN_NAME}.js okf-index              Rebuild index.md catalogs for OKF knowledge bundles
   node scripts/${BIN_NAME}.js audit [path ...]       Scan chapters for AI prose tells
@@ -1536,6 +1594,57 @@ switch (command) {
     break;
   case 'run-stage':
     handleRunStage(subCommand || args[2]);
+    break;
+  case 'pack':
+    handlePack(subCommand, args.slice(2));
+    break;
+  case 'pack-unstuck':
+    handlePack('unstuck', args.slice(1));
+    break;
+  case 'pack-brainstorm':
+    handlePack('brainstorm', args.slice(1));
+    break;
+  case 'pack-interview':
+    handlePack('interview', args.slice(1));
+    break;
+  case 'pack-heat':
+  case 'pack-dialogue-heat':
+    handlePack('heat', args.slice(1));
+    break;
+  case 'pack-bloom':
+  case 'pack-sensory-bloom':
+    handlePack('bloom', args.slice(1));
+    break;
+  case 'pack-scene':
+  case 'pack-stage-scene':
+    handlePack('scene', args.slice(1));
+    break;
+  case 'pack-theme':
+  case 'pack-theme-weaver':
+    handlePack('theme', args.slice(1));
+    break;
+  case 'pack-causality':
+  case 'pack-therefore-but':
+    handlePack('causality', args.slice(1));
+    break;
+  case 'pack-wwxdu':
+    handlePack('wwxdu', args.slice(1));
+    break;
+  case 'pack-subplot-genesis':
+    handlePack('subplot-genesis', args.slice(1));
+    break;
+  case 'pack-subplot-braid':
+    handlePack('subplot-braid', args.slice(1));
+    break;
+  case 'pack-subplot-collision':
+    handlePack('subplot-collision', args.slice(1));
+    break;
+  case 'pack-subplot-resolution':
+    handlePack('subplot-resolution', args.slice(1));
+    break;
+  case 'pack-dna':
+  case 'pack-character-dna':
+    handlePack('dna', args.slice(1));
     break;
   case 'pack-chapter':
     handlePackChapter(subCommand || args[1]);

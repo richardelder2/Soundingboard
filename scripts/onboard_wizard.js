@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
+/**
+ * LEGACY CLI WIZARD (STANDALONE FALLBACK ONLY)
+ * 
+ * NOTE FOR AGENTS (Claude Code, Antigravity, Codex):
+ * DO NOT execute this script in agent-assisted workflows.
+ * This script is superseded by the agent-led onboarding contract:
+ *   stages/01_onboarding/CONTEXT.md (Path A)
+ * Conduct the interview directly in dialogue and write onboarding artifacts natively.
+ */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';

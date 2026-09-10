@@ -1,5 +1,17 @@
 #!/usr/bin/env node
 
+/**
+ * LEGACY CLI WIZARD (STANDALONE FALLBACK ONLY)
+ * 
+ * NOTE FOR AGENTS (Claude Code, Antigravity, Codex):
+ * DO NOT execute this script in agent-assisted workflows.
+ * This script is superseded by the agent-native contract:
+ *   _config/templates/theme_weaver_playbook.template.md
+ * Run the deterministic context packer instead:
+ *   node scripts/pack-theme-weaver.js [chapter_or_theme]
+ * and perform the judgment and generation natively in-context.
+ */
+
 import * as readline from 'readline';
 import { callGemini } from './gemini_helper.js';
 

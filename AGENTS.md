@@ -77,6 +77,53 @@ Rules for series work:
 
 When the user asks to start a new novel/project, DO NOT tell them to run the terminal wizard — run the interview yourself in chat, per `stages/01_onboarding/CONTEXT.md` Path A: ask the blueprint questions one at a time, play the encouraging domain-expert coach between answers, then perform trope discovery from `setup/genre_bibles/INDEX.md`, seed `stages/01_onboarding/output/tell_allowlist.md` for in-world vocabulary/motifs, and write the exact output artifacts the contract specifies. The terminal wizard (`node scripts/saga.js wizard onboard`) is the fallback for users working outside an agent harness.
 
+## Agent-native creative playbooks (never invoke headless wizards)
+
+The terminal wizards in `scripts/` (`wizard unstuck`, `wizard heat`, `wizard interview`, etc.) are legacy fallbacks for non-agent CLI environments. When an agent is present, **never invoke these wizard scripts**. Instead, run the mechanical context packer (`node scripts/pack-<name>.js <args>` or `node scripts/saga.js pack <name> <args>`) to gather trimmed context, then execute the corresponding contract from `_config/templates/` natively:
+
+1. **Getting Unstuck:** When the author is blocked or needs creative forks forward:
+   - Packer: `node scripts/pack-unstuck.js [chapter]`
+   - Contract: `_config/templates/unstuck_playbook.template.md` (diagnose failure mode; deliver 3 narrative forks with opening prose).
+2. **Dialogue Escalation & Heat:** When dialogue is flat, polite, or expository:
+   - Packer: `node scripts/pack-dialogue-heat.js [chapter] [characters...]`
+   - Contract: `_config/templates/dialogue_heat_playbook.template.md` (Subtext, Status Play, Avoidance; subtle vs. acute rewrites).
+3. **Sensory Bloom:** When setting feels generic or lacks viscosity:
+   - Packer: `node scripts/pack-sensory-bloom.js [location_or_chapter]`
+   - Contract: `_config/templates/sensory_bloom_playbook.template.md` (budgeted sensory registers; subtle vs. descriptive rewrites).
+4. **Scene Staging & Hooks:** When planning a scene or beatsheet:
+   - Packer: `node scripts/pack-stage-scene.js <chapter>`
+   - Contract: `_config/templates/stage_scene_playbook.template.md` (value shifts, sensory anchors, 3 hook variations, 5-commandment beats).
+5. **Causal Plot Calculus:** When auditing plot transitions for causality:
+   - Packer: `node scripts/pack-causality.js <chapter_or_beatsheet>`
+   - Contract: `_config/templates/causal_calculus_playbook.template.md` (replace episodic "and then" with "Therefore / But" rewrites).
+6. **Character Voice Interview:** When interrogating a character or discovering voice rules:
+   - Packer: `node scripts/pack-interview.js <character>`
+   - Contract: `_config/templates/character_interview_playbook.template.md` (in-character roleplay ➔ Stylistic Voice Profile card).
+7. **Character Drop-Testing (WWXDU):** When testing unexpected choices under pressure:
+   - Packer: `node scripts/pack-wwxdu.js <character>`
+   - Contract: `_config/templates/wwxdu_playbook.template.md` (crisis roleplay ➔ Scenario Logcard).
+8. **Lore Brainstorming:** When developing worldbuilding, magic/tech, or secrets:
+   - Packer: `node scripts/pack-brainstorm.js [topic]`
+   - Contract: `_config/templates/lore_brainstorm_playbook.template.md` (Lore Summary, Secrets & Subtext, 3 active scene demonstration prompts).
+9. **Thematic Resonance:** When weaving motifs without narrator moralizing:
+   - Packer: `node scripts/pack-theme-weaver.js [chapter_or_theme]`
+   - Contract: `_config/templates/theme_weaver_playbook.template.md` (environmental symbolism, behavioral motifs, dialogue subtext).
+10. **Subplot Genesis & Architecture:** When designing secondary storylines to break narrative monomania:
+    - Packer: `node scripts/pack-subplot-genesis.js [focus]`
+    - Contract: `_config/templates/subplot_genesis_playbook.template.md` (Contrasting/Mundane, Thematic Counter-Weight, Autonomous Foil).
+11. **Subplot Braiding & Thread Freshening:** When weaving dormant subplots into upcoming chapter beats:
+    - Packer: `node scripts/pack-subplot-braid.js <chapter>`
+    - Contract: `_config/templates/subplot_braid_playbook.template.md` (dormancy calculation ➔ Level 1 environmental, Level 2 dialogue, Level 3 tactical).
+12. **Subplot Collision & Crisis Reversal:** When crashing secondary threads into the main quest at mid-book turning points:
+    - Packer: `node scripts/pack-subplot-collision.js <chapter>`
+    - Contract: `_config/templates/subplot_collision_playbook.template.md` (Resource Drain, Secret Breach, Irreconcilable Best Bad Choice).
+13. **Subplot Resolution Variety & Loose-End Audit:** When auditing thread resolution timing and clumping:
+    - Packer: `node scripts/pack-subplot-resolution.js [scope]`
+    - Contract: `_config/templates/subplot_resolution_playbook.template.md` (staggered endings, non-protagonist resolutions, Loose-End Ledger).
+14. **Character DNA & Persona Mashup:** When creating or deepening characters using combinations of famous characters, historical figures, or real people ("X meets Y"):
+    - Packer: `node scripts/pack-character-dna.js [character]`
+    - Contract: `_config/templates/character_dna_playbook.template.md` (3-donor deconstruction ➔ internal contradiction ➔ world transmutation ➔ character sheet).
+
 ## Non-negotiable craft rules
 
 1. **`_config/narrative_authenticity.md` governs all planning and prose.** Structural AI tells (explained themes, no subplots, linear time, uniform resolutions) must be prevented at Stage 02 — they cannot be edited out later. Prose tells are governed at Stage 03 and scanned at Stage 04 (`node scripts/saga.js audit`). Every rule is a dial, not a switch; uniform application is itself an AI fingerprint.
@@ -89,6 +136,7 @@ When the user asks to start a new novel/project, DO NOT tell them to run the ter
 - `node scripts/saga.js init` — scaffold a clean project elsewhere (run from the empty target folder)
 - `node scripts/saga.js status` — per-stage pipeline status + manuscript chapter table + next action
 - `node scripts/saga.js run-stage <id>` — print the compiled stage packet
+- `node scripts/saga.js pack <name> [args]` — assemble deterministic context pack for creative playbooks (unstuck, heat, bloom, etc.)
 - `node scripts/saga.js pack-chapter <N>` — assemble token-disciplined drafting kit for Chapter N (beats, linked OKF entities, voice exemplar, trailing anchor)
 - `node scripts/saga.js okf-index` — rebuild index.md catalogs across OKF knowledge bundles
 - `node scripts/saga.js audit [path ...]` — scan chapters for AI prose tells → reports in `stages/04_diagnostics_edits/output/reports/`; records `last_audit` in `manuscript.json`

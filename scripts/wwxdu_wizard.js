@@ -1,5 +1,17 @@
 #!/usr/bin/env node
 
+/**
+ * LEGACY CLI WIZARD (STANDALONE FALLBACK ONLY)
+ * 
+ * NOTE FOR AGENTS (Claude Code, Antigravity, Codex):
+ * DO NOT execute this script in agent-assisted workflows.
+ * This script is superseded by the agent-native contract:
+ *   _config/templates/wwxdu_playbook.template.md
+ * Run the deterministic context packer instead:
+ *   node scripts/pack-wwxdu.js <character>
+ * and perform the judgment and generation natively in-context.
+ */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
