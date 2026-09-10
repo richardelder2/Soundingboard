@@ -29,10 +29,6 @@ If you have tried using ChatGPT or Claude in a web browser to write long-form fi
 
 What Soundingboard does is provide a **disciplined studio environment on your own computer**—getting you out of fragile web chat windows and into clean, plain markdown files you fully own. It gives your AI agent the memory, structure, and craft rules it needs to be a truly helpful sounding board instead of a chaotic autocomplete engine.
 
-<p align="center">
-  <img src="assets/soundingboard_hero_banner.jpg" alt="Soundingboard Studio Workstation" width="100%" />
-</p>
-
 ---
 
 ## How It Works: A Structural Scaffold for Your Story
