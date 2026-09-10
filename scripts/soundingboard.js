@@ -153,6 +153,18 @@ function handleInit(targetFolder) {
     console.log('  ✔ Created project .gitignore (preserves manuscript.json and stage outputs).');
   }
 
+  // Scaffold inputs/ drop-zone vault
+  const inputsDrafts = path.join(targetDir, 'inputs', 'drafts');
+  const inputsNotes = path.join(targetDir, 'inputs', 'notes');
+  fs.mkdirSync(inputsDrafts, { recursive: true });
+  fs.mkdirSync(inputsNotes, { recursive: true });
+  const inputsReadmeSrc = path.join(templateDir, '_config', 'templates', 'inputs_readme.template.md');
+  const inputsReadmeDest = path.join(targetDir, 'inputs', 'README.md');
+  if (fs.existsSync(inputsReadmeSrc) && !fs.existsSync(inputsReadmeDest)) {
+    fs.copyFileSync(inputsReadmeSrc, inputsReadmeDest);
+  }
+  console.log('  ✔ Created inputs/ vault (inputs/drafts/, inputs/notes/, README.md)');
+
   // Support --form flag in preferences.json
   const formArg = (process.argv.slice(2) || []).find(a => a.startsWith('--form='));
   const formVal = formArg ? formArg.split('=')[1].toLowerCase() : 'novel';
@@ -250,6 +262,14 @@ function handleStatus(stageFilter) {
     outputFiles.forEach(file => console.log(`    ↳ \x1b[90m${file}\x1b[0m`));
   });
 
+  const inputsDrafts = path.join('inputs', 'drafts');
+  const inputsNotes = path.join('inputs', 'notes');
+  const rawDrafts = fs.existsSync(inputsDrafts) ? fs.readdirSync(inputsDrafts).filter(f => !f.startsWith('.')) : [];
+  const rawNotes = fs.existsSync(inputsNotes) ? fs.readdirSync(inputsNotes).filter(f => !f.startsWith('.')) : [];
+  if (rawDrafts.length > 0 || rawNotes.length > 0) {
+    console.log(`- \x1b[1mInputs Vault (inputs/)\x1b[0m: \x1b[32mActive\x1b[0m (${rawDrafts.length} raw draft(s), ${rawNotes.length} note(s))`);
+  }
+
   if (!stageTarget) {
     printManuscriptStatus();
   } else {
@@ -257,7 +277,7 @@ function handleStatus(stageFilter) {
   }
 }
 
-const STATUS_COLORS = { planned: '\x1b[90m', drafted: '\x1b[33m', audited: '\x1b[36m', passed: '\x1b[32m' };
+const STATUS_COLORS = { planned: '\x1b[90m', drafted: '\x1b[33m', audited: '\x1b[36m', passed: '\x1b[32m', imported: '\x1b[35m' };
 
 function printManuscriptStatus() {
   if (!fs.existsSync('manuscript.json')) {
@@ -298,6 +318,7 @@ function printManuscriptStatus() {
   } else {
     const action = {
       planned: `draft it (Stage 03 — beats: ${next.beat_file || 'n/a'})`,
+      imported: `review or audit it (Stage 04 — node scripts/${binName}.js audit, or continue drafting)`,
       drafted: `audit it (Stage 04 — node scripts/${binName}.js audit, then the rubric)`,
       audited: `resolve findings and pass the Stage 04 gate`,
     }[next.status] || 'check its status value';
@@ -336,6 +357,12 @@ function handleBrief() {
   console.log(`Form & Target:   ${manifest.form || 'novel'} (${manifest.target_words ? manifest.target_words.toLocaleString() + ' words' : 'no target words set'})`);
   console.log(`Current Words:   ${totalWords.toLocaleString()} words (${manifest.target_words ? Math.round((totalWords / manifest.target_words) * 100) : 0}% of target)`);
   console.log(`Chapters:        ${chapters.length} total [Passed: ${statusCounts.passed}, Audited: ${statusCounts.audited}, Drafted: ${statusCounts.drafted}, Imported: ${statusCounts.imported}, Planned: ${statusCounts.planned}]`);
+
+  const inputsDraftsDir = path.join('inputs', 'drafts');
+  const rawDraftsCount = fs.existsSync(inputsDraftsDir) ? fs.readdirSync(inputsDraftsDir).filter(f => !f.startsWith('.')).length : 0;
+  if (rawDraftsCount > 0) {
+    console.log(`Inputs Vault:    ${rawDraftsCount} raw draft snapshot(s) preserved in inputs/drafts/`);
+  }
 
   // 1. Thread Ledger facts
   const threadsPath = path.join('stages', '02_planning', 'output', 'trackers', 'threads.md');
@@ -561,7 +588,9 @@ function handlePack(type, extraArgs = []) {
     reader: 'pack-blind-reader.js',
     'plot-interrogator': 'pack-plot-interrogator.js',
     interrogator: 'pack-plot-interrogator.js',
-    devil: 'pack-plot-interrogator.js'
+    devil: 'pack-plot-interrogator.js',
+    debrief: 'pack-ingest-debrief.js',
+    'ingest-debrief': 'pack-ingest-debrief.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
@@ -584,6 +613,7 @@ Available context packers:
   node scripts/${BIN_NAME}.js pack subplot-resolution [scope]     Pack resolution clumping & loose-end audit
   node scripts/${BIN_NAME}.js pack blind-reader <chapter>         Pack cold-reading chapter text with zero hindsight
   node scripts/${BIN_NAME}.js pack plot-interrogator <chapter>    Pack scene turning points & constraints for plot audit
+  node scripts/${BIN_NAME}.js pack debrief [chapter]              Pack context for developmental ingest debrief
     `);
     return;
   }
@@ -833,9 +863,16 @@ async function handleManuscriptReportCmd(extraArgs) {
 }
 
 
-async function handleImportCmd(sourceFile, extraArgs) {
+async function handleImportCmd(sourceFile, extraArgs = []) {
   const { importManuscript } = await import('./importer.js');
-  importManuscript(sourceFile, extraArgs);
+  const options = {};
+  if (Array.isArray(extraArgs)) {
+    const chArg = extraArgs.find(a => a.startsWith('--target-chapter=') || a.startsWith('--chapter='));
+    if (chArg) options.targetChapter = chArg.split('=')[1];
+    const typeArg = extraArgs.find(a => a.startsWith('--type='));
+    if (typeArg) options.type = typeArg.split('=')[1];
+  }
+  importManuscript(sourceFile, options);
 }
 
 async function handleCompile() {
@@ -1565,7 +1602,8 @@ Usage:
   node scripts/${BIN_NAME}.js threads                Inspect narrative threads, subplots, and promises
   node scripts/${BIN_NAME}.js gate <chapter>         Evaluate Stage 04 gate verdicts (sole setter of passed)
   node scripts/${BIN_NAME}.js manuscript-report      Comprehensive whole-book narrative & voice report
-  node scripts/${BIN_NAME}.js import <file>          Ingest external .md or .docx into Stage 03 chapters
+  node scripts/${BIN_NAME}.js ingest <file|dir>      Ingest external raw drafts into Stage 03 with inputs/ archiving & canon
+  node scripts/${BIN_NAME}.js import <file|dir>      (Alias for ingest)
   node scripts/${BIN_NAME}.js export [--format=...]  Export manuscript (.html, .docx, .epub)
   node scripts/${BIN_NAME}.js compile [--all]        Compile passed chapters into manuscript.html (+ .epub via pandoc)
   `);
@@ -1662,6 +1700,10 @@ switch (command) {
   case 'pack-devil':
     handlePack('plot-interrogator', args.slice(1));
     break;
+  case 'pack-debrief':
+  case 'pack-ingest-debrief':
+    handlePack('debrief', args.slice(1));
+    break;
   case 'pack-chapter':
     handlePackChapter(subCommand || args[1]);
     break;
@@ -1690,6 +1732,7 @@ switch (command) {
   case 'report':
     handleManuscriptReportCmd(args.slice(1));
     break;
+  case 'ingest':
   case 'import':
     handleImportCmd(subCommand || args[1], args.slice(2));
     break;

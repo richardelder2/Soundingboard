@@ -500,19 +500,45 @@ function testManuscriptImport() {
 
   const manifestPath = path.join(rootDir, 'manuscript.json');
   const origManifest = fs.existsSync(manifestPath) ? fs.readFileSync(manifestPath, 'utf8') : null;
+  const canonDir = path.join(rootDir, 'stages', '02_planning', 'output');
+  const canonPath = path.join(canonDir, 'canon.md');
+  const origCanon = fs.existsSync(canonPath) ? fs.readFileSync(canonPath, 'utf8') : null;
   const chDir = path.join(rootDir, 'stages', '03_drafting', 'output', 'chapters');
   fs.mkdirSync(chDir, { recursive: true });
+  const archivedPath = path.join(rootDir, 'inputs', 'drafts', 'import_sample.md');
 
   try {
-    const importOut = execSync(`node ${cliScript} import "${fixturePath}"`, execOptions);
-    assert(importOut.includes('Successfully imported 2 chapter(s)'), 'Importer CLI ingests and splits multi-chapter markdown');
+    const importOut = execSync(`node ${cliScript} ingest "${fixturePath}"`, execOptions);
+    assert(importOut.includes('Successfully imported 2 chapter(s)'), 'Ingest CLI processes and splits multi-chapter markdown');
 
     const ch1Path = path.join(chDir, 'ch01.md');
     const ch2Path = path.join(chDir, 'ch02.md');
-    assert(fs.existsSync(ch1Path) && fs.existsSync(ch2Path), 'Importer creates individual chapter draft files with frontmatter');
+    assert(fs.existsSync(ch1Path) && fs.existsSync(ch2Path), 'Ingest creates individual chapter draft files with frontmatter');
+
+    const ch1Text = fs.readFileSync(ch1Path, 'utf8');
+    assert(ch1Text.includes('source_raw_file: "inputs/drafts/import_sample.md"'), 'Ingested chapter frontmatter records source_raw_file provenance');
+    assert(ch1Text.includes('source_hash:'), 'Ingested chapter frontmatter records source_hash');
+
+    assert(fs.existsSync(archivedPath), 'Ingest snapshots external file into inputs/drafts/ vault');
+
+    if (fs.existsSync(canonPath)) {
+      const canonText = fs.readFileSync(canonPath, 'utf8');
+      assert(canonText.includes('Evelyn') || canonText.includes('Julian'), 'Ingest auto-harvests character entities into canon.md');
+    }
 
     const manifestAfter = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
     assert(manifestAfter.chapters.length === 2 && manifestAfter.chapters[0].status === 'imported', 'Importer registers imported chapters in manuscript.json with status: imported');
+
+    // Test Re-ingestion: modify Chapter 1 and re-ingest
+    fs.writeFileSync(fixturePath, '# Chapter 1: The Arrival\nEvelyn stepped onto the rain-slicked platform, clutching an umbrella.\n\n# Chapter 2: The Departure\nJulian turned toward the departing locomotive.\n', 'utf8');
+    const reingestOut = execSync(`node ${cliScript} ingest "${fixturePath}"`, execOptions);
+    assert(reingestOut.includes('Successfully imported 2 chapter(s)'), 'Re-ingestion executes successfully');
+
+    const manifestReingest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    assert(manifestReingest.chapters.length === 2, 'Re-ingestion updates existing chapters in place without creating duplicates');
+
+    const ch1Updated = fs.readFileSync(ch1Path, 'utf8');
+    assert(ch1Updated.includes('clutching an umbrella'), 'Re-ingestion updates chapter draft content with new revision');
   } catch (e) {
     assert(false, 'Manuscript import test failed', e.message);
   } finally {
@@ -521,8 +547,59 @@ function testManuscriptImport() {
     if (fs.existsSync(ch1Path)) fs.unlinkSync(ch1Path);
     if (fs.existsSync(ch2Path)) fs.unlinkSync(ch2Path);
     if (fs.existsSync(fixturePath)) fs.unlinkSync(fixturePath);
+    const draftsDir = path.join(rootDir, 'inputs', 'drafts');
+    if (fs.existsSync(draftsDir)) {
+      fs.readdirSync(draftsDir).filter(f => f.includes('import_sample.md')).forEach(f => fs.unlinkSync(path.join(draftsDir, f)));
+    }
     if (origManifest !== null) fs.writeFileSync(manifestPath, origManifest, 'utf8');
     else if (fs.existsSync(manifestPath)) fs.unlinkSync(manifestPath);
+    if (origCanon !== null) fs.writeFileSync(canonPath, origCanon, 'utf8');
+    else if (fs.existsSync(canonPath)) fs.unlinkSync(canonPath);
+  }
+}
+
+function testDirectoryIngestion() {
+  const cliScript = fs.existsSync(path.join(rootDir, 'scripts', 'soundingboard.js')) ? 'scripts/soundingboard.js' : 'scripts/saga.js';
+  const execOptions = { cwd: rootDir, encoding: 'utf8', env: process.env };
+
+  const testDir = path.join(rootDir, 'tests', 'fixtures', 'multi_dir');
+  fs.mkdirSync(testDir, { recursive: true });
+  fs.writeFileSync(path.join(testDir, 'scene1.md'), '# Chapter 1: The First Step\nCaptain Vance scanned the silent perimeter.\n', 'utf8');
+  fs.writeFileSync(path.join(testDir, 'scene2.md'), '# Chapter 2: The Signal\nDr. Linda intercepted the telemetry burst.\n', 'utf8');
+
+  const manifestPath = path.join(rootDir, 'manuscript.json');
+  const origManifest = fs.existsSync(manifestPath) ? fs.readFileSync(manifestPath, 'utf8') : null;
+  const canonDir = path.join(rootDir, 'stages', '02_planning', 'output');
+  const canonPath = path.join(canonDir, 'canon.md');
+  const origCanon = fs.existsSync(canonPath) ? fs.readFileSync(canonPath, 'utf8') : null;
+  const chDir = path.join(rootDir, 'stages', '03_drafting', 'output', 'chapters');
+  fs.mkdirSync(chDir, { recursive: true });
+
+  try {
+    const dirOut = execSync(`node ${cliScript} ingest "${testDir}"`, execOptions);
+    assert(dirOut.includes('Successfully imported 2 chapter(s)'), 'Directory ingestion processes all chapter files in directory');
+
+    const manifestAfter = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    assert(manifestAfter.chapters.length >= 2, 'Directory ingestion registers all files into manuscript.json');
+  } catch (e) {
+    assert(false, 'Directory ingestion test failed', e.message);
+  } finally {
+    const ch1Path = path.join(chDir, 'ch01.md');
+    const ch2Path = path.join(chDir, 'ch02.md');
+    if (fs.existsSync(ch1Path)) fs.unlinkSync(ch1Path);
+    if (fs.existsSync(ch2Path)) fs.unlinkSync(ch2Path);
+    if (fs.existsSync(testDir)) {
+      fs.readdirSync(testDir).forEach(f => fs.unlinkSync(path.join(testDir, f)));
+      fs.rmdirSync(testDir);
+    }
+    const snap1 = path.join(rootDir, 'inputs', 'drafts', 'scene1.md');
+    const snap2 = path.join(rootDir, 'inputs', 'drafts', 'scene2.md');
+    if (fs.existsSync(snap1)) fs.unlinkSync(snap1);
+    if (fs.existsSync(snap2)) fs.unlinkSync(snap2);
+    if (origManifest !== null) fs.writeFileSync(manifestPath, origManifest, 'utf8');
+    else if (fs.existsSync(manifestPath)) fs.unlinkSync(manifestPath);
+    if (origCanon !== null) fs.writeFileSync(canonPath, origCanon, 'utf8');
+    else if (fs.existsSync(canonPath)) fs.unlinkSync(canonPath);
   }
 }
 
@@ -634,6 +711,7 @@ await testTolerantJsonAndVersioning();
 testStatusStageFilter();
 testBriefStateDump();
 testManuscriptImport();
+testDirectoryIngestion();
 testChapterKitAtScale();
 
 console.log('\n----------------------------------------');

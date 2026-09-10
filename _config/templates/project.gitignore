@@ -8,5 +8,5 @@ Thumbs.db
 .gemini/
 .claude/settings.local.json
 
-# Production artifacts, stage outputs, and manuscript.json ARE tracked in git
+# Production artifacts, raw inputs, stage outputs, and manuscript.json ARE tracked in git
 # per ICM §3.4 to maintain a full version history of the novel's development.

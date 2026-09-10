@@ -33,10 +33,15 @@ outputs:
       - The narrator never states the theme or the lesson.
       - Vary sentence and paragraph length aggressively; ration triads and em-dashes.
       - Apply Layer 3 fingerprint counters (escalation contour, register shifts between chapters, no unplanned epilogue).
-   - **Path B (Author-Drafted / Workspace Custodian):** If the author is writing the prose directly:
-      - The agent stands down from text generation.
-      - The agent monitors the workspace, auto-detects newly created drafts or raw text, moves them to the correct output path declared in `manuscript.json`, formats them with proper template frontmatter, and archives previous revisions.
+   - **Path B (Author-Drafted / Workspace Custodian / Discovery Ingest):** If the author writes the prose directly (in their editor of choice, Obsidian, Word, or Scrivener):
+      - The author drops raw files into `inputs/drafts/` or provides an external path.
+      - Ingestion runs via `node scripts/soundingboard.js ingest <file|dir>` (or agent-driven custodian ingestion).
+      - **Immutable Archiving:** External files are automatically snapshotted into `inputs/drafts/`. Raw inputs are never overwritten or deleted.
+      - **Frontmatter & Provenance:** Chapters are formatted into `stages/03_drafting/output/chapters/chXX.md` with `source_raw_file`, `source_hash`, `ingested_at`, and `word_count`.
+      - **Silent Bookkeeper:** Discovered proper nouns and figures are automatically appended to `stages/02_planning/output/canon.md` tagged `[unverified chN]`.
+      - **Voice Anchor:** If `voice_exemplars.md` is empty, a representative paragraph from the author's prose is sampled into `stages/02_planning/output/voice_exemplars.md`.
+      - **Sounding Board Debrief:** The agent reflects what emerged on the page (value shifts, open promises, character presence) without interrupting the author's flow.
 3. **Fact Harvesting & Bookkeeping** (required before the chapter counts as drafted):
    - **Fact Harvesting:** Read the final draft (from either Path A or Path B). Identify any new hard facts established (names, numbers, physical attributes, timeline dates, object states). Append these to `canon.md` tagged `[unverified chN]`.
-   - **Ledger Update:** Count the chapter's words, update the word counts and metadata, and change the chapter's `status` to `drafted` in `manuscript.json`.
+   - **Ledger Update:** Count the chapter's words, update the word counts and metadata, and set the chapter's `status` to `drafted` (or `imported`) in `manuscript.json`.
 4. **Self-check**: Run `node scripts/saga.js audit` on the new chapter. If Path A, resolve red flags automatically. If Path B, compile the audit findings and present them gently to the author as editorial feedback.

@@ -47,6 +47,7 @@ Keep `manuscript.json` truthful — it is the shared state that lets any agent r
 Novels are messy and authors don't work in stage order. The stages are **artifact gates, not a rail** — the contracts define what must exist and agree, never the sequence the human must follow.
 
 - **Arriving with material** (synopsis, foolscap, character sheets, drafted chapters): run Stage 01 **Path C intake** — inventory, normalize into the standard artifacts preserving the author's wording, interview only the gaps, register existing drafts in `manuscript.json` and harvest their canon facts. Never re-ask what the material already answers.
+- **Discovery writers & raw drafting (`inputs/` vault & ingestion)**: For authors writing directly in external files (Obsidian, Word, Scrivener) or dropping rough drafts into `inputs/drafts/`, the agent acts as **Custodian + Continuity Sentry + Sounding Board**. Ingestion (`node scripts/saga.js ingest <file|dir>`) snapshots the raw files immutably into `inputs/drafts/`, formats clean chapters in `stages/03_drafting/output/chapters/chXX.md` with provenance hashes, automatically harvests characters and world facts into `canon.md` tagged `[unverified chN]`, seeds `voice_exemplars.md`, and returns a **Sounding Board Debrief** (value shifts, open promises, character presence).
 - **Jumping around** (drafts chapter 12 first, redesigns a character mid-book, wants to write the climax today): allow it. Backfill the missing upstream artifacts by **reverse-engineering them from what exists** (a draft implies its beat sheet; chapters imply a foolscap), then reconcile — divergence between artifacts is resolved deliberately, with the author, never silently. Log ripple effects: a mid-book character change is a canon amendment with a retrofit list.
 - **What keeps this safe:** `manuscript.json` + `canon.md` + `structure_plan.md` are the ground truth of project state; `saga status` shows the holes; the stage packet's missing-input report is a to-do list, not an error. Out-of-order work raises the Stage 04 burden (more to verify), but the gate is unchanged: nothing compiles until it passes.
 
@@ -129,6 +130,9 @@ The terminal wizards in `scripts/` (`wizard unstuck`, `wizard heat`, `wizard int
 16. **Plot Interrogator & Devil's Advocate:** When cross-examining scene turning points, plot logic, and character motives:
     - Packer: `node scripts/pack-plot-interrogator.js <chapter_or_scene>` (or `node scripts/soundingboard.js pack plot-interrogator <ch>`)
     - Contract: `_config/templates/plot_interrogator_playbook.template.md` ("Why don't they just..." alternatives ➔ Contrivance Audit ➔ Bulletproof Fix Matrix).
+17. **Discovery Ingest Debrief (The Writer's Mirror):** When debriefing newly ingested chapters or raw drafts:
+    - Packer: `node scripts/pack-ingest-debrief.js [chapter_or_file]` (or `node scripts/soundingboard.js pack debrief <ch>`)
+    - Contract: `_config/templates/ingest_debrief_playbook.template.md` (Value Shift & Polarity ➔ Narrative Promises / IOUs ➔ Status Transactions & Voice ➔ Canon Sentry ➔ 3 Creative Runways).
 
 ## Non-negotiable craft rules
 
@@ -147,6 +151,7 @@ The terminal wizards in `scripts/` (`wizard unstuck`, `wizard heat`, `wizard int
 - `node scripts/saga.js okf-index` — rebuild index.md catalogs across OKF knowledge bundles
 - `node scripts/saga.js audit [path ...]` — scan chapters for AI prose tells → reports in `stages/04_diagnostics_edits/output/reports/`; records `last_audit` in `manuscript.json`
 - `node scripts/saga.js continuity [dir]` — proper-noun continuity scan (near-duplicate/orphaned names) feeding the canon check
+- `node scripts/saga.js ingest <file|dir>` — ingest external raw drafts into Stage 03 with inputs/ archiving, canon harvesting & voice sampling (alias: import)
 - `node scripts/saga.js compile [--all]` — compile passed chapters → `manuscript.html` (+ `.epub` via pandoc)
 - `node scripts/saga.js wizard onboard [--blueprint=<name>]` — terminal onboarding (needs a model backend in `.env`; agents use Path A instead)
 
