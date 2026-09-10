@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/soundingboard_logo.png" alt="Soundingboard — Narrative Production Studio" width="480" />
+  <img src="assets/soundingboard_logo.jpg" alt="Soundingboard — Narrative Production Studio" width="600" />
 </p>
 
 <h2 align="center">The Author's Intelligent Sounding Board &amp; Novel Production Studio</h2>
