@@ -3,7 +3,6 @@ node_modules/
 stages/*/output/
 .claude/settings.local.json
 setup/deep_research/
-scripts/claude-*.ps1
 ROADMAP_ROUND2.md
 SAGA_ICM_OVERVIEW.md
 
