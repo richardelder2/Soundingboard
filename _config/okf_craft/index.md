@@ -7,6 +7,7 @@ last_indexed: 2026-09-05
 # Soundingboard Static Craft Knowledge Catalog
 
 - [Soundingboard Open Knowledge Format (OKF) Specification](SPECIFICATION.md) — `type: okf_specification`
+- [Act 2B Desert Crossing: Breaking the Midpoint Slump & Narrative Slog](act_2b_desert_crossing_and_midpoint_slog.md) — `type: craft_rule`
 - [The Adventure Quest: Environmental Hostility, Resource Attrition & Team Dynamics](adventure_quest_survival_dynamics.md) — `type: craft_structure`
 - [Adversarial Prose Auditing: Slop Density, POV Filter Stripping & Sensory Anchors](adversarial_prose_auditing_and_slop_filtering.md) — `type: craft_rule`
 - [Agent-Safe Editorial Conduct: Minimal Intervention & Canon Invariance](agent_safe_editorial_conduct.md) — `type: craft_rule`
@@ -37,6 +38,7 @@ last_indexed: 2026-09-05
 - [Dyadic Relationship Dynamics & Relational Ledgers: Tracking Interpersonal Systems](dyadic_relationship_dynamics_and_ledgers.md) — `type: craft_structure`
 - [Dystopian Systemic Tension: Panopticon Mechanics & Compliance Cycles](dystopian_systemic_tension.md) — `type: craft_structure`
 - [Editorial Finding Format & Confidence Scoring: Human-in-the-Loop Diagnostic Protocol](editorial_finding_format_and_confidence_scoring.md) — `type: craft_rule`
+- [Editorial Triage: Filtering Beta Feedback & Navigating Conflict](editorial_triage_and_beta_feedback_filtering.md) — `type: craft_rule`
 - [Emergent AI & Synthetic Archetypes: Goblins, Demons, Nova](emergent_ai_and_synthetic_archetypes.md) — `type: craft_structure`
 - [The Enneagram Character Engine & Disintegration Trajectories](enneagram_character_fixations_and_disintegration.md) — `type: craft_structure`
 - [Epic Fantasy & Space Opera: Polyphonic Voice Integrity & Avalanche Convergence](epic_fantasy_polyphonic_convergence_and_avalanche.md) — `type: craft_structure`
@@ -59,6 +61,7 @@ last_indexed: 2026-09-05
 - [The Inexorable Force Antagonist: The Unreasoning Moral Principle](inexorable_force_antagonist_chigurh.md) — `type: craft_structure`
 - [The Irony Typology & Gérard Genette's Lateral Omission](irony_typology_and_lateral_omission_paralipsis.md) — `type: craft_structure`
 - [Jungian Psychological Archetypes & Shadow Integration](jungian_archetypes_and_shadow_integration.md) — `type: craft_structure`
+- [Kill Your Darlings Salvage Protocol: Trimming Bloat Without Creative Grief](kill_your_darlings_salvage_protocol.md) — `type: craft_rule`
 - [Kishōtenketsu: East Asian Four-Act Structure](kishotenketsu_four_act_non_conflict_structure.md) — `type: craft_structure`
 - [The Eight Strata of Revision: Layered Diagnostic Triage from Premise to Polish](layered_revision_eight_strata_framework.md) — `type: craft_rule`
 - [Literary & Upmarket Fiction Conventions: Interiority, Ambiguity & Textured Resolution](literary_and_upmarket_fiction_conventions.md) — `type: craft_structure`

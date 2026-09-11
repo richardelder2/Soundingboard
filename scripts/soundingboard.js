@@ -509,6 +509,7 @@ async function handleDiagnostic(subCmd, extraArgs = []) {
     heatmap: 'character_heatmap_diagnostic.js',
     resource: 'resource_consistency_diagnostic.js',
     playbook: 'generate_curated_playbook.js',
+    audio: 'audio_cadence_diagnostic.js',
   };
 
   if (!subCmd || subCmd === 'list' || subCmd === '--help' || subCmd === 'help') {
@@ -516,6 +517,7 @@ async function handleDiagnostic(subCmd, extraArgs = []) {
     console.log(`
 Available diagnostics:
   node scripts/${binName}.js diag audit [path]         Full AI prose tell & rhythm scan
+  node scripts/${binName}.js diag audio [chapter]      Audiobook acoustic & breath cadence audit
   node scripts/${binName}.js diag continuity [dir]     Proper noun & character continuity scan
   node scripts/${binName}.js diag rhythm [chapter]     Sentence length standard deviation & cadence
   node scripts/${binName}.js diag dialogue [chapter]   Speaker attribution & dialogue ratio
@@ -1875,6 +1877,7 @@ Usage:
   node scripts/${BIN_NAME}.js status                 Show the status of each pipeline stage
   node scripts/${BIN_NAME}.js brief                  Executive summary of manuscript progress & state
   node scripts/${BIN_NAME}.js visualizer [ekg|net]   Launch State Road AI Story Console (EKG & Cast Network)
+  node scripts/${BIN_NAME}.js audio [chapter]        Audiobook acoustic & breath cadence diagnostic
   node scripts/${BIN_NAME}.js craft search <query>   Search ${getCraftModuleCount()} craft modules (flags: --stage, --genre, --scope, --json)
   node scripts/${BIN_NAME}.js okf-lint              Validate all craft modules against ICM standards
   node scripts/${BIN_NAME}.js diag [name] [args]     Run diagnostic tools (rhythm, dialogue, tense, etc.)
@@ -2016,6 +2019,10 @@ switch (command) {
     break;
   case 'continuity':
     handleContinuity();
+    break;
+  case 'audio':
+  case 'audiobook':
+    await handleDiagnostic('audio', args.slice(1));
     break;
   case 'canon':
     handleCanon(subCommand, args.slice(2));
