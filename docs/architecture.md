@@ -7,7 +7,7 @@ Soundingboard is an agent-native, token-disciplined novel engineering studio bui
 ```
                   ┌─────────────────────────────────────┐
                   │          _config/ Layer 3           │
-                  │   Rules, Templates, 92 Craft Cards  │
+                  │   Rules, Templates, 114 Craft Cards  │
                   └──────────────────┬──────────────────┘
                                      │ Context
                                      ▼

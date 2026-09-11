@@ -115,10 +115,10 @@ node scripts/soundingboard.js wizard onboard
 ```
 
 ### What happens next:
-1. The script loads the Hard Sci-Fi Comfort Book blueprint from `setup/comfort_scifi_blueprint.md`.
-2. It guides you step-by-step through **16 targeted Q&A questions** (asking exactly one question at a time).
-3. The coach validates the scientific rigor of your inputs in real-time.
-4. After completing the interview, it synthesizes the answers into an Open Knowledge Format (OKF) world bible and characters profile files under `stages/01_onboarding/output/`.
+1. The script presents the blueprint catalog from `setup/INDEX.md` and lets you select your genre (or loads the blueprint specified via `--blueprint=<name>`).
+2. It guides you step-by-step through the questionnaire questions (asking exactly one question at a time).
+3. The coach validates and sharpens your genre ideas in real-time using domain-specific prompts.
+4. After completing the interview, it synthesizes the answers into an Open Knowledge Format (OKF) world bible and character profile files under `stages/01_onboarding/output/`.
 
 ---
 

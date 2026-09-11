@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soundingboard — The Author's Intelligent Sounding Board & Novel Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #07090e;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(26, 35, 56, 0.9);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(245, 158, 11, 0.35);
+      --accent-gold: #f59e0b;
+      --accent-gold-light: #fbbf24;
+      --accent-cyan: #38bdf8;
+      --accent-purple: #c084fc;
+      --accent-emerald: #34d399;
+      --accent-rose: #fb7185;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-title: 'Cinzel', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* Ambient background canvas glow */
+    .ambient-glow {
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.07) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatAura 18s ease-in-out infinite alternate;
+    }
+
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 55vw;
+      height: 55vh;
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.06) 0%, rgba(52, 211, 153, 0.04) 50%, transparent 70%);
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatAura2 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatAura {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(8%, 10%) scale(1.15); }
+    }
+
+    @keyframes floatAura2 {
+      0% { transform: translate(0, 0) scale(1.1); }
+      100% { transform: translate(-10%, -8%) scale(0.95); }
+    }
+
+    /* Studio Header & Navigation Bar */
+    header.deck-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7, 9, 14, 0.7);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      color: #07090e;
+      font-family: var(--font-title);
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-family: var(--font-title);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .brand-subtitle {
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    /* Pacing & Presentation Timer */
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    .timer-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .timer-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+
+    .timer-btn:hover {
+      color: #fff;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .btn-pill:hover, .btn-pill.active {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--accent-gold);
+      color: #fff;
+    }
+
+    .btn-pill kbd {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      font-family: var(--font-mono);
+    }
+
+    /* Slide Deck Viewport */
+    .deck-viewport {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - 64px - 56px);
+      margin-top: 64px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .slide {
+      position: absolute;
+      width: 90vw;
+      max-width: 1280px;
+      height: 82vh;
+      opacity: 0;
+      transform: scale(0.96) translateY(20px);
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    .slide.prev {
+      opacity: 0;
+      transform: scale(0.96) translateY(-20px);
+    }
+
+    /* Slide Content Typography & Layouts */
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-gold-light);
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .slide-badge.cyan {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--accent-cyan);
+    }
+
+    .slide-badge.purple {
+      background: rgba(192, 132, 252, 0.1);
+      border-color: rgba(192, 132, 252, 0.3);
+      color: var(--accent-purple);
+    }
+
+    .slide-badge.emerald {
+      background: rgba(52, 211, 153, 0.1);
+      border-color: rgba(52, 211, 153, 0.3);
+      color: var(--accent-emerald);
+    }
+
+    h1.slide-title {
+      font-family: var(--font-display);
+      font-size: 2.85rem;
+      line-height: 1.15;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    h1.slide-title span.highlight {
+      color: var(--accent-gold);
+      font-style: italic;
+    }
+
+    h1.slide-title span.cyan {
+      color: var(--accent-cyan);
+    }
+
+    h1.slide-title span.purple {
+      color: var(--accent-purple);
+    }
+
+    p.slide-subtitle {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 840px;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.85rem;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.4rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-3px);
+      background: var(--bg-card-hover);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+
+    .card.gold-top::before {
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+
+    .card.cyan-top::before {
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    }
+
+    .card.purple-top::before {
+      background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    }
+
+    .card.emerald-top::before {
+      background: linear-gradient(90deg, transparent, var(--accent-emerald), transparent);
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .pill-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+      margin-right: 4px;
+    }
+
+    /* Comparison Box (Problem vs Solution) */
+    .compare-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .compare-col {
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+    }
+
+    .compare-col.problem {
+      border-left: 3px solid var(--accent-rose);
+    }
+
+    .compare-col.solution {
+      border-left: 3px solid var(--accent-emerald);
+      background: rgba(18, 32, 38, 0.6);
+    }
+
+    .compare-header {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-col.problem .compare-header { color: var(--accent-rose); }
+    .compare-col.solution .compare-header { color: var(--accent-emerald); }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .feature-item .icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Interactive Author Mode Selector */
+    .mode-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+
+    .mode-tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .mode-tab-btn.active {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--accent-gold);
+      color: #fff;
+    }
+
+    .mode-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .mode-panel.active {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .code-preview {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #e6edf3;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    .code-preview .keyword { color: #ff7b72; }
+    .code-preview .string { color: #a5d6ff; }
+    .code-preview .comment { color: #8b949e; font-style: italic; }
+    .code-preview .fn { color: #d2a8ff; }
+    .code-preview .accent { color: #f2cc60; }
+
+    /* Footer & Controls */
+    footer.deck-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+    }
+
+    .progress-bar-container {
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
+      width: 12.5%;
+      transition: width 0.3s ease;
+    }
+
+    .slide-counter {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .slide-counter span.current {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .deck-nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--accent-gold);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Speaker Notes Drawer */
+    .speaker-drawer {
+      position: fixed;
+      bottom: 56px;
+      right: 2rem;
+      width: 480px;
+      max-height: 420px;
+      background: #0d121d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+      padding: 1.25rem;
+      display: none;
+      flex-direction: column;
+      z-index: 150;
+      backdrop-filter: blur(20px);
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .speaker-drawer.open {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .speaker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .speaker-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .speaker-timing {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .speaker-body {
+      overflow-y: auto;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      max-height: 320px;
+      padding-right: 6px;
+    }
+
+    .speaker-body p {
+      margin-bottom: 0.75rem;
+    }
+
+    .speaker-body strong {
+      color: var(--accent-gold-light);
+    }
+
+    .speaker-cue {
+      display: inline-block;
+      background: rgba(192, 132, 252, 0.15);
+      border-left: 2px solid var(--accent-purple);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: #d8b4fe;
+      margin: 6px 0;
+      border-radius: 0 4px 4px 0;
+      font-family: var(--font-mono);
+    }
+
+    /* Grid Overview Modal */
+    .overview-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.95);
+      backdrop-filter: blur(24px);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      padding: 3rem;
+      overflow-y: auto;
+    }
+
+    .overview-modal.open {
+      display: flex;
+    }
+
+    .overview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .overview-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .overview-thumb {
+      background: #111726;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 160px;
+    }
+
+    .overview-thumb:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .overview-thumb.current {
+      border: 2px solid var(--accent-gold);
+      background: #192238;
+    }
+
+    .thumb-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    .thumb-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: #fff;
+      margin-top: 6px;
+    }
+
+    .thumb-time {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    /* Small diagram styles */
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .flow-step:hover .flow-icon {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.1);
+      transform: scale(1.05);
+    }
+
+    .flow-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .flow-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* Interactive fork simulator */
+    .fork-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .fork-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fork-btn.selected {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent-cyan);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+      .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: 1fr; }
+      h1.slide-title { font-size: 2.1rem; }
+      .slide { padding: 1rem; width: 95vw; }
+      .overview-grid { grid-template-columns: repeat(2, 1fr); }
+      .speaker-drawer { width: 90vw; right: 5vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- Header Bar -->
+  <header class="deck-header">
+    <div class="brand-group">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">SOUNDINGBOARD</div>
+        <div class="brand-subtitle">Narrative Production Studio</div>
+      </div>
+    </div>
+
+    <!-- 5-Minute Timer & Pacer -->
+    <div class="timer-container">
+      <div class="timer-status-dot" id="timerDot"></div>
+      <span id="timerDisplay">00:00</span>
+      <span style="color: var(--text-dim);">/ 05:00</span>
+      <button class="timer-btn" id="timerToggleBtn" title="Start / Pause Timer (T)">▶</button>
+      <button class="timer-btn" id="timerResetBtn" title="Reset Timer">↺</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-pill" id="btnNotes" title="Toggle Speaker Script (S)">
+        <span>🎙️ Script</span>
+        <kbd>S</kbd>
+      </button>
+      <button class="btn-pill" id="btnOverview" title="Slide Overview Grid (O)">
+        <span>⊞ Grid</span>
+        <kbd>O</kbd>
+      </button>
+      <button class="btn-pill" id="btnFullscreen" title="Toggle Fullscreen (F)">
+        <span>⛶</span>
+        <kbd>F</kbd>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Deck Viewport -->
+  <main class="deck-viewport">
+
+    <!-- ================= SLIDE 1 ================= -->
+    <section class="slide active" id="slide-1" data-index="1" data-time="0:00 - 0:40" data-notes="Welcome everyone. Today we're looking at Soundingboard. If you've ever tried writing fiction with ChatGPT or Claude in a web browser, you know the frustration: around Chapter 3, the AI develops amnesia. Characters apologize neatly. The prose defaults to corporate clichés. And worse: you're trapped copying and pasting between a browser tab and Word. StoryScope research showed AI fiction is detectable at 94% accuracy from narrative structure alone. Soundingboard was built to break authors out of that web chat silo.">
+      <div class="slide-badge">01 · The Web Chat Silo</div>
+      <h1 class="slide-title">Writing a Novel is Hard.<br />Writing One in a <span class="highlight">Web Chat</span> is Broken.</h1>
+      <p class="slide-subtitle">Why raw AI in a browser tab inevitably falls apart after 15,000 words—and why prompt engineering alone cannot fix it.</p>
+
+      <div class="compare-wrapper">
+        <div class="compare-col problem">
+          <div class="compare-header">⚠️ The Web Chat Failure Modes</div>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <span class="icon">🧠</span>
+              <div><strong>The Amnesia Wall:</strong> By Chapter 4, the model forgets who holds the brass key, drops your subplots, and scrambles character eye colors.</div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">📋</span>
+              <div><strong>Copy-Paste Purgatory:</strong> Juggling snippets between chat boxes, Word, and Google Docs, losing version history and sanity.</div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">🤖</span>
+              <div><strong>The 94% Structural Detectability:</strong> <em>StoryScope</em> research reveals AI novels are flagged from structure alone—unearned catharsis, neat apologies, and moralizing narrator summaries.</div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">✂️</span>
+              <div><strong>Destructive Rewrites:</strong> Prompting <em>&quot;tighten the pacing&quot;</em> causes the AI to obliterate your idiosyncratic authorial voice.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="compare-col solution">
+          <div class="compare-header">✨ What Authors Actually Need</div>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <span class="icon">📂</span>
+              <div><strong>A Studio On Your Computer:</strong> Markdown files and clean folders you own 100% locally. Zero vendor lock-in.</div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">🧭</span>
+              <div><strong>A Proactive Creative Concierge:</strong> An AI that reads the story state, preserves the canon, and suggests the next 2 steps instead of asking <em>&quot;How can I help?&quot;</em></div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">🛡️</span>
+              <div><strong>Anti-Drift Calibration:</strong> Dynamic voice anchors that lock into your rhythm, stopping the slide into sterile corporate prose.</div>
+            </li>
+            <li class="feature-item">
+              <span class="icon">✍️</span>
+              <div><strong>Human-in-the-Loop Agency:</strong> You hold the red pen. The AI diagnoses; it never unilaterally rewrites your art.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 2 ================= -->
+    <section class="slide" id="slide-2" data-index="2" data-time="0:40 - 1:20" data-notes="Enter Soundingboard: The Author's Intelligent Sounding Board and Narrative Studio. It is built on a breakthrough paper called the Interpretable Context Methodology, or ICM. The core philosophy is simple: the file system is the agent's brain. Instead of a black-box vector database where things get hallucinated, every character rule, plot beat, and world truth lives in plain, human-readable markdown files. The agent acts not as a chaotic autocomplete, but as an Executive Novel Assistant that keeps your canon straight across 80,000 words.">
+      <div class="slide-badge cyan">02 · The Paradigm Shift</div>
+      <h1 class="slide-title">What is Soundingboard?<br />The <span class="cyan">Glass-Box</span> Novel Studio.</h1>
+      <p class="slide-subtitle">A disciplined, agent-native workspace governed by the Interpretable Context Methodology (ICM, arXiv:2603.16021). Zero black-box vector databases.</p>
+
+      <div class="grid-3">
+        <div class="card cyan-top">
+          <div class="card-icon">🗂️</div>
+          <div class="card-title">The File System is the Brain</div>
+          <div class="card-desc">Every character sheet, world law, and chapter beat lives in plain markdown and JSON. Open any file in Obsidian, Notepad, or VS Code to see exactly what your AI knows.</div>
+          <div class="pill-tag">ICM Architecture</div>
+          <div class="pill-tag">Zero Black Boxes</div>
+        </div>
+
+        <div class="card gold-top">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Token-Disciplined Kits</div>
+          <div class="card-desc">Instead of dumping an entire 80k-word manuscript into context, Soundingboard packs surgical chapter kits (&le; 6,000 tokens) with trailing voice anchors, focusing the model's full attention on nuance.</div>
+          <div class="pill-tag">Trailing 500w Anchor</div>
+          <div class="pill-tag">Anti-Drift</div>
+        </div>
+
+        <div class="card purple-top">
+          <div class="card-icon">🤝</div>
+          <div class="card-title">The Creative Concierge</div>
+          <div class="card-desc">The AI is contractually bound by <code>AGENTS.md</code> to hide technical plumbing, proactively propose narrative forks, and mirror your craft lexicon—whether you speak <em>Save the Cat!</em> or <em>Story Grid</em>.</div>
+          <div class="pill-tag">Universal Lexicon</div>
+          <div class="pill-tag">Proactive Flow</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.5rem;">📜</span>
+          <div style="font-size: 0.88rem; color: #cbd5e1;">
+            <strong>Rule of Contradiction:</strong> In Soundingboard, <span style="color: var(--accent-gold);">the draft always loses to canon</span>. New facts are flagged <code>[unverified]</code> until vetted. Canon cannot be silently altered.
+          </div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-emerald); background: rgba(52, 211, 153, 0.1); padding: 4px 10px; border-radius: 6px;">
+          ✓ Single Source of Truth
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 3 ================= -->
+    <section class="slide" id="slide-3" data-index="3" data-time="1:20 - 2:05" data-notes="How does it work in practice? Soundingboard isn't another closed app you have to pay a monthly subscription for. It works inside tools you already use. If you like coding agents, it runs inside Claude Code, Google Antigravity, Cursor, or Gemini CLI. If you are a discovery writer who loves Obsidian, Scrivener, or Microsoft Word, you simply write there, and Soundingboard ingests and synchronizes your work into the studio. Behind the scenes, a zero-dependency Node.js engine handles all the telemetry, audits, and compilation.">
+      <div class="slide-badge emerald">03 · Tool Interoperability</div>
+      <h1 class="slide-title">Lives Inside Tools <span class="emerald">Already On Your Desk</span>.</h1>
+      <p class="slide-subtitle">No proprietary app lock-in. Soundingboard layers directly over your preferred editors, agents, and writing tools.</p>
+
+      <div class="grid-2">
+        <div class="card emerald-top">
+          <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
+            <span>🤖</span> Native Agent Environments
+          </div>
+          <div class="card-desc" style="margin-bottom: 1rem;">
+            Soundingboard provides clear contracts (<code>AGENTS.md</code> &amp; <code>CONTEXT.md</code>) that any modern coding agent or CLI tool automatically obeys:
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Claude Code &amp; Cursor</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Agent runs terminal audits &amp; packs chapter kits natively.</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Google Antigravity</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Full IDE pairing with live artifacts and task management.</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Gemini CLI / OpenRouter</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Plug in Gemini 1.5/Pro or Claude 3.7 with zero setup hassle.</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Local Ollama / Llama.cpp</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">100% private, offline narrative execution on your own GPU.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card gold-top">
+          <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
+            <span>🖋️</span> Author Workspaces &amp; Ingestion
+          </div>
+          <div class="card-desc" style="margin-bottom: 1rem;">
+            Authors write in their favorite creative environments without touching a single line of code:
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.2rem;">💎</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Obsidian Vaults</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Open the Soundingboard folder directly as an Obsidian vault to browse bi-directional character links.</div>
+              </div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.2rem;">📄</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Scrivener &amp; MS Word Ingestion</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Drop rough draft exports into <code>inputs/drafts/</code>. Soundingboard snapshots them immutably and extracts canon facts.</div>
+              </div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.2rem;">⚙️</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Zero-Dependency Mechanical Engine</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Lightweight Node.js CLI (<code>soundingboard.js</code>) runs audits, cadence scans, and compiles to HTML/EPUB instantly.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 4 ================= -->
+    <section class="slide" id="slide-4" data-index="4" data-time="2:05 - 2:50" data-notes="Soundingboard structures a novel into 5 clear, disciplined studio workspaces. Stage 01 is the Discovery Lounge: an interview where the agent captures your story bible and in-world terminology. Stage 02 is the Storyboard Wall: building the foolscap roadmap, scheduling obligatory genre scenes, and creating beat sheets. Stage 03 is the Writing Desk: drafting with trailing voice anchors. Stage 04 is the Editorial Desk: running mechanical cadence scans and AI tell audits. And Stage 05 is the Printing Press, compiling your passing chapters into clean HTML and EPUB.">
+      <div class="slide-badge purple">04 · The 5 Workspaces</div>
+      <h1 class="slide-title">The <span class="purple">5 Creative Workspaces</span> Pipeline.</h1>
+      <p class="slide-subtitle">A state machine that takes your initial spark of an idea all the way to a compiled, reader-ready publication.</p>
+
+      <div class="grid-5" style="margin-bottom: 1.5rem;">
+        <div class="card purple-top flow-step">
+          <div class="flow-icon">🛋️</div>
+          <div class="flow-title">01 · Discovery</div>
+          <div class="flow-sub">The Lounge</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Agent interviews author, builds Story Bible, genre tropes, and in-world allowlists.</p>
+        </div>
+
+        <div class="card gold-top flow-step">
+          <div class="flow-icon">📋</div>
+          <div class="flow-title">02 · Planning</div>
+          <div class="flow-sub">Storyboard Wall</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">1-Page Foolscap, Obligatory Scene Ledger, chapter beat sheets, and <code>manuscript.json</code>.</p>
+        </div>
+
+        <div class="card cyan-top flow-step">
+          <div class="flow-icon">✍️</div>
+          <div class="flow-title">03 · Drafting</div>
+          <div class="flow-sub">The Writing Desk</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Active drafting with trailing 500-word voice anchors; new facts tagged <code>[unverified]</code>.</p>
+        </div>
+
+        <div class="card emerald-top flow-step">
+          <div class="flow-icon">🔍</div>
+          <div class="flow-title">04 · Diagnostics</div>
+          <div class="flow-sub">Editorial Desk</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Proper-noun scans, cadence variance checks, tell suppression, and HITL revision playbooks.</p>
+        </div>
+
+        <div class="card purple-top flow-step">
+          <div class="flow-icon">🖨️</div>
+          <div class="flow-title">05 · Publishing</div>
+          <div class="flow-sub">Printing Press</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Single-command compiler generates clean, validated HTML and e-reader standard EPUB.</p>
+        </div>
+      </div>
+
+      <!-- Live Cycle Callout -->
+      <div style="background: rgba(192, 132, 252, 0.08); border: 1px solid rgba(192, 132, 252, 0.25); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-weight: 700; color: #fff; font-size: 0.9rem; margin-bottom: 2px;">The Per-Chapter Production Loop (03 ⟷ 04)</div>
+          <div style="font-size: 0.8rem; color: #cbd5e1;">Stages 01 and 02 run once. Then, chapters cycle between Drafting (03) and Diagnostics (04) until every gate passes cleanly.</div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-purple); background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(192, 132, 252, 0.3);">
+          planned ➔ drafted ➔ audited ➔ passed
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 5 ================= -->
+    <section class="slide" id="slide-5" data-index="5" data-time="2:50 - 3:35" data-notes="One of the biggest strengths of Soundingboard is that it doesn't force a one-size-fits-all workflow. An author can choose between three distinct working modes: Path A is Co-Writing, where the agent drafts scenes guided by beat sheets and voice exemplars. Path B is Solo-Writing, where the author writes all the prose themselves, and the AI acts purely as workspace custodian—updating word counts, checking continuity, and catching plot holes. And Path C is Discovery Ingestion: if you write raw chapters in Scrivener or Obsidian, Soundingboard ingests them, hashes their provenance, harvests new canon, and delivers an insightful Sounding Board Debrief.">
+      <div class="slide-badge gold">05 · Author Workflows</div>
+      <h1 class="slide-title">The <span class="highlight">3 Ways Authors Work</span> With It.</h1>
+      <p class="slide-subtitle">Whether you want an active writing partner, a silent continuity custodian, or an intake engine for discovery drafts.</p>
+
+      <div class="mode-tabs">
+        <button class="mode-tab-btn active" onclick="selectMode('pathA')">Path A · Co-Writing (Agent-Drafted)</button>
+        <button class="mode-tab-btn" onclick="selectMode('pathB')">Path B · Solo-Writing (Author-Drafted)</button>
+        <button class="mode-tab-btn" onclick="selectMode('pathC')">Path C · Discovery Ingestion (Raw Drafts)</button>
+      </div>
+
+      <!-- Path A Content -->
+      <div class="mode-panel active" id="panel-pathA">
+        <div class="card gold-top">
+          <div class="card-title">🤝 Path A: Collaborative Scene Partner</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            You brainstorm beats, emotional turns, and dialogue subtext with the agent. The agent drafts the scene against your voice guide and the trailing 500 words of the previous chapter.
+          </div>
+          <ul class="feature-list" style="font-size: 0.82rem;">
+            <li class="feature-item"><span class="icon">✨</span> You review and edit the draft live in chat or in your editor.</li>
+            <li class="feature-item"><span class="icon">🏷️</span> New world details are harvested and tagged <code>[unverified chN]</code> in canon.</li>
+            <li class="feature-item"><span class="icon">🔄</span> Fluid transitions: switch to Solo-Writing anytime.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment">// Path A: Chapter Kit Packing</span>
+<span class="keyword">const</span> kit = <span class="fn">packChapter</span>({
+  chapter: <span class="accent">4</span>,
+  max_tokens: <span class="accent">6000</span>,
+  trailing_anchor: <span class="string">"last 500w of ch03"</span>,
+  beats: <span class="string">"stages/02_planning/beats/ch04.md"</span>,
+  voice_exemplars: <span class="string">"voice_exemplars.md"</span>
+});
+<span class="comment">// Agent drafts with strict anti-drift</span>
+        </div>
+      </div>
+
+      <!-- Path B Content -->
+      <div class="mode-panel" id="panel-pathB">
+        <div class="card cyan-top">
+          <div class="card-title">🛡️ Path B: The Workspace Custodian</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            You write every single sentence yourself. You never let an AI generate a single line of your prose. The AI acts as your behind-the-scenes executive assistant.
+          </div>
+          <ul class="feature-list" style="font-size: 0.82rem;">
+            <li class="feature-item"><span class="icon">📊</span> Auto-tracks word count milestones in <code>manuscript.json</code>.</li>
+            <li class="feature-item"><span class="icon">👁️</span> Sentry audit: catches if a character's eye color changed or if a dagger vanished.</li>
+            <li class="feature-item"><span class="icon">🎵</span> Cadence analysis: highlights monotonous sentence lengths for your revision.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment">// Path B: Custodian Telemetry</span>
+$ node scripts/soundingboard.js status
+<span class="string">"Chapter 4: Solo-draft detected (3,420 words)"</span>
+<span class="fn">continuity_scan</span>: <span class="accent">0 orphaned proper nouns</span>
+<span class="fn">cadence_variance</span>: <span class="string">8.2 (Healthy burstiness)</span>
+<span class="comment">// Master ledger updated automatically</span>
+        </div>
+      </div>
+
+      <!-- Path C Content -->
+      <div class="mode-panel" id="panel-pathC">
+        <div class="card purple-top">
+          <div class="card-title">📥 Path C: Discovery Vault Ingestion</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            For pantsers and discovery writers who write in Obsidian, Scrivener, or Google Docs. Drop your raw files into <code>inputs/drafts/</code> and run one command.
+          </div>
+          <ul class="feature-list" style="font-size: 0.82rem;">
+            <li class="feature-item"><span class="icon">🔒</span> Immutable snapshot with SHA-256 provenance hashes.</li>
+            <li class="feature-item"><span class="icon">🌾</span> Auto-harvests characters and locations into <code>canon.md</code>.</li>
+            <li class="feature-item"><span class="icon">🪞</span> Delivers a &quot;Sounding Board Debrief&quot;: value shifts, open promises, and character presence.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment">// Path C: Raw Discovery Ingestion</span>
+$ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
+<span class="accent">[PROVENANCE]</span> Hash: e3b0c44298fc1c149afbf4...
+<span class="keyword">[HARVEST]</span> 4 characters, 2 factions logged to canon.md
+<span class="fn">[DEBRIEF]</span> Narrative promise opened: "The silver key"
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 6 ================= -->
+    <section class="slide" id="slide-6" data-index="6" data-time="3:35 - 4:15" data-notes="Novels are messy, and authors don't write in straight lines. Soundingboard treats stages as gates, not rails. If you wake up inspired to write the climax in Chapter 12 today, go right ahead! Soundingboard backfills and reverse-engineers the upstream beat sheets. If you change a character's backstory mid-book, it logs a canon amendment with an automatic retrofit list. For series authors, a shared series folder maintains romance ladders and lore debt across books. And whenever you hit writer's block, 17 agent-native playbooks diagnose the exact problem.">
+      <div class="slide-badge cyan">06 · Nonlinearity &amp; Playbooks</div>
+      <h1 class="slide-title">Non-Linear Freedom &amp; <span class="cyan">17 Creative Playbooks</span>.</h1>
+      <p class="slide-subtitle">Stages are artifact gates, not rails. Meet the author wherever they are in their creative journey.</p>
+
+      <div class="grid-3">
+        <div class="card cyan-top">
+          <div class="card-title">🔀 Out-of-Order Drafting</div>
+          <div class="card-desc">Write Chapter 12 first. Soundingboard reverse-engineers the missing beat sheets and foolscap backward from your draft, reconciling differences with you deliberately.</div>
+          <div class="pill-tag">Reverse Engineering</div>
+          <div class="pill-tag">Pantsing Friendly</div>
+        </div>
+
+        <div class="card purple-top">
+          <div class="card-title">📚 Cross-Book Series Layer</div>
+          <div class="card-desc">Shared <code>series/</code> directory tracks romance ladders, heat levels, lore debt ledgers, and village bibles across multi-book sagas without cross-contaminating files.</div>
+          <div class="pill-tag">Multi-Book Memory</div>
+          <div class="pill-tag">Lore Debt</div>
+        </div>
+
+        <div class="card gold-top">
+          <div class="card-title">🛠️ 17 Creative Playbooks</div>
+          <div class="card-desc">When blocked, run targeted playbooks rather than vague chat prompts: Unstuck, Dialogue Heat, Sensory Bloom, Scene Staging, Blind Reader EKG, and Plot Interrogator.</div>
+          <div class="pill-tag">Targeted Diagnostics</div>
+          <div class="pill-tag">Zero Hallucinations</div>
+        </div>
+      </div>
+
+      <!-- Playbook Showcase Bar -->
+      <div style="margin-top: 1.25rem; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
+        <span class="pill-tag" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3);">⚡ Getting Unstuck (3 Narrative Forks)</span>
+        <span class="pill-tag" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">🔥 Dialogue Escalation &amp; Subtext</span>
+        <span class="pill-tag" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3);">🌿 Sensory Bloom (Viscosity &amp; Setting)</span>
+        <span class="pill-tag" style="background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.3);">🩺 Blind Reader Simulator (Emotional EKG)</span>
+        <span class="pill-tag" style="background: rgba(251, 113, 133, 0.15); color: var(--accent-rose); border: 1px solid rgba(251, 113, 133, 0.3);">🕵️ Plot Interrogator ("Why don't they just...")</span>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 7 ================= -->
+    <section class="slide" id="slide-7" data-index="7" data-time="4:15 - 4:55" data-notes="This brings us to the core philosophy of Soundingboard: Narrative Authenticity and the Human-in-the-Loop Revision Playbook. Standard AI writing tools rely on autonomous rewrites. You ask it to fix the pacing, and it flattens your unique voice into corporate oatmeal. In Soundingboard, the agent is contractually forbidden from saying 'I fixed this.' Instead, when an audit flags an issue—like an explained theme or monotonous cadence—it generates a structured 3-option creative fork: Cut it, Dramatize it, or Push it into Subtext. The author chooses the direction, and the agent executes only surgical, minimal edits.">
+      <div class="slide-badge emerald">07 · Editorial Integrity</div>
+      <h1 class="slide-title">The <span class="emerald">Human-in-the-Loop</span> Revision Playbook.</h1>
+      <p class="slide-subtitle">Why autonomous AI editing ruins voice—and how Soundingboard guarantees the author always holds the red pen.</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-left: 3px solid var(--accent-gold);">
+          <div class="card-title">The 4-Phase HITL Revision Cycle</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
+              <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono);">Phase 1</span>
+              <div><strong>Objective Diagnosis:</strong> Zero text modifications. Mechanical scans flag cadence spikes, AI tells (&gt;0.50/1k words), or canon contradictions.</div>
+            </div>
+            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono);">Phase 2</span>
+              <div><strong>The 3-Option Fork:</strong> Agent presents distinct craft choices (The Cut, Dramatize, Subtext Shift, or Custom Direction).</div>
+            </div>
+            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
+              <span style="color: var(--accent-purple); font-weight: 700; font-family: var(--font-mono);">Phase 3</span>
+              <div><strong>Author Sign-Off:</strong> Author picks their favored option in chat. Zero prose changes occur until the author says "Proceed."</div>
+            </div>
+            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
+              <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono);">Phase 4</span>
+              <div><strong>Surgical Execution:</strong> Minimal, targeted revision applied, followed by machine re-audit before gate clearance.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="background: #0e1424; border: 1px solid rgba(56, 189, 248, 0.3);">
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-cyan); margin-bottom: 8px;">
+            [STAGE 04 REVISION PLAYBOOK SIMULATOR]
+          </div>
+          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 10px;">
+            <strong style="color: var(--accent-rose);">Finding:</strong> Explained Theme at scene climax:<br />
+            <em style="color: #94a3b8;">&quot;She realized hope was a fragile bird in the winter dusk.&quot;</em>
+          </div>
+
+          <div style="font-size: 0.78rem; font-weight: 700; color: #fff; margin-bottom: 6px;">Choose Author Strategy:</div>
+          <div class="fork-btn-group">
+            <button class="fork-btn selected" onclick="demoFork(this, 'cut')">Option A: The Cut</button>
+            <button class="fork-btn" onclick="demoFork(this, 'dramatize')">Option B: Dramatize</button>
+            <button class="fork-btn" onclick="demoFork(this, 'subtext')">Option C: Subtext</button>
+          </div>
+
+          <div id="forkResult" style="margin-top: 10px; background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px; font-size: 0.78rem; color: #38bdf8; font-family: var(--font-mono);">
+            &gt; SCRIPT: Delete summary sentence entirely. End scene on the cold silence of the closing door.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 8 ================= -->
+    <section class="slide" id="slide-8" data-index="8" data-time="4:55 - 5:25" data-notes="To wrap up: Soundingboard is not about replacing the author. Writing a compelling novel still requires human vulnerability, taste, and hard creative choices. Soundingboard simply removes the friction, protects the author's psychological ownership, and equips AI agents with 114 codified craft modules from masters like Shawn Coyne, John Truby, Brandon Sanderson, and K.M. Weiland. You get pure creative flow, an AI that acts as a real concierge, and complete ownership of your story on your own computer.">
+      <div class="slide-badge gold">08 · The Takeaway</div>
+      <h1 class="slide-title">Pure Creative Flow.<br />A <span class="highlight">Real Writing Concierge</span>.</h1>
+      <p class="slide-subtitle">Soundingboard gives your AI agent the memory, structure, and craft rules to be a true creative partner.</p>
+
+      <div class="grid-3" style="margin-bottom: 1.5rem;">
+        <div class="card gold-top">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">114 Codified Craft Cards</div>
+          <div class="card-desc">Swain MRUs, Truby 4-corner opposition, Sanderson magic laws, and Story Grid 5 Commandments embedded in <code>_config/okf_craft/</code>.</div>
+        </div>
+
+        <div class="card cyan-top">
+          <div class="card-icon">📖</div>
+          <div class="card-title">Universal Rosetta Stone</div>
+          <div class="card-desc">Speak in whatever storytelling system you love. Soundingboard translates seamlessly behind the scenes without taxonomy debates.</div>
+        </div>
+
+        <div class="card emerald-top">
+          <div class="card-icon">💎</div>
+          <div class="card-title">Total Author Ownership</div>
+          <div class="card-desc">Every word and piece of state lives in your files. Zero vendor lock-in. Compile to clean HTML and EPUB with one command.</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 1.25rem;">
+        <div style="font-family: var(--font-display); font-size: 1.25rem; color: #fff; margin-bottom: 6px;">
+          Ready to begin? Start the conversation in chat:
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-gold); background: rgba(0,0,0,0.5); display: inline-block; padding: 6px 18px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+          &quot;Read AGENTS.md and let's brainstorm my novel.&quot;
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Speaker Script Drawer -->
+  <aside class="speaker-drawer" id="speakerDrawer">
+    <div class="speaker-header">
+      <div class="speaker-title">
+        <span>🎙️ 5-Minute Presentation Script</span>
+      </div>
+      <div class="speaker-timing" id="speakerTiming">0:00 - 0:40</div>
+    </div>
+    <div class="speaker-body" id="speakerBody">
+      <!-- Dynamically filled based on active slide -->
+    </div>
+  </aside>
+
+  <!-- Overview Grid Modal -->
+  <div class="overview-modal" id="overviewModal">
+    <div class="overview-header">
+      <div class="overview-title">Presentation Overview (8 Slides)</div>
+      <button class="btn-pill" onclick="toggleOverview()">✕ Close <kbd>Esc</kbd></button>
+    </div>
+    <div class="overview-grid" id="overviewGrid">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </div>
+
+  <!-- Footer Navigation Bar -->
+  <footer class="deck-footer">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <div class="slide-counter">
+      Slide <span class="current" id="currentSlideNum">1</span> / <span id="totalSlidesNum">8</span>
+    </div>
+
+    <div class="deck-nav-buttons">
+      <button class="nav-btn" id="prevBtn" title="Previous Slide (← or Backspace)">‹</button>
+      <button class="nav-btn" id="nextBtn" title="Next Slide (→, Space, or Enter)">›</button>
+    </div>
+  </footer>
+
+  <script>
+    // State management
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+
+    // Timer state
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    // Elements
+    const progressBar = document.getElementById('progressBar');
+    const currentSlideNum = document.getElementById('currentSlideNum');
+    const totalSlidesNum = document.getElementById('totalSlidesNum');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const speakerDrawer = document.getElementById('speakerDrawer');
+    const speakerTiming = document.getElementById('speakerTiming');
+    const speakerBody = document.getElementById('speakerBody');
+    const overviewModal = document.getElementById('overviewModal');
+    const overviewGrid = document.getElementById('overviewGrid');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerToggleBtn = document.getElementById('timerToggleBtn');
+    const timerResetBtn = document.getElementById('timerResetBtn');
+    const timerDot = document.getElementById('timerDot');
+    const btnNotes = document.getElementById('btnNotes');
+    const btnOverview = document.getElementById('btnOverview');
+    const btnFullscreen = document.getElementById('btnFullscreen');
+
+    totalSlidesNum.textContent = totalSlides;
+
+    // Populate Overview Grid
+    function buildOverviewGrid() {
+      overviewGrid.innerHTML = '';
+      slides.forEach((slide, i) => {
+        const titleEl = slide.querySelector('.slide-title');
+        const badgeEl = slide.querySelector('.slide-badge');
+        const time = slide.getAttribute('data-time') || '';
+        const thumb = document.createElement('div');
+        thumb.className = `overview-thumb ${i === currentIndex ? 'current' : ''}`;
+        thumb.innerHTML = `
+          <div>
+            <div class="thumb-num">SLIDE 0${i + 1} &bull; ${badgeEl ? badgeEl.innerText : ''}</div>
+            <div class="thumb-title">${titleEl ? titleEl.innerText.split('\n')[0].replace(/<[^>]*>?/gm, '') : 'Slide ' + (i + 1)}</div>
+          </div>
+          <div class="thumb-time">⏱️ ${time}</div>
+        `;
+        thumb.onclick = () => {
+          goToSlide(i);
+          toggleOverview(false);
+        };
+        overviewGrid.appendChild(thumb);
+      });
+    }
+
+    // Update active slide
+    function updateSlide() {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active', 'prev');
+        if (i === currentIndex) {
+          slide.classList.add('active');
+        } else if (i < currentIndex) {
+          slide.classList.add('prev');
+        }
+      });
+
+      // Update UI elements
+      currentSlideNum.textContent = currentIndex + 1;
+      const progressPercent = ((currentIndex + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalSlides - 1;
+
+      // Update speaker script
+      const activeSlide = slides[currentIndex];
+      const notes = activeSlide.getAttribute('data-notes') || 'No notes for this slide.';
+      const timing = activeSlide.getAttribute('data-time') || '0:00 - 5:00';
+      speakerTiming.textContent = timing;
+      speakerBody.innerHTML = `<p>${notes}</p><div class="speaker-cue">⚡ TARGET PACE: ${timing}</div>`;
+
+      // Update overview thumb active classes
+      const thumbs = overviewGrid.querySelectorAll('.overview-thumb');
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('current', i === currentIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentIndex = index;
+        updateSlide();
+      }
+    }
+
+    function nextSlide() {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlide();
+      }
+    }
+
+    // Timer controls
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        timerToggleBtn.textContent = '▶';
+        timerDot.style.background = '#64748b';
+        timerDot.style.boxShadow = 'none';
+      } else {
+        timerRunning = true;
+        timerToggleBtn.textContent = '⏸';
+        timerDot.style.background = '#34d399';
+        timerDot.style.boxShadow = '0 0 8px #34d399';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          timerDisplay.textContent = formatTime(timerSeconds);
+
+          // Pacer alert after 5 minutes (300 seconds)
+          if (timerSeconds >= 300) {
+            timerDisplay.style.color = '#fb7185';
+            timerDot.style.background = '#fb7185';
+            timerDot.style.boxShadow = '0 0 8px #fb7185';
+          } else {
+            timerDisplay.style.color = 'inherit';
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 0;
+      timerDisplay.textContent = '00:00';
+      timerDisplay.style.color = 'inherit';
+      timerToggleBtn.textContent = '▶';
+      timerDot.style.background = '#34d399';
+      timerDot.style.boxShadow = '0 0 8px #34d399';
+    }
+
+    // Toggle drawers & modals
+    function toggleNotes() {
+      speakerDrawer.classList.toggle('open');
+      btnNotes.classList.toggle('active', speakerDrawer.classList.contains('open'));
+    }
+
+    function toggleOverview(forceState) {
+      if (forceState !== undefined) {
+        overviewModal.classList.toggle('open', forceState);
+      } else {
+        overviewModal.classList.toggle('open');
+      }
+      btnOverview.classList.toggle('active', overviewModal.classList.contains('open'));
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      // Don't trigger shortcuts if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case ' ':
+        case 'PageDown':
+        case 'Enter':
+          e.preventDefault();
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+        case 'Backspace':
+          e.preventDefault();
+          prevSlide();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides - 1);
+          break;
+        case 's':
+        case 'S':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'Escape':
+          if (overviewModal.classList.contains('open')) {
+            toggleOverview(false);
+          } else if (speakerDrawer.classList.contains('open')) {
+            toggleNotes();
+          }
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 't':
+        case 'T':
+          e.preventDefault();
+          toggleTimer();
+          break;
+        // Number keys 1-8
+        case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8':
+          goToSlide(parseInt(e.key, 10) - 1);
+          break;
+      }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) {
+        nextSlide();
+      } else if (touchEndX - touchStartX > 50) {
+        prevSlide();
+      }
+    }, { passive: true });
+
+    // Interactive Mode Selector (Slide 5)
+    window.selectMode = function(modeId) {
+      document.querySelectorAll('.mode-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.mode-panel').forEach(panel => panel.classList.remove('active'));
+
+      event.target.classList.add('active');
+      const targetPanel = document.getElementById(`panel-${modeId}`);
+      if (targetPanel) targetPanel.classList.add('active');
+    };
+
+    // Interactive Revision Simulator (Slide 7)
+    window.demoFork = function(btn, option) {
+      document.querySelectorAll('.fork-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const resultEl = document.getElementById('forkResult');
+
+      if (option === 'cut') {
+        resultEl.innerHTML = '&gt; <span style="color: #fb7185;">Option A (The Cut):</span> Delete summary sentence entirely. End scene on the cold silence of the closing door.';
+      } else if (option === 'dramatize') {
+        resultEl.innerHTML = '&gt; <span style="color: #fbbf24;">Option B (Dramatize):</span> Replace internal realization with physical action: &quot;She turned the small brass key twice, feeling the deadbolt catch.&quot;';
+      } else if (option === 'subtext') {
+        resultEl.innerHTML = '&gt; <span style="color: #38bdf8;">Option C (Subtext Shift):</span> Deflect into defensive dialogue: &quot;\'Winter is coming early,\' she said, checking the latch. \'That\'s all.\'&quot;';
+      }
+    };
+
+    // Button event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    btnNotes.addEventListener('click', toggleNotes);
+    btnOverview.addEventListener('click', () => toggleOverview());
+    btnFullscreen.addEventListener('click', toggleFullscreen);
+    timerToggleBtn.addEventListener('click', toggleTimer);
+    timerResetBtn.addEventListener('click', resetTimer);
+
+    // Initial setup
+    buildOverviewGrid();
+    updateSlide();
+  </script>
+</body>
+</html>

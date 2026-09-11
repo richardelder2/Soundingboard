@@ -6,7 +6,7 @@ This contract defines the execution flow of the Soundingboard novel engineering 
 
 ```mermaid
 graph TD
-    A[setup/comfort_scifi_blueprint.md] -->|Onboard Wizard / Path A| B(01_onboarding)
+    A[setup/INDEX.md & Blueprints] -->|Onboard Wizard / Path A| B(01_onboarding)
     B -->|Output: profiles & bible| C(02_planning)
     C -->|Output: beats, canon, trackers| D(03_drafting)
     D -->|Output: chapters| E(04_diagnostics_edits)
@@ -17,7 +17,7 @@ graph TD
 ## Stage Registry & Artifact Routing
 
 1. **`stages/01_onboarding/`**
-   - **Inputs**: `setup/*_blueprint.md`, `_config/okf_craft/index.md`
+   - **Inputs**: `setup/INDEX.md`, `setup/*_blueprint.md`, `setup/genre_bibles/INDEX.md`, `_config/okf_craft/index.md`
    - **Outputs**: `stages/01_onboarding/output/preferences.json`, `stages/01_onboarding/output/bible/`, `stages/01_onboarding/output/characters/`, `stages/01_onboarding/output/tell_allowlist.md`
    - **Processes**:
      - `01_intake`: Collect raw material or conduct Path A interview.
