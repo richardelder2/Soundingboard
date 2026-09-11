@@ -1,0 +1,8 @@
+# Soundingboard — Windsurf Cascade Instructions
+
+Read and follow `AGENTS.md` in this directory — it is the canonical instruction set for all agents operating in this workspace.
+
+Windsurf-Specific Safeguards:
+1. NEVER perform full-file replacements on active manuscript chapters. Always perform surgical, localized paragraph or line edits.
+2. Maintain `manuscript.json`, `canon.md`, and `structure_plan.md` as ground truth.
+3. Consult `docs/harnesses/cursor_windsurf_guide.md` for complete IDE guidelines.

@@ -1,0 +1,8 @@
+# Soundingboard — Cursor AI Instructions
+
+Read and follow `AGENTS.md` in this directory — it is the canonical instruction set for all agents operating in this workspace.
+
+Cursor-Specific Safeguards:
+1. NEVER perform destructive full-file rewrites of manuscript chapters in `stages/03_drafting/output/chapters/`. Always make targeted, localized line or paragraph replacements.
+2. For developmental edits and diagnostic revisions, provide proposed before/after snippets in chat using the Revision Playbook format before modifying existing markdown files.
+3. Consult `docs/harnesses/cursor_windsurf_guide.md` for complete IDE guidelines.
