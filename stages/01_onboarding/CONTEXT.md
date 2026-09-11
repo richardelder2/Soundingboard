@@ -5,6 +5,7 @@ name: Project Kickoff & Context Compilation
 inputs:
   - setup/INDEX.md
   - setup/genre_bibles/INDEX.md
+  - setup/trope_packs/INDEX.md
 outputs:
   - stages/01_onboarding/output/preferences.json
   - stages/01_onboarding/output/bible/world_bible.md
@@ -22,8 +23,8 @@ Three execution paths produce **identical artifacts**. Path A is preferred whene
 
 ## Path A — Agent-led interview (no API key required)
 1. **Story & Genre Discovery (Triage):** Ask the author about the story they want to write — explore their core concept, genre, tone/vibe, and any comp titles. Never assume or default to a single genre.
-2. **Match Questionnaire Blueprint:** Consult `setup/INDEX.md` to select the blueprint that fits their vision (or propose the closest 2–3 matches if cross-genre). Load that blueprint from `setup/`.
-3. **Ask Questions Sequentially:** Ask the chosen blueprint's questions **one at a time in chat**, in order. After each answer, play the blueprint's coach persona yourself (e.g., warm tea-and-scones for cozy mystery; psychological claustrophobia for domestic thriller; hard-science plausibility for sci-fi; banter and spark for rom-com; ≤ 3 sentences of feedback) — then ask the next question. Adaptive follow-ups are allowed; skipping questions is not.
+2. **Match Questionnaire Blueprint & Trope Pack:** Consult `setup/INDEX.md` to select the blueprint that fits their vision (or propose the closest 2–3 matches if cross-genre). If the author is writing a specialized commercial micro-genre (e.g. *Hockey Romance*, *Space Fleet*, *Courtroom Case*, *Cyberpunk Netrunner*), attach the matching modular pack from `setup/trope_packs/INDEX.md` to inject tailored tropes, technical jargon, and setting constraints. Load that blueprint from `setup/`.
+3. **Ask Questions Sequentially:** Ask the chosen blueprint's questions **one at a time in chat**, in order. After each answer, play the blueprint's coach persona yourself (e.g., warm tea-and-scones for cozy mystery; litigation proctor for courtroom thriller; hard-science plausibility for sci-fi; banter and spark for rom-com; ≤ 3 sentences of feedback) — then ask the next question. Adaptive follow-ups are allowed; skipping questions is not.
 4. **Reserve Synthesis for Approval:** Reserve the blueprint's final synthesis items for the end: synthesize all answers into the concept summary + logline per the blueprint's prompt, present them for approval, and revise until approved.
 5. Continue to Trope Discovery (below), then write the Output Artifacts exactly as specified.
 

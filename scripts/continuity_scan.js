@@ -121,7 +121,17 @@ export function runContinuityScan(targets) {
   const lines = [];
   lines.push('# Continuity Scan — proper nouns');
   lines.push('');
+
+  const canonSources = [];
+  const bookCanon = path.join('stages', '02_planning', 'output', 'canon.md');
+  if (fs.existsSync(bookCanon)) canonSources.push('Book Local');
+  const seriesCandidates = [path.join('..', 'series', 'series_canon.md'), path.join('..', 'series_canon.md'), path.join('series', 'series_canon.md')];
+  if (seriesCandidates.some(c => fs.existsSync(c))) canonSources.push('Series');
+  const worldCandidates = [path.join('..', '..', 'world', 'world_canon.md'), path.join('..', 'world', 'world_canon.md'), path.join('world', 'world_canon.md')];
+  if (worldCandidates.some(c => fs.existsSync(c))) canonSources.push('World Universe');
+
   lines.push(`Generated: ${new Date().toISOString()}  |  Scanned: ${files.length} chapters in ${dir}`);
+  lines.push(`Active Canon Tiers: ${canonSources.length > 0 ? canonSources.join(' ➔ ') : 'Local only (no multi-tier series/world active)'}`);
   lines.push('');
   lines.push('## ⚠️ Near-duplicate names (possible misspellings — verify against canon.md "Names & spellings")');
   if (nearDupes.length === 0) lines.push('- none found');

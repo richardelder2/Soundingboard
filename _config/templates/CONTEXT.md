@@ -23,11 +23,14 @@ Per ICM §3.2, agents consult this index to instantiate schema skeletons per sta
 
 ## 2. Genre-Conditional Continuity Trackers
 
-Instantiate only the tracker matching the active genre (from `preferences.json`):
+Instantiate the tracker matching the active genre (from `preferences.json`):
 
 | Genre / Mode | Tracker Template | Output Path | Focus |
 |---|---|---|---|
 | **Romance / Romantasy** | `tracker_romance_heat_ladder.template.md` | `stages/02_planning/output/trackers/heat_ladder.md` | 11-step intimacy ladder, grovel debt. |
-| **Fantasy / Progression / Thriller** | `tracker_power_escalation.template.md` | `stages/02_planning/output/trackers/power_escalation.md` | Advancement tiers, upgrades (4–6 ch). |
-| **Mystery / Detective / Noir** | `tracker_fair_play_clues.template.md` | `stages/02_planning/output/trackers/fair_play_clues.md` | Planted clues, suspect & alibi grid. |
+| **Fantasy / Progression / LitRPG** | `tracker_power_escalation.template.md` | `stages/02_planning/output/trackers/power_escalation.md` | Advancement tiers, upgrades (4–6 ch). |
+| **Mystery / Detective / Thriller** | `tracker_fair_play_clues.template.md` | `stages/02_planning/output/trackers/fair_play_clues.md` | Planted clues, suspect & alibi grid. |
+| **Legal Thriller / Procedural** | `tracker_investigation_evidence.template.md` | `stages/02_planning/output/trackers/investigation_evidence.md` | Forensic chain of custody, witness impeachment, statutory motions. |
+| **Epic Fantasy / Space Opera / Grimdark** | `tracker_faction_influence.template.md` | `stages/02_planning/output/trackers/faction_influence.md` | Multi-faction power shifts, diplomatic leverage, defection logs. |
+| **Heist / Caper / Tactical Op** | `tracker_heist_phases.template.md` | `stages/02_planning/output/trackers/heist_phases.md` | Synchronized 5-phase clock, security blueprints, double-bluff architecture. |
 | **Unlisted / Universal** | *None* | *None* | Use core `tracker_lore_debt.md` only. |

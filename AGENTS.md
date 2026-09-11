@@ -52,26 +52,33 @@ Novels are messy and authors don't work in stage order. The stages are **artifac
 - **Jumping around** (drafts chapter 12 first, redesigns a character mid-book, wants to write the climax today): allow it. Backfill the missing upstream artifacts by **reverse-engineering them from what exists** (a draft implies its beat sheet; chapters imply a foolscap), then reconcile — divergence between artifacts is resolved deliberately, with the author, never silently. Log ripple effects: a mid-book character change is a canon amendment with a retrofit list.
 - **What keeps this safe:** `manuscript.json` + `canon.md` + `structure_plan.md` are the ground truth of project state; `soundingboard status` shows the holes; the stage packet's missing-input report is a to-do list, not an error. Out-of-order work raises the Stage 04 burden (more to verify), but the gate is unchanged: nothing compiles until it passes.
 
-## Multiple projects & series
+## Multiple projects, series & multi-series universes (3-Tier Model)
 
-**One book = one workspace folder** (created by `soundingboard init`). Projects are fully self-contained — all state is cwd-relative, so parallel projects cannot contaminate each other. On entering any project cold, run `soundingboard status` first.
+Soundingboard supports a clean **3-tier abstraction hierarchy**:
 
-**Series** (multiple books sharing a world, cast, and trope trackers) use a sibling `series/` folder as the shared layer:
-
+```text
+my-universe/
+  world/             ← TIER 1: SHARED UNIVERSE LAYER (world_bible.md, world_canon.md,
+  │                     factions/, tracker_world_lore_debt.md, global laws & cosmology)
+  │
+  series-01/         ← TIER 2: SERIES CONTAINER (series_bible.md, series_canon.md,
+  │   │                 cross-book trackers, overarching big bad, series arc map)
+  │   book-01/       ← TIER 3: INDIVIDUAL BOOK (standard soundingboard workspace)
+  │   book-02/
+  │
+  series-02/         ← TIER 2: SPIN-OFF SERIES (shares world/ rules with series-01)
+      book-01/
 ```
-my-series/
-  series/            ← shared, read-mostly: filled genre bible, series_canon.md,
-  │                     cross-book trackers (heat ladder, lore-debt ledger, romance
-  │                     ladder, town/village bible), series arc map
-  book-01/           ← normal soundingboard init workspace
-  book-02/
-```
 
-Rules for series work:
-- Book-level artifacts (manuscript.json, structure_plan, per-book canon) stay in the book folder; facts and trackers that outlive one book get **promoted to `series/`** when a book completes Stage 04 (new canon → `series/series_canon.md`; ladder/ledger movements → the shared trackers).
-- Stage 01 for book N+1 starts by reading `series/` — the genre bible is already filled; only the per-book fields (this book's couple/case/trial ladder) get interviewed.
-- Book drafting treats `series/series_canon.md` exactly like local canon: draft loses conflicts; amendments are deliberate and logged with a retrofit list (which may span published books — flag those to the author, they may be unfixable and must constrain the new book instead).
-- The genre bibles' series trackers ("never reuse a motive-mechanism pair within 5 books", "one romance-ladder rung per 1–2 books") are audited at Stage 02 of each new book, not just Stage 04.
+**Cascading Canon Inheritance:**
+Whenever `soundingboard canon query`, `canon check`, or context packers run in a book workspace, canon resolution cascades automatically:
+$$\text{Local Book Canon} \;\longrightarrow\; \text{Series Canon} \;\longrightarrow\; \text{World Universe Canon}$$
+Drafts lose conflicts against series and world canon unless a deliberate canon amendment is logged with a retrofit list.
+
+**Upgrading Project Scope (`soundingboard promote`):**
+Authors often begin with a single book and later decide to expand into a multi-book series or an entire shared universe. Never ask authors to manually move folders or risk broken paths. Run the promotion engine backstage:
+- `node scripts/soundingboard.js promote --to=series`: Creates an immutable backup in `.soundingboard/backups/`, elevates world/genre bibles to a shared `series/` layer, updates `preferences.json`, and scaffolds a clean `book-02/`.
+- `node scripts/soundingboard.js promote --to=world`: Elevates core magic, physics, and historical laws into a top-level `world/` layer, enabling multiple independent series to co-exist in the same universe.
 
 **Studio updates & upstream sync:** Authors and agents can check for updates anytime via `node scripts/soundingboard.js check-update` (or `sb check-update`) and safely pull improvements with `node scripts/soundingboard.js update` (or `sb update`).
 - **Sacred creative files are never touched:** All manuscript chapters, `canon.md`, `preferences.json`, `.env`, and `inputs/` vaults are guaranteed untouched.

@@ -58,4 +58,34 @@ export class ContextPacker {
     }
     return null;
   }
+
+  static resolveCascadingCanon(cwd = process.cwd()) {
+    const layers = [];
+    // 1. Book-level canon
+    const bookCanon = ContextPacker.findFirstExisting([
+      path.join(cwd, 'stages', '02_planning', 'output', 'canon.md'),
+      path.join(cwd, 'canon.md'),
+      path.join(cwd, '00_Story_Bible', 'canon.md')
+    ]);
+    if (bookCanon) layers.push({ level: 'Book Canon', path: bookCanon });
+
+    // 2. Series-level canon
+    const seriesCanon = ContextPacker.findFirstExisting([
+      path.join(cwd, '..', 'series', 'series_canon.md'),
+      path.join(cwd, '..', 'series_canon.md'),
+      path.join(cwd, 'series', 'series_canon.md')
+    ]);
+    if (seriesCanon) layers.push({ level: 'Series Canon', path: seriesCanon });
+
+    // 3. World-level canon
+    const worldCanon = ContextPacker.findFirstExisting([
+      path.join(cwd, '..', '..', 'world', 'world_canon.md'),
+      path.join(cwd, '..', 'world', 'world_canon.md'),
+      path.join(cwd, 'world', 'world_canon.md')
+    ]);
+    if (worldCanon) layers.push({ level: 'World Universe Canon', path: worldCanon });
+
+    return layers;
+  }
 }
+

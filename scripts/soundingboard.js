@@ -183,9 +183,57 @@ function handleInit(targetFolder) {
   // Support --form flag in preferences.json
   const formArg = (process.argv.slice(2) || []).find(a => a.startsWith('--form='));
   const formVal = formArg ? formArg.split('=')[1].toLowerCase() : 'novel';
-  const validForms = ['short_story', 'novelette', 'novella', 'novel', 'series'];
+  const validForms = ['short_story', 'novelette', 'novella', 'novel', 'series', 'world'];
   const chosenForm = validForms.includes(formVal) ? formVal : 'novel';
   const isShort = ['short_story', 'novelette'].includes(chosenForm);
+
+  // Scaffolding multi-tier universe or series layers when requested
+  if (chosenForm === 'world') {
+    const worldDir = path.join(targetDir, 'world');
+    const factionsDir = path.join(worldDir, 'factions');
+    fs.mkdirSync(factionsDir, { recursive: true });
+
+    const worldBibleSrc = path.join(templateDir, '_config', 'templates', 'world_bible.template.md');
+    const worldBibleDest = path.join(worldDir, 'world_bible.md');
+    if (fs.existsSync(worldBibleSrc) && !fs.existsSync(worldBibleDest)) {
+      fs.copyFileSync(worldBibleSrc, worldBibleDest);
+    }
+
+    const worldCanonSrc = path.join(templateDir, '_config', 'templates', 'canon.template.md');
+    const worldCanonDest = path.join(worldDir, 'world_canon.md');
+    if (fs.existsSync(worldCanonSrc) && !fs.existsSync(worldCanonDest)) {
+      fs.copyFileSync(worldCanonSrc, worldCanonDest);
+    }
+
+    const worldLoreSrc = path.join(templateDir, '_config', 'templates', 'tracker_lore_debt.template.md');
+    const worldLoreDest = path.join(worldDir, 'tracker_world_lore_debt.md');
+    if (fs.existsSync(worldLoreSrc) && !fs.existsSync(worldLoreDest)) {
+      fs.copyFileSync(worldLoreSrc, worldLoreDest);
+    }
+
+    const worldReadmeDest = path.join(worldDir, 'README.md');
+    if (!fs.existsSync(worldReadmeDest)) {
+      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 1)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe.\n\n- \`world_bible.md\`: Core laws of physics, magic/technology, and world constraints.\n- \`world_canon.md\`: Established historical facts across eras.\n- \`factions/\`: Global empires, bloodlines, and religious orders.\n- \`tracker_world_lore_debt.md\`: Unresolved cosmic questions.\n`, 'utf8');
+    }
+    console.log('  ✔ Created world/ universe layer (world_bible.md, world_canon.md, factions/, tracker_world_lore_debt.md)');
+  } else if (chosenForm === 'series') {
+    const seriesDir = path.join(targetDir, 'series');
+    const trackersDir = path.join(seriesDir, 'trackers');
+    fs.mkdirSync(trackersDir, { recursive: true });
+
+    const seriesBibleSrc = path.join(templateDir, '_config', 'templates', 'world_bible.template.md');
+    const seriesBibleDest = path.join(seriesDir, 'series_bible.md');
+    if (fs.existsSync(seriesBibleSrc) && !fs.existsSync(seriesBibleDest)) {
+      fs.copyFileSync(seriesBibleSrc, seriesBibleDest);
+    }
+
+    const seriesCanonSrc = path.join(templateDir, '_config', 'templates', 'canon.template.md');
+    const seriesCanonDest = path.join(seriesDir, 'series_canon.md');
+    if (fs.existsSync(seriesCanonSrc) && !fs.existsSync(seriesCanonDest)) {
+      fs.copyFileSync(seriesCanonSrc, seriesCanonDest);
+    }
+    console.log('  ✔ Created series/ container layer (series_bible.md, series_canon.md, trackers/)');
+  }
 
   const onboardingDir = path.join(targetDir, 'stages', '01_onboarding', 'output');
   if (!fs.existsSync(onboardingDir)) fs.mkdirSync(onboardingDir, { recursive: true });
@@ -667,88 +715,284 @@ async function handleContinuity(customArgs) {
 
 
 function handleCanon(action, extraArgs = []) {
-  const canonCandidates = [
+  const canonSources = [];
+  const cwd = process.cwd();
+
+  // 1. Local Book Canon
+  const bookCandidates = [
     path.join('stages', '02_planning', 'output', 'canon.md'),
-    path.join('_config', 'templates', 'canon.template.md')
+    path.join('canon.md')
   ];
-  const canonFile = canonCandidates.find(c => fs.existsSync(c));
-  if (!canonFile) {
-    console.error('No canon file found (checked stages/02_planning/output/canon.md).');
+  const bookCanon = bookCandidates.find(c => fs.existsSync(c));
+  if (bookCanon) {
+    canonSources.push({ level: 'Book Local', path: bookCanon });
+  }
+
+  // 2. Series Canon
+  const seriesCandidates = [
+    path.join('..', 'series', 'series_canon.md'),
+    path.join('..', 'series_canon.md'),
+    path.join('series', 'series_canon.md')
+  ];
+  const seriesCanon = seriesCandidates.find(c => fs.existsSync(c));
+  if (seriesCanon) {
+    canonSources.push({ level: 'Series', path: seriesCanon });
+  }
+
+  // 3. World Canon
+  const worldCandidates = [
+    path.join('..', '..', 'world', 'world_canon.md'),
+    path.join('..', 'world', 'world_canon.md'),
+    path.join('world', 'world_canon.md')
+  ];
+  const worldCanon = worldCandidates.find(c => fs.existsSync(c));
+  if (worldCanon) {
+    canonSources.push({ level: 'World Universe', path: worldCanon });
+  }
+
+  if (canonSources.length === 0) {
+    const templateCanon = path.join('_config', 'templates', 'canon.template.md');
+    if (fs.existsSync(templateCanon)) {
+      canonSources.push({ level: 'Template', path: templateCanon });
+    }
+  }
+
+  if (canonSources.length === 0) {
+    console.error('No canon file found (checked stages/02_planning/output/canon.md, series/, and world/).');
     return;
   }
 
-  const fileContent = readText(canonFile);
-
   if (action === 'query') {
     const queryTerm = extraArgs.join(' ').trim();
-    printHeader(`Canon Query: "${queryTerm || 'ALL ENTITIES'}"`);
+    printHeader(`Cascading Canon Query: "${queryTerm || 'ALL ENTITIES'}"`);
+    console.log(`Searching ${canonSources.length} active tier(s): ${canonSources.map(s => `[${s.level}: ${s.path}]`).join(', ')}\n`);
 
-    const lines = fileContent.split(/\r?\n/);
     const results = [];
-    let currentSection = '';
 
-    lines.forEach(line => {
-      const h = line.match(/^#{1,3}\s+(.*)$/);
-      if (h) {
-        currentSection = h[1];
-        return;
-      }
-      if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| entity |') && !line.toLowerCase().includes('| character |')) {
-        const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-        if (cells.length >= 3) {
-          const entity = cells[0];
-          const attrOrFact = cells[1];
-          const valOrStatus = cells[2];
-          const firstAsserted = cells[3] || '';
-          const status = cells[4] || '';
+    canonSources.forEach(source => {
+      const fileContent = readText(source.path);
+      const lines = fileContent.split(/\r?\n/);
+      let currentSection = '';
 
-          if (!queryTerm || line.toLowerCase().includes(queryTerm.toLowerCase())) {
-            results.push({ section: currentSection, entity, attribute: attrOrFact, value: valOrStatus, firstAsserted, status });
+      lines.forEach(line => {
+        const h = line.match(/^#{1,3}\s+(.*)$/);
+        if (h) {
+          currentSection = h[1];
+          return;
+        }
+        if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| entity |') && !line.toLowerCase().includes('| character |')) {
+          const cells = line.split('|').map(c => c.trim()).filter(Boolean);
+          if (cells.length >= 3) {
+            const entity = cells[0];
+            const attrOrFact = cells[1];
+            const valOrStatus = cells[2];
+            const firstAsserted = cells[3] || '';
+            const status = cells[4] || '';
+
+            if (!queryTerm || line.toLowerCase().includes(queryTerm.toLowerCase())) {
+              results.push({
+                tier: source.level,
+                sourcePath: source.path,
+                section: currentSection,
+                entity,
+                attribute: attrOrFact,
+                value: valOrStatus,
+                firstAsserted,
+                status
+              });
+            }
           }
         }
-      }
+      });
     });
 
     if (results.length === 0) {
-      console.log(`No canon entries matching "${queryTerm}" found.\n`);
+      console.log(`No canon entries matching "${queryTerm}" found in any active tier.\n`);
       return;
     }
 
-    console.log(`Found ${results.length} matching canon entry/entries:\n`);
-    console.log(`| Entity | Attribute / Fact | Value | Established | Status |`);
-    console.log(`|---|---|---|---|---|`);
+    console.log(`Found ${results.length} matching canon entry/entries across tiers:\n`);
+    console.log(`| Tier | Entity | Attribute / Fact | Value | Established | Status |`);
+    console.log(`|---|---|---|---|---|---|`);
     results.forEach(r => {
-      console.log(`| **${r.entity}** | ${r.attribute} | ${r.value} | ${r.firstAsserted} | ${r.status} |`);
+      console.log(`| **[${r.tier}]** | **${r.entity}** | ${r.attribute} | ${r.value} | ${r.firstAsserted} | ${r.status} |`);
     });
     console.log('');
   } else if (action === 'check') {
-    printHeader('Canon Integrity & Verification Check');
-    const unverified = [];
-    const lines = fileContent.split(/\r?\n/);
-    lines.forEach((line, idx) => {
-      const match = line.match(/\[unverified\s+ch(\d+)\]/i);
-      if (match) {
-        unverified.push({ lineNum: idx + 1, chapter: parseInt(match[1], 10), text: line.trim() });
+    printHeader('Cascading Canon Integrity & Verification Check');
+    let totalUnverified = 0;
+
+    canonSources.forEach(source => {
+      const fileContent = readText(source.path);
+      const unverified = [];
+      const lines = fileContent.split(/\r?\n/);
+      lines.forEach((line, idx) => {
+        const match = line.match(/\[unverified\s+ch(\d+)\]/i);
+        if (match) {
+          unverified.push({ lineNum: idx + 1, chapter: parseInt(match[1], 10), text: line.trim() });
+        }
+      });
+
+      if (unverified.length === 0) {
+        console.log(`\x1b[32m✔ [${source.level}] ${source.path}: All entries verified.\x1b[0m`);
+      } else {
+        totalUnverified += unverified.length;
+        console.log(`\x1b[33m▲ [${source.level}] ${source.path}: ${unverified.length} unverified tag(s):\x1b[0m`);
+        unverified.forEach(u => {
+          console.log(`    • Line ${u.lineNum} (Ch ${u.chapter}): ${u.text}`);
+        });
       }
     });
 
-    if (unverified.length === 0) {
-      console.log('\x1b[32m✔ All canon entries are verified. No [unverified chN] tags remain.\x1b[0m\n');
+    if (totalUnverified === 0) {
+      console.log('\n\x1b[32m✔ All canon entries across all tiers are fully verified.\x1b[0m\n');
     } else {
-      console.log(`\x1b[33mFound ${unverified.length} unverified canon tag(s):\x1b[0m\n`);
-      unverified.forEach(u => {
-        console.log(`  • Line ${u.lineNum} (Ch ${u.chapter}): ${u.text}`);
-      });
-      console.log('\nRun "soundingboard gate <chapter>" upon audit completion to promote tags to verified status.\n');
+      console.log(`\nRun "soundingboard gate <chapter>" upon audit completion to promote tags to verified status.\n`);
     }
   } else {
     console.log(`
-Soundingboard Canon State Commands:
-  node scripts/${binName}.js canon query <entity>    Query canon facts for a specific character, object, or rule
-  node scripts/${binName}.js canon check              Audit canon for [unverified chN] tags needing promotion
+Soundingboard Cascading Canon Commands:
+  node scripts/${binName}.js canon query <entity>    Query canon facts across Book, Series, and World tiers
+  node scripts/${binName}.js canon check              Audit all active canon tiers for [unverified chN] tags
     `);
   }
 }
+
+function handlePromote(targetScope, extraArgs = []) {
+  printHeader('Soundingboard Workspace Scope Promotion Engine');
+
+  const allArgs = process.argv.slice(2) || [];
+  const toArg = allArgs.find(a => a.startsWith('--to='));
+  const scope = toArg ? toArg.split('=')[1].toLowerCase() : (targetScope || 'series').toLowerCase();
+
+  if (!['series', 'world'].includes(scope)) {
+    console.log('Usage: node scripts/soundingboard.js promote --to=series|world');
+    console.log('  --to=series : Upgrade a standalone novel into a multi-book series workspace');
+    console.log('  --to=world  : Upgrade a series into a multi-series universe workspace\n');
+    return;
+  }
+
+  const cwd = process.cwd();
+
+  // Pre-flight safety backup snapshot
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const backupDir = path.join(cwd, '.soundingboard', 'backups', `pre-promotion-${timestamp}`);
+  fs.mkdirSync(backupDir, { recursive: true });
+  console.log(`\x1b[36m[Snapshot]\x1b[0m Creating pre-promotion safety archive in .soundingboard/backups/...`);
+
+  const criticalPaths = [
+    'stages/01_onboarding/output/bible/world_bible.md',
+    'stages/01_onboarding/output/bible/genre_bible.md',
+    'stages/01_onboarding/output/preferences.json',
+    'stages/02_planning/output/canon.md',
+    'stages/02_planning/output/structure_plan.md',
+    'manuscript.json'
+  ];
+  criticalPaths.forEach(rel => {
+    const full = path.join(cwd, rel);
+    if (fs.existsSync(full)) {
+      const dest = path.join(backupDir, rel);
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(full, dest);
+    }
+  });
+  console.log(`  ✔ Safety snapshot archived in: .soundingboard/backups/pre-promotion-${timestamp}\n`);
+
+  if (scope === 'series') {
+    // Mode A: Standalone Book -> Multi-Book Series
+    console.log(`\x1b[34m[Promotion]\x1b[0m Promoting project to Multi-Book Series layer...`);
+
+    const seriesDir = path.join(cwd, 'series');
+    const trackersDir = path.join(seriesDir, 'trackers');
+    fs.mkdirSync(trackersDir, { recursive: true });
+
+    // Elevate world/genre bible
+    const localWorldBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'world_bible.md');
+    const localGenreBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'genre_bible.md');
+    const seriesBibleDest = path.join(seriesDir, 'series_bible.md');
+    if (!fs.existsSync(seriesBibleDest)) {
+      if (fs.existsSync(localGenreBible)) {
+        fs.copyFileSync(localGenreBible, seriesBibleDest);
+      } else if (fs.existsSync(localWorldBible)) {
+        fs.copyFileSync(localWorldBible, seriesBibleDest);
+      }
+      console.log(`  ✔ Elevated series bible: series/series_bible.md`);
+    }
+
+    // Elevate canon to series_canon
+    const localCanon = path.join(cwd, 'stages', '02_planning', 'output', 'canon.md');
+    const seriesCanonDest = path.join(seriesDir, 'series_canon.md');
+    if (!fs.existsSync(seriesCanonDest) && fs.existsSync(localCanon)) {
+      fs.copyFileSync(localCanon, seriesCanonDest);
+      console.log(`  ✔ Seeded series canon: series/series_canon.md`);
+    }
+
+    // Update preferences.json
+    const prefFile = path.join(cwd, 'stages', '01_onboarding', 'output', 'preferences.json');
+    if (fs.existsSync(prefFile)) {
+      try {
+        const pref = JSON.parse(fs.readFileSync(prefFile, 'utf8'));
+        pref.form = 'series';
+        pref.series_dir = 'series';
+        fs.writeFileSync(prefFile, JSON.stringify(pref, null, 2), 'utf8');
+        console.log(`  ✔ Updated preferences.json (form: series)`);
+      } catch (e) {}
+    }
+
+    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Book Series!\x1b[0m`);
+    console.log(`  • Shared series layer active at: series/`);
+    console.log(`  • Current manuscript remains active in: stages/`);
+    console.log(`  • Sibling books can now be initialized alongside this series.\n`);
+  } else if (scope === 'world') {
+    // Mode B: Series -> Multi-Series Universe
+    console.log(`\x1b[34m[Promotion]\x1b[0m Promoting project to Multi-Series World Universe (Tier 1)...`);
+
+    const worldDir = path.join(cwd, 'world');
+    const factionsDir = path.join(worldDir, 'factions');
+    fs.mkdirSync(factionsDir, { recursive: true });
+
+    const worldBibleDest = path.join(worldDir, 'world_bible.md');
+    const localBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'world_bible.md');
+    const seriesBible = path.join(cwd, 'series', 'series_bible.md');
+    if (!fs.existsSync(worldBibleDest)) {
+      if (fs.existsSync(seriesBible)) {
+        fs.copyFileSync(seriesBible, worldBibleDest);
+      } else if (fs.existsSync(localBible)) {
+        fs.copyFileSync(localBible, worldBibleDest);
+      }
+      console.log(`  ✔ Created universal world bible: world/world_bible.md`);
+    }
+
+    const worldCanonDest = path.join(worldDir, 'world_canon.md');
+    const localCanon = path.join(cwd, 'stages', '02_planning', 'output', 'canon.md');
+    const seriesCanon = path.join(cwd, 'series', 'series_canon.md');
+    if (!fs.existsSync(worldCanonDest)) {
+      if (fs.existsSync(seriesCanon)) {
+        fs.copyFileSync(seriesCanon, worldCanonDest);
+      } else if (fs.existsSync(localCanon)) {
+        fs.copyFileSync(localCanon, worldCanonDest);
+      }
+      console.log(`  ✔ Created universal world canon: world/world_canon.md`);
+    }
+
+    const worldLoreDest = path.join(worldDir, 'tracker_world_lore_debt.md');
+    const localLore = path.join(cwd, 'stages', '02_planning', 'output', 'trackers', 'lore_debt.md');
+    if (!fs.existsSync(worldLoreDest) && fs.existsSync(localLore)) {
+      fs.copyFileSync(localLore, worldLoreDest);
+      console.log(`  ✔ Seeded world lore debts: world/tracker_world_lore_debt.md`);
+    }
+
+    const worldReadmeDest = path.join(worldDir, 'README.md');
+    if (!fs.existsSync(worldReadmeDest)) {
+      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 1)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe.\n\n- \`world_bible.md\`: Core laws of physics, magic/technology, and world constraints.\n- \`world_canon.md\`: Established historical facts across eras.\n- \`factions/\`: Global empires, bloodlines, and religious orders.\n- \`tracker_world_lore_debt.md\`: Unresolved cosmic questions.\n`, 'utf8');
+    }
+
+    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Series World Universe!\x1b[0m`);
+    console.log(`  • Tier 1 World Layer active at: world/`);
+    console.log(`  • Multiple series can now co-exist and inherit these universal laws.\n`);
+  }
+}
+
 
 function handleTimeline() {
   printHeader('Manuscript Story Chronology & Timeline');
@@ -1607,7 +1851,8 @@ function showHelp() {
 ${APP_NAME} novel engineering CLI
 
 Usage:
-  node scripts/${BIN_NAME}.js init [folder] [--form]  Scaffold workspace (forms: short_story, novella, novel, series)
+  node scripts/${BIN_NAME}.js init [folder] [--form]  Scaffold workspace (forms: short_story, novella, novel, series, world)
+  node scripts/${BIN_NAME}.js promote [--to=...]      Upgrade workspace scope (--to=series or --to=world)
   node scripts/${BIN_NAME}.js status                 Show the status of each pipeline stage
   node scripts/${BIN_NAME}.js brief                  Executive summary of manuscript progress & state
   node scripts/${BIN_NAME}.js craft search <query>   Search ${getCraftModuleCount()} craft modules (flags: --stage, --genre, --scope, --json)
@@ -1754,6 +1999,10 @@ switch (command) {
     break;
   case 'canon':
     handleCanon(subCommand, args.slice(2));
+    break;
+  case 'promote':
+  case 'upgrade-scope':
+    handlePromote(subCommand, args.slice(2));
     break;
   case 'timeline':
     handleTimeline();
