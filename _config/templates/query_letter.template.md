@@ -1,4 +1,4 @@
-﻿# Literary Agent Query Letter & Synopsis: [TITLE]
+# Literary Agent Query Letter & Synopsis: [TITLE]
 
 ---
 type: query_letter

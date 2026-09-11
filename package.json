@@ -1,6 +1,6 @@
 {
   "name": "soundingboard",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Portable, token-efficient novel engineering system using Interpretable Context Methodology and Open Knowledge Format",
   "type": "module",
   "bin": {

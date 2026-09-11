@@ -1,4 +1,4 @@
-﻿# Blurb & Marketing Launch Kit: [TITLE]
+# Blurb & Marketing Launch Kit: [TITLE]
 
 ---
 type: marketing_kit
