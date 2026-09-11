@@ -1846,6 +1846,25 @@ function handleCraftSearch(searchArgs) {
   });
 }
 
+async function handleVisualizer(type, extraArgs = []) {
+  printHeader('State Road AI Story Console Visualizer');
+  const target = (type || 'all').toLowerCase();
+
+  if (target === 'ekg' || target === 'pacing' || target === 'all') {
+    const { generatePacingEkgHtml } = await import('./visualizer_ekg.js');
+    const ekgPath = generatePacingEkgHtml();
+    console.log(`  📊 Narrative EKG & Pacing Dashboard: ${ekgPath}`);
+  }
+
+  if (target === 'network' || target === 'cast' || target === 'all') {
+    const { generateNetworkHtml } = await import('./visualizer_network.js');
+    const netPath = generateNetworkHtml();
+    console.log(`  🕸️ Character & Faction Network Canvas: ${netPath}`);
+  }
+
+  console.log('\n\x1b[32m✔ State Road AI Story Console successfully generated! Open the HTML files in your browser to explore.\x1b[0m\n');
+}
+
 function showHelp() {
   console.log(`
 ${APP_NAME} novel engineering CLI
@@ -1855,6 +1874,7 @@ Usage:
   node scripts/${BIN_NAME}.js promote [--to=...]      Upgrade workspace scope (--to=series or --to=world)
   node scripts/${BIN_NAME}.js status                 Show the status of each pipeline stage
   node scripts/${BIN_NAME}.js brief                  Executive summary of manuscript progress & state
+  node scripts/${BIN_NAME}.js visualizer [ekg|net]   Launch State Road AI Story Console (EKG & Cast Network)
   node scripts/${BIN_NAME}.js craft search <query>   Search ${getCraftModuleCount()} craft modules (flags: --stage, --genre, --scope, --json)
   node scripts/${BIN_NAME}.js okf-lint              Validate all craft modules against ICM standards
   node scripts/${BIN_NAME}.js diag [name] [args]     Run diagnostic tools (rhythm, dialogue, tense, etc.)
@@ -2026,6 +2046,10 @@ switch (command) {
     break;
   case 'compile':
     handleCompile();
+    break;
+  case 'visualizer':
+  case 'console':
+    await handleVisualizer(subCommand, args.slice(2));
     break;
   case '--help':
   case 'help':
