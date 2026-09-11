@@ -96,6 +96,7 @@ You don't need programming experience, command-line skills, or complicated setup
 3. **Start the conversation in chat:**
    > *"Read AGENTS.md and let's brainstorm my novel."*
 4. Your agent will read the contracts and walk you through Stage 01 at your own pace.
+5. **Stay up to date:** Check for new craft cards and diagnostics anytime by asking your agent (*"Check for Soundingboard updates"*) or running `node scripts/soundingboard.js check-update`. Updates automatically safeguard your drafts with pre-update snapshots and preserve your customized settings.
 
 ---
 

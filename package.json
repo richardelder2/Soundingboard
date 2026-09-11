@@ -14,6 +14,8 @@
     "okf-index": "node ./scripts/soundingboard.js okf-index",
     "okf-lint": "node ./scripts/soundingboard.js okf-lint",
     "audit": "node ./scripts/soundingboard.js audit",
+    "check-update": "node ./scripts/soundingboard.js check-update",
+    "update": "node ./scripts/soundingboard.js update",
     "test": "node ./tests/run_tests.js"
   },
   "engines": {

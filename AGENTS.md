@@ -72,7 +72,11 @@ Rules for series work:
 - Book drafting treats `series/series_canon.md` exactly like local canon: draft loses conflicts; amendments are deliberate and logged with a retrofit list (which may span published books — flag those to the author, they may be unfixable and must constrain the new book instead).
 - The genre bibles' series trackers ("never reuse a motive-mechanism pair within 5 books", "one romance-ladder rung per 1–2 books") are audited at Stage 02 of each new book, not just Stage 04.
 
-**Upgrading a project** to a newer template version: re-run `node <template>/scripts/soundingboard.js init` from inside the project folder. Verified safe: it refreshes `scripts/`, `_config/`, stage contracts, and docs while preserving `manuscript.json`, `.env`, and every `output/` directory. Caveat: locally customized stage contracts or config files are overwritten — diff before/after (`git diff`) if the project is under git, which it should be.
+**Studio updates & upstream sync:** Authors and agents can check for updates anytime via `node scripts/soundingboard.js check-update` (or `sb check-update`) and safely pull improvements with `node scripts/soundingboard.js update` (or `sb update`).
+- **Sacred creative files are never touched:** All manuscript chapters, `canon.md`, `preferences.json`, `.env`, and `inputs/` vaults are guaranteed untouched.
+- **Automatic pre-update snapshot:** Every update run creates a timestamped safety snapshot in `.soundingboard/backups/`.
+- **Conflict-free resolution:** If the author customized a configuration file (like `_config/narrative_authenticity.md`) that changed upstream, the author's tailored version is kept active, and the upstream version is saved side-by-side as `<file>.upstream-v<version>.md`—never leaving raw git conflict markers in the project.
+- **Creative Concierge role:** When the author asks about updates, run `check-update` / `update` behind the scenes and summarize what's new in warm, craft-oriented terms (new craft cards, refined diagnostics), reassuring them that their story notes and chapters are completely safe.
 
 ## Agent-led onboarding (no API key needed)
 
@@ -168,6 +172,8 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `gate` | `node scripts/soundingboard.js gate <chapter>` | Machine-evaluate Stage 04 gate verdicts (scan, canon, rubric, ledger); sets `passed`. |
 | `manuscript-report` | `node scripts/soundingboard.js manuscript-report` | Whole-book diagnostic report: POV distribution, repeating 4-grams, and rhythm contour. |
 | `ingest` | `node scripts/soundingboard.js ingest <file\|dir>` | Ingest raw drafts with immutable archiving, provenance hash, and canon harvesting (alias: `import`). |
+| `check-update` | `node scripts/soundingboard.js check-update` | Check remote repository for new studio releases, craft cards, and tools. |
+| `update` | `node scripts/soundingboard.js update [--force]` | Safely pull upstream updates with auto-snapshot and conflict preservation. |
 | `compile` | `node scripts/soundingboard.js compile [--all]` | Compile verified passed chapters into `manuscript.html` (+ `.epub` via pandoc). |
 | `export` | `node scripts/soundingboard.js export [--format=...]` | Export compiled manuscript to `.html`, `.epub`, or `.docx`. |
 | `diag` | `node scripts/soundingboard.js diag [name] [args]` | Run diagnostic tools directly (rhythm, dialogue, tense, dread, lore, sensory, etc.). |

@@ -120,6 +120,8 @@ All CLI commands run in zero-dependency Node.js ($\ge 18$). The canonical entry 
 | `soundingboard gate` | `node scripts/soundingboard.js gate <chapter>` | Machine-evaluate Stage 04 gate verdicts (scan, canon, rubric, ledger); sets `passed`. |
 | `soundingboard manuscript-report` | `node scripts/soundingboard.js manuscript-report` | Whole-book diagnostic report: POV distribution, repeating 4-grams, and rhythm contour. |
 | `soundingboard ingest` | `node scripts/soundingboard.js ingest <file\|dir>` | Ingest raw drafts with immutable archiving, provenance hash, and canon harvesting (alias: `import`). |
+| `soundingboard check-update` | `node scripts/soundingboard.js check-update` | Check remote repository for new studio releases, craft cards, and tools. |
+| `soundingboard update` | `node scripts/soundingboard.js update [--force]` | Safely pull upstream updates with auto-snapshot and conflict preservation. |
 | `soundingboard compile` | `node scripts/soundingboard.js compile [--all]` | Compile verified passed chapters into `manuscript.html` (+ `.epub` via pandoc). |
 | `soundingboard export` | `node scripts/soundingboard.js export [--format=...]` | Export compiled manuscript to `.html`, `.epub`, or `.docx`. |
 | `soundingboard diag` | `node scripts/soundingboard.js diag [name] [args]` | Run diagnostic tools directly (rhythm, dialogue, tense, dread, lore, sensory, etc.). |

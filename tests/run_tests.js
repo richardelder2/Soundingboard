@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { testUpdateSystem } from './test_update.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -761,6 +762,7 @@ testManuscriptImport();
 testDirectoryIngestion();
 testChapterKitAtScale();
 testMarkdownScriptInvocations();
+await testUpdateSystem(assert, rootDir);
 
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);

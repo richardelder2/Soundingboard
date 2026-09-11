@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fork } from 'child_process';
 import { fileURLToPath } from 'url';
+import { checkUpdate, handleCheckUpdate, handleUpdate, renderUpdateBanner } from './updater.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -211,6 +212,7 @@ function handleInit(targetFolder) {
 }
 
 function handleStatus(stageFilter) {
+  renderUpdateBanner();
   printHeader('Soundingboard Stage Pipeline Status');
 
   const filterArg = stageFilter || args.find(a => a.startsWith('--stage='));
@@ -1604,6 +1606,8 @@ Usage:
   node scripts/${BIN_NAME}.js manuscript-report      Comprehensive whole-book narrative & voice report
   node scripts/${BIN_NAME}.js ingest <file|dir>      Ingest external raw drafts into Stage 03 with inputs/ archiving & canon
   node scripts/${BIN_NAME}.js import <file|dir>      (Alias for ingest)
+  node scripts/${BIN_NAME}.js check-update            Check remote repository for new studio updates
+  node scripts/${BIN_NAME}.js update [--force]        Safely pull upstream updates with auto-snapshot & conflict defense
   node scripts/${BIN_NAME}.js export [--format=...]  Export manuscript (.html, .docx, .epub)
   node scripts/${BIN_NAME}.js compile [--all]        Compile passed chapters into manuscript.html (+ .epub via pandoc)
   `);
@@ -1611,6 +1615,12 @@ Usage:
 
 if (process.argv[1] && (process.argv[1].endsWith('soundingboard.js') || process.argv[1].endsWith('saga.js') || process.argv[1].endsWith('sb.js'))) {
 switch (command) {
+  case 'check-update':
+    await handleCheckUpdate();
+    break;
+  case 'update':
+    await handleUpdate({ force: args.includes('--force') });
+    break;
   case 'init':
     handleInit(subCommand);
     break;
