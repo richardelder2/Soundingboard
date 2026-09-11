@@ -5,6 +5,7 @@ import * as path from 'path';
 import { fork } from 'child_process';
 import { fileURLToPath } from 'url';
 import { checkUpdate, handleCheckUpdate, handleUpdate, renderUpdateBanner } from './updater.js';
+import { handleDoctor, diagnoseEnvironment, autoFixEnvironment } from './doctor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -119,6 +120,19 @@ function handleInit(targetFolder) {
   console.log(`Initializing clean workspace at: ${targetDir}`);
   console.log(`Template source: ${templateDir}`);
 
+  // Pre-flight check
+  const diag = diagnoseEnvironment(targetDir);
+  if (!diag.isReady) {
+    console.log('\n\x1b[31mPrerequisite check warning:\x1b[0m');
+    diag.checks.filter(c => c.status === 'fail').forEach(c => {
+      console.log(`  ✗ ${c.name}: ${c.message}`);
+      if (c.fixInstruction && c.fixInstruction.cmd) {
+        console.log(`    ↳ To install: \x1b[33m${c.fixInstruction.cmd}\x1b[0m`);
+      }
+    });
+    console.log('');
+  }
+
   const items = [
     '_config',
     'setup',
@@ -206,6 +220,14 @@ function handleInit(targetFolder) {
     ].join('\n');
     fs.writeFileSync(envPath, envContent, 'utf8');
     console.log('  ✔ Created template .env file.');
+  }
+
+  // Concierge auto-healing for workspace git tracking and author identity
+  const fixRes = autoFixEnvironment(targetDir);
+  if (fixRes.fixed && fixRes.fixed.length > 0) {
+    for (const f of fixRes.fixed) {
+      console.log(`  ✔ ${f.message}`);
+    }
   }
 
   console.log(`\n\x1b[32m✔ ${APP_NAME} Workspace successfully initialized! Run "npm install" to configure dependencies.\x1b[0m\n`);
@@ -1608,6 +1630,7 @@ Usage:
   node scripts/${BIN_NAME}.js import <file|dir>      (Alias for ingest)
   node scripts/${BIN_NAME}.js check-update            Check remote repository for new studio updates
   node scripts/${BIN_NAME}.js update [--force]        Safely pull upstream updates with auto-snapshot & conflict defense
+  node scripts/${BIN_NAME}.js doctor [--fix]          Inspect environment and auto-heal missing tools & configs
   node scripts/${BIN_NAME}.js export [--format=...]  Export manuscript (.html, .docx, .epub)
   node scripts/${BIN_NAME}.js compile [--all]        Compile passed chapters into manuscript.html (+ .epub via pandoc)
   `);
@@ -1615,6 +1638,9 @@ Usage:
 
 if (process.argv[1] && (process.argv[1].endsWith('soundingboard.js') || process.argv[1].endsWith('saga.js') || process.argv[1].endsWith('sb.js'))) {
 switch (command) {
+  case 'doctor':
+    handleDoctor(args.slice(1));
+    break;
   case 'check-update':
     await handleCheckUpdate();
     break;

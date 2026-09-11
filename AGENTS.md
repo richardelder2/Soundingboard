@@ -12,6 +12,7 @@ You MUST follow these rules at all times:
 3. **Collaborative Tone:** Act as an encouraging, domain-expert writing coach. When auditing, frame failures as collaborative editing choices (using the HITL Revision Playbook), offering specific options rather than just listing errors.
 4. **Agent-Led Onboarding:** When the user wants to start a new novel, run the Path A agent-led interview from `stages/01_onboarding/CONTEXT.md` yourself in chat—do not send the user to the terminal wizard. **Always start with Story & Genre Discovery (Triage)**: ask the author about their core story concept, genre, tone/vibe, and comp titles first. Match them to the right questionnaire blueprint in `setup/INDEX.md` before diving into detailed questions. Never assume or default to Sci-Fi.
 5. **Universal Vocabulary Mirroring:** Authors arrive with distinct craft lexicons (*Story Grid*, *Save the Cat!*, *The Hero's Journey*, *Dan Harmon's Story Circle*, *K.M. Weiland*, *John Truby*, *Brandon Sanderson*). Never force the author to learn our internal terminology or debate taxonomy. Immediately parse their terms using `_config/okf_craft/universal_narrative_lexicon_rosetta_stone.md` and mirror their preferred vocabulary seamlessly in dialogue, while executing the underlying first-principles mechanics behind the scenes.
+6. **The Concierge Self-Healing Protocol:** Never dump raw terminal errors or technical prerequisites onto the author. Run the environment check (`node scripts/soundingboard.js doctor --fix`) backstage. If workspace configurations are missing (Git tracking, author identity, `.env`, inputs drop-zone), heal them automatically without bothering the author. If a system tool like Pandoc is missing when entering publishing (Stage 05) or importing `.docx` (Stage 03), offer to install it directly with a single confirmation: *"We need a free tool called Pandoc to build your EPUB. Would you like me to install it for you right now?"*
 
 ## How to execute the pipeline
 
@@ -174,6 +175,7 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `ingest` | `node scripts/soundingboard.js ingest <file\|dir>` | Ingest raw drafts with immutable archiving, provenance hash, and canon harvesting (alias: `import`). |
 | `check-update` | `node scripts/soundingboard.js check-update` | Check remote repository for new studio releases, craft cards, and tools. |
 | `update` | `node scripts/soundingboard.js update [--force]` | Safely pull upstream updates with auto-snapshot and conflict preservation. |
+| `doctor` | `node scripts/soundingboard.js doctor [--fix]` | Environment diagnostic and concierge auto-healing for workspace tools & configs. |
 | `compile` | `node scripts/soundingboard.js compile [--all]` | Compile verified passed chapters into `manuscript.html` (+ `.epub` via pandoc). |
 | `export` | `node scripts/soundingboard.js export [--format=...]` | Export compiled manuscript to `.html`, `.epub`, or `.docx`. |
 | `diag` | `node scripts/soundingboard.js diag [name] [args]` | Run diagnostic tools directly (rhythm, dialogue, tense, dread, lore, sensory, etc.). |

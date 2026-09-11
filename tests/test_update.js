@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { semverCompare, getCachedUpdateInfo, createSafetySnapshot, runStandaloneUpdate } from '../scripts/updater.js';
+import { diagnoseEnvironment, autoFixEnvironment } from '../scripts/doctor.js';
 
 export async function testUpdateSystem(assert, rootDir) {
   // 1. Semver Comparison Tests
@@ -81,6 +82,35 @@ export async function testUpdateSystem(assert, rootDir) {
   } finally {
     try {
       fs.rmSync(tempTestDir, { recursive: true, force: true });
+    } catch {}
+  }
+
+  // 6. Doctor Environment Diagnostic & Auto-Healing Tests
+  const diag = diagnoseEnvironment(rootDir);
+  assert(diag.checks.some(c => c.id === 'node'), 'Doctor checks Node.js runtime');
+  assert(diag.checks.some(c => c.id === 'git_bin'), 'Doctor checks Git binary');
+  assert(diag.checks.some(c => c.id === 'git_identity'), 'Doctor checks Git author identity');
+  assert(diag.checks.some(c => c.id === 'pandoc'), 'Doctor checks Pandoc engine');
+
+  try {
+    const doctorOut = execSync(`node "${cliScript}" doctor`, { cwd: rootDir, encoding: 'utf8' });
+    assert(doctorOut.includes('Soundingboard Studio Doctor'), 'CLI doctor executes cleanly');
+  } catch (e) {
+    assert(false, 'CLI doctor threw error', e.message);
+  }
+
+  // 7. Auto-Healing Test in Scratch Directory
+  const autoFixDir = path.join(rootDir, 'tests', 'fixtures', 'temp_doctor_workspace');
+  fs.mkdirSync(autoFixDir, { recursive: true });
+  try {
+    const healRes = autoFixEnvironment(autoFixDir, { authorName: 'TestAuthor', authorEmail: 'test@example.com' });
+    assert(healRes.fixed.length >= 2, 'Doctor auto-healing remediates missing workspace items');
+    assert(fs.existsSync(path.join(autoFixDir, '.env')), 'Doctor auto-healing created missing .env');
+    assert(fs.existsSync(path.join(autoFixDir, 'inputs', 'drafts')), 'Doctor auto-healing created inputs/drafts');
+    assert(fs.existsSync(path.join(autoFixDir, '.git')), 'Doctor auto-healing initialized missing Git repository');
+  } finally {
+    try {
+      fs.rmSync(autoFixDir, { recursive: true, force: true });
     } catch {}
   }
 }

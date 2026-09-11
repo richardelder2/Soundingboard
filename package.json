@@ -16,6 +16,7 @@
     "audit": "node ./scripts/soundingboard.js audit",
     "check-update": "node ./scripts/soundingboard.js check-update",
     "update": "node ./scripts/soundingboard.js update",
+    "doctor": "node ./scripts/soundingboard.js doctor",
     "test": "node ./tests/run_tests.js"
   },
   "engines": {
