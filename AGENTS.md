@@ -172,7 +172,9 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `craft` | `node scripts/soundingboard.js craft search <query>` | Search 114 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
 | `okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits (alias: `lint`). |
 | `okf-index` | `node scripts/soundingboard.js okf-index` | Rebuild static markdown catalogs (`index.md`) across OKF knowledge bundles. |
-| `audit` | `node scripts/soundingboard.js audit [path ...]` | Scan chapters for AI prose tells, cadence variance, emotion modes, and dialogue ratios. |
+| `audit` | `node scripts/soundingboard.js audit [path ...]` | Scan scenes for AI prose tells, rhythm variance, and emotion modes (< 500ms). |
+| `chapter-audit` | `node scripts/soundingboard.js chapter-audit [ch]` | Chapter-scoped multi-scene cadence variability and break efficacy audit. |
+| `commandments` | `node scripts/soundingboard.js commandments [sc\|ch]` | Advisory audit of Shawn Coyne's 5 Commandments against Stage 02 scene cards. |
 | `continuity` | `node scripts/soundingboard.js continuity [dir]` | Proper-noun continuity scan (detects near-duplicates and orphaned names). |
 | `canon` | `node scripts/soundingboard.js canon query "<q>"` / `check` | Query established facts for an entity, or check for unverified canon tags. |
 | `timeline` | `node scripts/soundingboard.js timeline` | Verify story chronology and temporal anchors across chapter drafts. |

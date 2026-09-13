@@ -729,6 +729,14 @@ async function handleChapterAudit(customArgs) {
   runChapterAudit(target);
 }
 
+async function handleCommandmentAudit(customArgs) {
+  const { runCommandmentAudit } = await import('./commandment_audit.js');
+  const cmdArgs = customArgs !== undefined ? customArgs : args.slice(1);
+  const target = cmdArgs.length > 0 ? cmdArgs[0] : null;
+  runCommandmentAudit(target);
+}
+
+
 async function handleContinuity(customArgs) {
   const { runContinuityScan } = await import('./continuity_scan.js');
   const contArgs = customArgs !== undefined ? customArgs : args.slice(1);
@@ -1930,6 +1938,7 @@ Usage:
   node scripts/${BIN_NAME}.js pack-chapter <N>       Assemble token-disciplined drafting kit for Chapter N
   node scripts/${BIN_NAME}.js audit [path ...]       Scene-scoped AI prose tell & rhythm scan (<sc-id|path>)
   node scripts/${BIN_NAME}.js chapter-audit [ch]     Chapter-scoped multi-scene cadence & break efficacy audit
+  node scripts/${BIN_NAME}.js commandments [sc|ch]   Advisory audit of 5 Coyne commandments against Stage 02 intent
   node scripts/${BIN_NAME}.js continuity [dir|sc]    Scan scenes/chapters for proper-noun consistency & canon match
   node scripts/${BIN_NAME}.js canon query <entity>   Query established canon facts for an entity
   node scripts/${BIN_NAME}.js canon check            Check canon for unverified tags
@@ -2066,6 +2075,11 @@ switch (command) {
     break;
   case 'chapter-audit':
     await handleChapterAudit(args.slice(1));
+    break;
+  case 'commandment-audit':
+  case 'audit-commandments':
+  case 'commandments':
+    await handleCommandmentAudit(args.slice(1));
     break;
   case 'continuity':
     await handleContinuity(args.slice(1));

@@ -508,6 +508,9 @@ function testManuscriptImport() {
   fs.mkdirSync(chDir, { recursive: true });
   const archivedPath = path.join(rootDir, 'inputs', 'drafts', 'import_sample.md');
 
+  const rootManuscriptDir = path.join(rootDir, 'manuscript');
+  const hadManuscriptBefore = fs.existsSync(rootManuscriptDir);
+
   try {
     const importOut = execSync(`node ${cliScript} ingest "${fixturePath}"`, execOptions);
     assert(importOut.includes('Successfully imported 2 chapter(s)'), 'Ingest CLI processes and splits multi-chapter markdown');
@@ -556,6 +559,9 @@ function testManuscriptImport() {
     else if (fs.existsSync(manifestPath)) fs.unlinkSync(manifestPath);
     if (origCanon !== null) fs.writeFileSync(canonPath, origCanon, 'utf8');
     else if (fs.existsSync(canonPath)) fs.unlinkSync(canonPath);
+    if (!hadManuscriptBefore && fs.existsSync(rootManuscriptDir)) {
+      fs.rmSync(rootManuscriptDir, { recursive: true, force: true });
+    }
   }
 }
 
@@ -575,6 +581,9 @@ function testDirectoryIngestion() {
   const origCanon = fs.existsSync(canonPath) ? fs.readFileSync(canonPath, 'utf8') : null;
   const chDir = path.join(rootDir, 'stages', '03_drafting', 'output', 'chapters');
   fs.mkdirSync(chDir, { recursive: true });
+
+  const rootManuscriptDir = path.join(rootDir, 'manuscript');
+  const hadManuscriptBefore = fs.existsSync(rootManuscriptDir);
 
   try {
     const dirOut = execSync(`node ${cliScript} ingest "${testDir}"`, execOptions);
@@ -601,6 +610,9 @@ function testDirectoryIngestion() {
     else if (fs.existsSync(manifestPath)) fs.unlinkSync(manifestPath);
     if (origCanon !== null) fs.writeFileSync(canonPath, origCanon, 'utf8');
     else if (fs.existsSync(canonPath)) fs.unlinkSync(canonPath);
+    if (!hadManuscriptBefore && fs.existsSync(rootManuscriptDir)) {
+      fs.rmSync(rootManuscriptDir, { recursive: true, force: true });
+    }
   }
 }
 
@@ -763,6 +775,28 @@ testDirectoryIngestion();
 testChapterKitAtScale();
 testMarkdownScriptInvocations();
 await testUpdateSystem(assert, rootDir);
+
+// P2 Stage 04 Tests (SB2-P2-01, SB2-P2-02, SB2-P2-03, SB2-P2-04)
+try {
+  execSync('node tests/scene_audit.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Scene-Scoped Audits & Coverage Reporting (SB2-P2-01, SB2-P2-04)');
+} catch (e) {
+  assert(false, 'Scene-Scoped Audits & Coverage Reporting (SB2-P2-01, SB2-P2-04)', e.message);
+}
+
+try {
+  execSync('node tests/chapter_audit.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Chapter-Scoped Audits & Break Efficacy (SB2-P2-02)');
+} catch (e) {
+  assert(false, 'Chapter-Scoped Audits & Break Efficacy (SB2-P2-02)', e.message);
+}
+
+try {
+  execSync('node tests/commandment_audit.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Commandment Advisory Audit (SB2-P2-03)');
+} catch (e) {
+  assert(false, 'Commandment Advisory Audit (SB2-P2-03)', e.message);
+}
 
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);

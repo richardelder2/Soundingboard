@@ -157,10 +157,10 @@ These decisions have been author-approved and must NOT be altered or second-gues
   - Break efficacy audit compares chapter ending against authored `break_rationale`.
   - *Acceptance:* Audit reports cadence variance across scenes and validates break delivery. (Verified by `tests/chapter_audit.test.js`)
 
-- [ ] **SB2-P2-03: Commandment Advisory Audit**
-  - Evaluates derived scene commandments against Stage 02 scene card intent.
+- [x] **SB2-P2-03: Commandment Advisory Audit**
+  - Evaluates derived scene commandments against Stage 02 scene card intent (`scripts/commandment_audit.js`).
   - Surfaces divergences as advisory creative options in Revision Playbook.
-  - *Acceptance:* Audit outputs side-by-side comparison without failing machine gate.
+  - *Acceptance:* Audit outputs side-by-side comparison without failing machine gate. (Verified by `tests/commandment_audit.test.js`)
 
 - [x] **SB2-P2-04: Honest Coverage Reporting on Every Pass**
   - Every diagnostic pass reports: scenes examined, scenes skipped, null value shifts, and undrafted scenes (`scripts/coverage_reporter.js`).
@@ -219,6 +219,7 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Phase 0 Execution) | Phase 0 completed (SB2-P0-01 through SB2-P0-10): frontmatter parser, JSDoc types, typecheck, monotonic ID allocator, derived reindex, SHA-256 staleness, concurrency guard, Node >= 18 preflight, migration tool, 1.x branch | 88/88 main tests pass; 7 new test suites pass; 0 typescript errors | Ready to begin Phase 1 (`SB2-P1-01`) |
 | 2026-09-13 | Antigravity (Phase 1 Execution) | Phase 1 completed (SB2-P1-01 through SB2-P1-07): scene card & templates overhaul, chapter break rationale validation, pack-scene drafting kit, same-POV voice anchor resolution engine, obligatory scene ledger validator, 27 questionnaire blueprints updated, ongoing ingest decomposition, The Bracket Method playbook, craft card & CLI packer | 88/88 main tests pass; 8/8 Phase 1 suites pass; okf-lint 0 errors; 0 typescript errors | Ready to begin Phase 2 (`SB2-P2-01`) |
 | 2026-09-13 | Antigravity (Phase 2 Option A Execution) | Phase 2 Option A completed (SB2-P2-01, SB2-P2-02, SB2-P2-04): scene-scoped audits (< 500ms AI-tell scan + scene continuity against canon), chapter-scoped audits (multi-scene cadence variability + break efficacy verification against authored rationale), honest coverage reporting (examined, skipped, undrafted, null value shifts), and CLI wiring | 88/88 main tests pass; 14/14 scene audit tests pass; 20/20 chapter audit tests pass; okf-lint 0 errors; 0 typescript errors | Ready for Commandment Advisory Audit (`SB2-P2-03`) or Thread Sentry & Canon 2.0 (`SB2-P2-05`, `SB2-P2-06`) |
+| 2026-09-13 | Antigravity (Commandment Advisory Audit) | Completed SB2-P2-03 (Commandment Advisory Audit): evaluated Shawn Coyne's 5 Commandments from scene prose against Stage 02 frontmatter intent, side-by-side comparison, advisory options in Revision Playbook without failing machine gates, CLI wiring (`soundingboard commandments`), and test suite | 91/91 main tests pass; 21/21 commandment audit tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Diagnostics Suite (`SB2-P2-05`) and Canon 2.0 (`SB2-P2-06`) |
 
 ---
 
