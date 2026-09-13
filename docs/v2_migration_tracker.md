@@ -184,11 +184,11 @@ These decisions have been author-approved and must NOT be altered or second-gues
 ### Phase 3: Publishing, Visualizations & Studio Console
 *Goal: Publishing compiler, Thread Lane Visualizer, craft card metadata, and documentation.*
 
-- [ ] **SB2-P3-01: Multi-Tier Manuscript Compiler (`scripts/compile_manuscript.js`)**
+- [x] **SB2-P3-01: Multi-Tier Manuscript Compiler (`scripts/compile_manuscript.js`)**
   - Compiles scenes $\rightarrow$ chapters $\rightarrow$ HTML/EPUB.
   - Configurable scene break glyphs (`***`, blank line, none).
   - Fail-loud verification: halts immediately if any scene in a chapter is missing or undrafted.
-  - *Acceptance:* Missing scene throws clear compilation error; full manuscript compiles byte-clean HTML.
+  - *Acceptance:* Missing scene throws clear compilation error; full manuscript compiles byte-clean HTML. (Verified by `tests/compile_manuscript.test.js`)
 
 - [ ] **SB2-P3-02: Thread Lane Visualizer (`scripts/thread_visualizer.js`)**
   - Terminal ASCII chart for instant chat feedback.
@@ -223,6 +223,7 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Commandment Advisory Audit) | Completed SB2-P2-03 (Commandment Advisory Audit): evaluated Shawn Coyne's 5 Commandments from scene prose against Stage 02 frontmatter intent, side-by-side comparison, advisory options in Revision Playbook without failing machine gates, CLI wiring (`soundingboard commandments`), and test suite | 91/91 main tests pass; 21/21 commandment audit tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Diagnostics Suite (`SB2-P2-05`) and Canon 2.0 (`SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Thread Diagnostics Suite) | Completed SB2-P2-05 (Thread Diagnostics Suite): polarity turn detection, word-count-based Dormancy Sentry, hard Orphan Guard on unbound scenes, ASCII Thread Lane View, CLI integration (`soundingboard threads`), and test suite | 92/92 main tests pass; 37/37 thread diagnostic tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Canon 2.0 & Epistemic Decision Queues (`SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Canon 2.0 & Phase 2 Complete) | Completed SB2-P2-06 (Canon 2.0 & Decision Queues): provenance validation (`established_in`), Reader Spoiler Guard (`reader_known_as_of`), 3 epistemic gap decision queues (Orphaned, Unbound, Absent), CLI integration (`soundingboard canon check/query/queues`), and test suite. Phase 2 is 100% complete. | 93/93 main tests pass; 8/8 canon tests pass; 0 typescript errors; okf-lint 0 errors | Phase 2 Complete; Ready for Phase 3 (`SB2-P3-01`) |
+| 2026-09-13 | Antigravity (Multi-Tier Compiler) | Completed SB2-P3-01 (Multi-Tier Manuscript Compiler): multi-tier resolution (2.0 atomic scenes -> chapters -> HTML/EPUB/DOCX + 1.x legacy fallback), configurable scene break glyphs (`***`, blank, none, custom), fail-loud missing scene verification, gate enforcement, CLI integration, and test suite. | 94/94 main tests pass; 7/7 compiler tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Lane Visualizer (`SB2-P3-02`) |
 
 ---
 

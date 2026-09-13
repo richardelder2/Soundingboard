@@ -812,6 +812,13 @@ try {
   assert(false, 'Canon 2.0 & Decision Queues (SB2-P2-06)', e.message);
 }
 
+try {
+  execSync('node tests/compile_manuscript.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Multi-Tier Manuscript Compiler (SB2-P3-01)');
+} catch (e) {
+  assert(false, 'Multi-Tier Manuscript Compiler (SB2-P3-01)', e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

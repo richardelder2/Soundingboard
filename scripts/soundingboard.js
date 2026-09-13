@@ -1007,9 +1007,9 @@ async function handleImportCmd(sourceFile, extraArgs = []) {
   importManuscript(sourceFile, options);
 }
 
-async function handleCompile() {
+async function handleCompile(extraArgs) {
   const { compileManuscript } = await import('./compile_manuscript.js');
-  compileManuscript(args.slice(1));
+  compileManuscript(extraArgs !== undefined ? extraArgs : args.slice(1));
 }
 
 const PACKET_FILE_CAP = 48 * 1024;
