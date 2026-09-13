@@ -798,6 +798,13 @@ try {
   assert(false, 'Commandment Advisory Audit (SB2-P2-03)', e.message);
 }
 
+try {
+  execSync('node tests/threads.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Thread Diagnostics Suite (SB2-P2-05)');
+} catch (e) {
+  assert(false, 'Thread Diagnostics Suite (SB2-P2-05)', e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

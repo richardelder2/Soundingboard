@@ -1095,99 +1095,13 @@ function handleTimeline() {
   }
 }
 
-function handleThreads() {
-  printHeader('Narrative Thread & Subplot Ledger');
-  const threadsCandidates = [
-    path.join('stages', '02_planning', 'output', 'trackers', 'threads.md'),
-    path.join('stages', '02_planning', 'output', 'threads.md'),
-    path.join('_config', 'templates', 'threads.template.md')
-  ];
-  const threadsFile = threadsCandidates.find(f => fs.existsSync(f));
-  if (!threadsFile) {
-    console.log('No thread tracker found. Initialize one using _config/templates/threads.template.md.\n');
-    return;
-  }
-
-  const threadContent = readText(threadsFile);
-  const lines = threadContent.split(/\r?\n/);
-
-  const threads = [];
-  lines.forEach(line => {
-    if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| thread id |')) {
-      const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-      if (cells.length >= 6) {
-        threads.push({
-          id: cells[0],
-          description: cells[1],
-          type: cells[2],
-          introduced: cells[3],
-          latest: cells[4],
-          target: cells[5],
-          status: cells[6] || 'open'
-        });
-      }
-    }
-  });
-
-  // Fallback: Check frontmatter threads array or bullet lists
-  if (threads.length === 0) {
-    try {
-      const meta = parse(threadContent, threadsFile);
-      if (Array.isArray(meta.threads)) {
-        meta.threads.forEach(t => {
-          if (typeof t === 'object' && t.id) {
-            threads.push({
-              id: t.id,
-              description: t.name || t.description || 'Main Story (Spine)',
-              type: t.spine ? 'main' : (t.type || 'subplot'),
-              introduced: t.introduced || 'ch 1',
-              latest: t.latest || 'ch 1',
-              target: t.target || 'ch 20',
-              status: t.status || 'open'
-            });
-          }
-        });
-      }
-    } catch (_) {}
-
-    // Fallback: parse bullet points like "- **th-01**: Main Story (Spine) [open]"
-    if (threads.length === 0) {
-      lines.forEach(line => {
-        const bMatch = line.match(/^-\s+\*\*([a-zA-Z0-9_-]+)\*\*:\s*(.*?)(\[(.*?)\])?$/);
-        if (bMatch) {
-          threads.push({
-            id: bMatch[1],
-            description: bMatch[2].trim() || 'Tracked Thread',
-            type: /spine|main/i.test(bMatch[2]) ? 'main' : 'subplot',
-            introduced: 'ch 1',
-            latest: 'ch 1',
-            target: 'ch 20',
-            status: bMatch[4] ? bMatch[4].trim() : 'open'
-          });
-        }
-      });
-    }
-  }
-
-  if (threads.length === 0) {
-    console.log('No threads tracked yet in ' + threadsFile + '\n');
-    return;
-  }
-
-  const openCount = threads.filter(t => t.status.toLowerCase() === 'open').length;
-  const progressingCount = threads.filter(t => t.status.toLowerCase() === 'progressing').length;
-  const resolvedCount = threads.filter(t => t.status.toLowerCase() === 'resolved').length;
-
-  console.log(`Tracked Threads: ${threads.length} | Open: ${openCount} | Progressing: ${progressingCount} | Resolved: ${resolvedCount}\n`);
-
-  console.log('| ID | Type | Description | Introduced | Latest Dev | Target Res | Status |');
-  console.log('|---|---|---|---|---|---|---|');
-  threads.forEach(t => {
-    const isResolved = t.status.toLowerCase() === 'resolved';
-    const badge = isResolved ? `\x1b[32m${t.status}\x1b[0m` : `\x1b[36m${t.status}\x1b[0m`;
-    console.log(`| **${t.id}** | ${t.type} | ${t.description.slice(0, 35)} | ${t.introduced} | ${t.latest} | ${t.target} | ${badge} |`);
-  });
-  console.log('');
+async function handleThreads(extraArgs = []) {
+  const { runThreadDiagnostics } = await import('./threads.js');
+  const thresholdArg = extraArgs.find(a => a.startsWith('--threshold='));
+  const threshold = thresholdArg ? parseInt(thresholdArg.split('=')[1], 10) : undefined;
+  const strict = extraArgs.includes('--strict');
+  const json = extraArgs.includes('--json');
+  return runThreadDiagnostics({ threshold, strict, json, isCli: true });
 }
 
 async function handleGateCmd(chId, extraArgs) {
@@ -2099,7 +2013,7 @@ switch (command) {
     handleTimeline();
     break;
   case 'threads':
-    handleThreads();
+    await handleThreads(args.slice(1));
     break;
   case 'gate':
     handleGateCmd(subCommand || args[1], args.slice(2));

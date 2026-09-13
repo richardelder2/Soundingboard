@@ -166,11 +166,12 @@ These decisions have been author-approved and must NOT be altered or second-gues
   - Every diagnostic pass reports: scenes examined, scenes skipped, null value shifts, and undrafted scenes (`scripts/coverage_reporter.js`).
   - *Acceptance:* Test fixture with 4 drafted scenes and 2 undrafted scenes explicitly reports both counts in audit output. (Verified by `tests/scene_audit.test.js` & `tests/chapter_audit.test.js`)
 
-- [ ] **SB2-P2-05: Thread Diagnostics Suite (`scripts/threads.js`)**
+- [x] **SB2-P2-05: Thread Diagnostics Suite (`scripts/threads.js`)**
   - Polarity turn detection (warns if thread value polarity never shifts).
   - Dormancy Sentry: flags subplots silent for $> N$ words (word-count based).
   - Orphan Guard: hard error on any scene bound to zero threads.
-  - *Acceptance:* Dormancy warning triggers when word count gap exceeds threshold. Orphaned scene triggers non-zero exit.
+  - ASCII Thread Lane View: terminal visualization of thread trajectories and braid points.
+  - *Acceptance:* Dormancy warning triggers when word count gap exceeds threshold. Orphaned scene triggers non-zero exit. (Verified by `tests/threads.test.js`)
 
 - [ ] **SB2-P2-06: Canon 2.0 & Decision Queues (`scripts/canon.js`)**
   - Provenance validation: checks that `established_in` scenes still exist.
@@ -220,6 +221,7 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Phase 1 Execution) | Phase 1 completed (SB2-P1-01 through SB2-P1-07): scene card & templates overhaul, chapter break rationale validation, pack-scene drafting kit, same-POV voice anchor resolution engine, obligatory scene ledger validator, 27 questionnaire blueprints updated, ongoing ingest decomposition, The Bracket Method playbook, craft card & CLI packer | 88/88 main tests pass; 8/8 Phase 1 suites pass; okf-lint 0 errors; 0 typescript errors | Ready to begin Phase 2 (`SB2-P2-01`) |
 | 2026-09-13 | Antigravity (Phase 2 Option A Execution) | Phase 2 Option A completed (SB2-P2-01, SB2-P2-02, SB2-P2-04): scene-scoped audits (< 500ms AI-tell scan + scene continuity against canon), chapter-scoped audits (multi-scene cadence variability + break efficacy verification against authored rationale), honest coverage reporting (examined, skipped, undrafted, null value shifts), and CLI wiring | 88/88 main tests pass; 14/14 scene audit tests pass; 20/20 chapter audit tests pass; okf-lint 0 errors; 0 typescript errors | Ready for Commandment Advisory Audit (`SB2-P2-03`) or Thread Sentry & Canon 2.0 (`SB2-P2-05`, `SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Commandment Advisory Audit) | Completed SB2-P2-03 (Commandment Advisory Audit): evaluated Shawn Coyne's 5 Commandments from scene prose against Stage 02 frontmatter intent, side-by-side comparison, advisory options in Revision Playbook without failing machine gates, CLI wiring (`soundingboard commandments`), and test suite | 91/91 main tests pass; 21/21 commandment audit tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Diagnostics Suite (`SB2-P2-05`) and Canon 2.0 (`SB2-P2-06`) |
+| 2026-09-13 | Antigravity (Thread Diagnostics Suite) | Completed SB2-P2-05 (Thread Diagnostics Suite): polarity turn detection, word-count-based Dormancy Sentry, hard Orphan Guard on unbound scenes, ASCII Thread Lane View, CLI integration (`soundingboard threads`), and test suite | 92/92 main tests pass; 37/37 thread diagnostic tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Canon 2.0 & Epistemic Decision Queues (`SB2-P2-06`) |
 
 ---
 
