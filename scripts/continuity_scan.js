@@ -12,7 +12,9 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { strip } from './frontmatter.js';
+import { parse, strip } from './frontmatter.js';
+import { findScenePath } from './hash_staleness.js';
+import { calculateCoverage, formatCoverageMarkdown, formatCoverageConsole } from './coverage_reporter.js';
 
 const DEFAULT_INPUT = path.join('stages', '03_drafting', 'output', 'chapters');
 const REPORT_DIR = path.join('stages', '04_diagnostics_edits', 'output', 'reports');
@@ -58,44 +60,162 @@ function levenshtein(a, b) {
   return dp[a.length][b.length];
 }
 
-export function runContinuityScan(targets) {
-  const dir = targets && targets.length ? targets[0] : DEFAULT_INPUT;
-  if (!fs.existsSync(dir)) {
-    console.error(`Chapters directory not found: ${dir}`);
-    process.exitCode = 1;
-    return;
+function collectContinuityFiles(targets) {
+  const files = [];
+  const targetList = targets && targets.length ? targets : [DEFAULT_INPUT];
+
+  for (const t of targetList) {
+    let candidatePath = t;
+    if (/^sc-\d+$/i.test(t)) {
+      const found = findScenePath(t.toLowerCase());
+      if (found) candidatePath = found;
+    }
+
+    if (!fs.existsSync(candidatePath)) {
+      const found = findScenePath(t.toLowerCase());
+      if (found) {
+        candidatePath = found;
+      } else {
+        console.error(`Skipping missing path: ${t}`);
+        continue;
+      }
+    }
+
+    const stat = fs.statSync(candidatePath);
+    if (stat.isDirectory()) {
+      const entries = fs.readdirSync(candidatePath, { withFileTypes: true });
+      for (const entry of entries) {
+        const subPath = path.join(candidatePath, entry.name);
+        if (entry.isDirectory() && /^ch-/i.test(entry.name)) {
+          fs.readdirSync(subPath)
+            .filter(f => /^sc-\d+\.md$/i.test(f) || /\.(md|txt|markdown)$/i.test(f))
+            .filter(f => f !== 'chapter.md')
+            .forEach(f => files.push(path.join(subPath, f)));
+        } else if (entry.isFile() && /\.(md|txt|markdown)$/i.test(entry.name)) {
+          if (entry.name !== 'chapter.md') {
+            files.push(subPath);
+          }
+        }
+      }
+    } else {
+      files.push(candidatePath);
+    }
   }
-  const files = fs.readdirSync(dir).filter(f => /\.(md|txt|markdown)$/i.test(f)).sort();
+  return files;
+}
+
+function loadCanonEntities(rootDir = process.cwd()) {
+  const canonEntities = new Map(); // entityName -> { tier, fact, status }
+  const canonSources = [];
+  const bookCanon = path.join(rootDir, 'stages', '02_planning', 'output', 'canon.md');
+  if (fs.existsSync(bookCanon)) canonSources.push({ level: 'Book Local', path: bookCanon });
+  const seriesCandidates = [
+    path.join(rootDir, '..', 'series', 'series_canon.md'),
+    path.join(rootDir, '..', 'series_canon.md'),
+    path.join(rootDir, 'series', 'series_canon.md')
+  ];
+  const seriesCanon = seriesCandidates.find(c => fs.existsSync(c));
+  if (seriesCanon) canonSources.push({ level: 'Series', path: seriesCanon });
+  const worldCandidates = [
+    path.join(rootDir, '..', '..', 'world', 'world_canon.md'),
+    path.join(rootDir, '..', 'world', 'world_canon.md'),
+    path.join(rootDir, 'world', 'world_canon.md')
+  ];
+  const worldCanon = worldCandidates.find(c => fs.existsSync(c));
+  if (worldCanon) canonSources.push({ level: 'World Universe', path: worldCanon });
+
+  for (const source of canonSources) {
+    const raw = fs.readFileSync(source.path, 'utf8').replace(/^\uFEFF/, '');
+    const lines = raw.split(/\r?\n/);
+    for (const line of lines) {
+      if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| entity |')) {
+        const cells = line.split('|').map(c => c.trim()).filter(Boolean);
+        if (cells.length >= 2) {
+          const entityName = cells[0].replace(/[\[\]]/g, '').trim();
+          if (entityName.length >= 2 && !STOPWORDS.has(entityName)) {
+            canonEntities.set(entityName.toLowerCase(), {
+              name: entityName,
+              tier: source.level,
+              fact: cells[1] || '',
+              status: cells[2] || ''
+            });
+          }
+        }
+      }
+    }
+  }
+
+  return { canonEntities, canonSources };
+}
+
+export function runContinuityScan(targets, options = {}) {
+  const files = collectContinuityFiles(targets);
   if (files.length === 0) {
-    console.error(`No chapter files in ${dir}`);
+    console.error(`No files found to scan for continuity.`);
     process.exitCode = 1;
     return;
   }
 
+  // Derive rootDir from first file if options.rootDir not set
+  let detectedRoot = options.rootDir || process.cwd();
+  if (!options.rootDir && files.length > 0) {
+    const candidatePath = path.resolve(files[0]);
+    const stagesIdx = candidatePath.indexOf('stages');
+    const manuscriptIdx = candidatePath.indexOf('manuscript');
+    if (stagesIdx !== -1) {
+      detectedRoot = candidatePath.slice(0, stagesIdx - 1);
+    } else if (manuscriptIdx !== -1) {
+      detectedRoot = candidatePath.slice(0, manuscriptIdx - 1);
+    }
+  }
+
+  const { canonEntities, canonSources } = loadCanonEntities(detectedRoot);
+
   // word → { total, mid, poss, chapters: Map(file → count), first: file }
   const registry = new Map();
+  const examinedSceneIds = [];
+
   for (const file of files) {
-    const text = strip(fs.readFileSync(path.join(dir, file), 'utf8'));
+    const rawContent = fs.readFileSync(file, 'utf8');
+    let sceneMeta = null;
+    try {
+      sceneMeta = parse(rawContent, file);
+    } catch (e) {
+      sceneMeta = null;
+    }
+    const sceneId = sceneMeta?.id || (path.basename(file).startsWith('sc-') ? path.basename(file, '.md') : null);
+    if (sceneId) examinedSceneIds.push(sceneId);
+
+    const text = strip(rawContent);
+    const label = sceneId || path.basename(file);
+
     for (const [word, t] of extractTokens(text)) {
-      if (!registry.has(word)) registry.set(word, { total: 0, mid: 0, poss: 0, chapters: new Map(), first: file });
+      if (!registry.has(word)) registry.set(word, { total: 0, mid: 0, poss: 0, chapters: new Map(), first: label });
       const entry = registry.get(word);
       entry.total += t.total;
       entry.mid += t.mid;
       entry.poss += t.poss;
-      entry.chapters.set(file, t.total);
+      entry.chapters.set(label, (entry.chapters.get(label) || 0) + t.total);
     }
   }
 
-  // Confirmed names: ≥2 occurrences with at least one strong name signal (mid-sentence or possessive use)
+  // Confirmed names:
+  // For single-scene scans: >= 1 occurrence with mid-sentence or possessive signal
+  // For multi-scene scans: >= 2 occurrences with at least one signal
+  const isSingleScene = files.length === 1;
+  const minOccurrences = isSingleScene ? 1 : 2;
+
   const names = [...registry.entries()]
-    .filter(([, e]) => e.total >= 2 && (e.mid >= 1 || e.poss >= 1))
+    .filter(([, e]) => e.total >= minOccurrences && (e.mid >= 1 || e.poss >= 1))
     .sort((a, b) => b[1].total - a[1].total);
 
-  // 1. Near-duplicates: confirmed names vs ALL tokens (so a one-off typo like "Marra"
-  //    still gets caught against the real "Mara"). Distance budget scales with length.
+  // 1. Near-duplicates:
+  // A) Compare confirmed names against allTokens in the scanned prose
+  // B) Compare allTokens against established canonEntities (catches typo like "Cathryn" against canon "Kathryn")
   const nearDupes = [];
   const seenPair = new Set();
   const allTokens = [...registry.entries()];
+
   for (const [a, ea] of names) {
     for (const [b, eb] of allTokens) {
       if (a === b) continue;
@@ -107,50 +227,75 @@ export function runContinuityScan(targets) {
         const key = [a, b].sort().join('|');
         if (seenPair.has(key)) continue;
         seenPair.add(key);
-        nearDupes.push({ a, b, aCount: ea.total, bCount: eb.total });
+        nearDupes.push({ a, b, aCount: ea.total, bCount: eb.total, type: 'prose' });
       }
     }
   }
 
-  // 2. Single-chapter names with meaningful frequency (≥ 3 mentions in one chapter, nowhere else)
-  const singles = names.filter(([, e]) => e.chapters.size === 1 && e.total >= 3);
+  // Cross-check all extracted prose tokens against canon entities
+  for (const [token, et] of allTokens) {
+    for (const [canonKey, canonItem] of canonEntities) {
+      if (token.toLowerCase() === canonKey) continue;
+      const minLen = Math.min(token.length, canonItem.name.length);
+      if (minLen < 4) continue;
+      const maxD = minLen >= 6 ? 2 : 1;
+      const d = levenshtein(token.toLowerCase(), canonKey);
+      if (d > 0 && d <= maxD) {
+        const key = [token, canonItem.name].sort().join('|');
+        if (seenPair.has(key)) continue;
+        seenPair.add(key);
+        nearDupes.push({
+          a: token,
+          b: `${canonItem.name} [Canon: ${canonItem.tier}]`,
+          aCount: et.total,
+          bCount: 'Canon',
+          type: 'canon'
+        });
+      }
+    }
+  }
+
+  // 2. Single-chapter names with meaningful frequency
+  const singles = isSingleScene ? [] : names.filter(([, e]) => e.chapters.size === 1 && e.total >= 3);
+
+  const coverage = calculateCoverage(examinedSceneIds);
 
   const lines = [];
-  lines.push('# Continuity Scan — proper nouns');
+  const scopeTitle = isSingleScene && examinedSceneIds[0] ? `Scene ${examinedSceneIds[0]}` : `${files.length} chapters/scenes`;
+  lines.push(`# Continuity Scan — Proper Nouns (${scopeTitle})`);
   lines.push('');
-
-  const canonSources = [];
-  const bookCanon = path.join('stages', '02_planning', 'output', 'canon.md');
-  if (fs.existsSync(bookCanon)) canonSources.push('Book Local');
-  const seriesCandidates = [path.join('..', 'series', 'series_canon.md'), path.join('..', 'series_canon.md'), path.join('series', 'series_canon.md')];
-  if (seriesCandidates.some(c => fs.existsSync(c))) canonSources.push('Series');
-  const worldCandidates = [path.join('..', '..', 'world', 'world_canon.md'), path.join('..', 'world', 'world_canon.md'), path.join('world', 'world_canon.md')];
-  if (worldCandidates.some(c => fs.existsSync(c))) canonSources.push('World Universe');
-
-  lines.push(`Generated: ${new Date().toISOString()}  |  Scanned: ${files.length} chapters in ${dir}`);
-  lines.push(`Active Canon Tiers: ${canonSources.length > 0 ? canonSources.join(' ➔ ') : 'Local only (no multi-tier series/world active)'}`);
+  lines.push(`Generated: ${new Date().toISOString()}  |  Scanned: ${files.length} file(s)`);
+  lines.push(`Active Canon Tiers: ${canonSources.length > 0 ? canonSources.map(s => s.level).join(' ➔ ') : 'Local only (no multi-tier series/world active)'}`);
   lines.push('');
-  lines.push('## ⚠️ Near-duplicate names (possible misspellings — verify against canon.md "Names & spellings")');
+  lines.push('## ⚠️ Near-duplicate names (possible misspellings — verify against canon.md)');
   if (nearDupes.length === 0) lines.push('- none found');
-  nearDupes.forEach(d => lines.push(`- **${d.a}** (×${d.aCount}) vs **${d.b}** (×${d.bCount}) — if these are the same character/place, one spelling is wrong everywhere it appears`));
+  nearDupes.forEach(d => {
+    lines.push(`- **${d.a}** (×${d.aCount}) vs **${d.b}** (×${d.bCount}) — verify spelling consistency against canon`);
+  });
   lines.push('');
-  lines.push('## ℹ️ Names appearing in only one chapter (≥3 mentions — renamed character? dropped thread?)');
-  if (singles.length === 0) lines.push('- none found');
-  singles.forEach(([name, e]) => lines.push(`- **${name}** ×${e.total}, only in ${e.first}`));
-  lines.push('');
+  if (!isSingleScene) {
+    lines.push('## ℹ️ Names appearing in only one unit (≥3 mentions — renamed character? dropped thread?)');
+    if (singles.length === 0) lines.push('- none found');
+    singles.forEach(([name, e]) => lines.push(`- **${name}** ×${e.total}, only in ${e.first}`));
+    lines.push('');
+  }
   lines.push('## Name index (first appearance — cross-check canon.md)');
-  lines.push('| Name | Total | Chapters | First seen |');
+  lines.push('| Name | Total | Occurrences / Units | First seen |');
   lines.push('|---|---|---|---|');
   names.slice(0, 60).forEach(([name, e]) => lines.push(`| ${name} | ${e.total} | ${e.chapters.size} | ${e.first} |`));
+  lines.push('');
+  lines.push(formatCoverageMarkdown(coverage));
   lines.push('');
   lines.push('> Heuristic scan: mid-sentence capitalized tokens. Judgment continuity (facts, timeline, knowledge state) is the canon check in Stage 04 — this list only feeds it.');
 
   fs.mkdirSync(REPORT_DIR, { recursive: true });
-  const reportPath = path.join(REPORT_DIR, 'continuity_names.md');
+  const reportFileName = isSingleScene && examinedSceneIds[0] ? `continuity_${examinedSceneIds[0]}.md` : 'continuity_names.md';
+  const reportPath = path.join(REPORT_DIR, reportFileName);
   fs.writeFileSync(reportPath, lines.join('\n'), 'utf8');
 
-  console.log(`Scanned ${files.length} chapters: ${names.length} recurring names, ${nearDupes.length} near-duplicate pair(s), ${singles.length} single-chapter name(s).`);
+  console.log(`Scanned ${files.length} file(s): ${names.length} recurring names, ${nearDupes.length} near-duplicate pair(s).`);
   nearDupes.forEach(d => console.log(`  \x1b[33m⚠\x1b[0m ${d.a} / ${d.b}`));
+  console.log(`${formatCoverageConsole(coverage)}`);
   console.log(`Report: ${reportPath}`);
 }
 

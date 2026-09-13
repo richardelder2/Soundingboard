@@ -147,24 +147,24 @@ These decisions have been author-approved and must NOT be altered or second-gues
 ### Phase 2: Diagnostics, Thread Sentry & Canon 2.0
 *Goal: Audits split cleanly along context seams; subplots and canon gain real-time health checks.*
 
-- [ ] **SB2-P2-01: Scene-Scoped Audits**
+- [x] **SB2-P2-01: Scene-Scoped Audits**
   - Scopes continuity scan (`scripts/continuity_scan.js`) to canon + 1 scene (no craft modules, no cadence).
   - Scopes AI-tell scan (`scripts/narrative_audit.js`) to scene prose + in-world allowlist (no canon).
-  - *Acceptance:* Scene audit runs in $< 500$ms with findings tagged with specific `scene_id`.
+  - *Acceptance:* Scene audit runs in $< 500$ms with findings tagged with specific `scene_id`. (Verified by `tests/scene_audit.test.js`)
 
-- [ ] **SB2-P2-02: Chapter-Scoped Audits**
-  - Cadence and rhythm analysis evaluates multi-scene variance across chapter.
+- [x] **SB2-P2-02: Chapter-Scoped Audits**
+  - Cadence and rhythm analysis evaluates multi-scene variance across chapter (`scripts/chapter_audit.js`).
   - Break efficacy audit compares chapter ending against authored `break_rationale`.
-  - *Acceptance:* Audit reports cadence variance across scenes and validates break delivery.
+  - *Acceptance:* Audit reports cadence variance across scenes and validates break delivery. (Verified by `tests/chapter_audit.test.js`)
 
 - [ ] **SB2-P2-03: Commandment Advisory Audit**
   - Evaluates derived scene commandments against Stage 02 scene card intent.
   - Surfaces divergences as advisory creative options in Revision Playbook.
   - *Acceptance:* Audit outputs side-by-side comparison without failing machine gate.
 
-- [ ] **SB2-P2-04: Honest Coverage Reporting on Every Pass**
-  - Every diagnostic pass reports: scenes examined, scenes skipped, null value shifts, and undrafted scenes.
-  - *Acceptance:* Test fixture with 4 drafted scenes and 2 undrafted scenes explicitly reports both counts in audit output.
+- [x] **SB2-P2-04: Honest Coverage Reporting on Every Pass**
+  - Every diagnostic pass reports: scenes examined, scenes skipped, null value shifts, and undrafted scenes (`scripts/coverage_reporter.js`).
+  - *Acceptance:* Test fixture with 4 drafted scenes and 2 undrafted scenes explicitly reports both counts in audit output. (Verified by `tests/scene_audit.test.js` & `tests/chapter_audit.test.js`)
 
 - [ ] **SB2-P2-05: Thread Diagnostics Suite (`scripts/threads.js`)**
   - Polarity turn detection (warns if thread value polarity never shifts).
@@ -218,6 +218,8 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Initial Architecture) | V2 Specs preservation, architectural alignment, master tracker initialization | All 3 specs saved to `docs/v2_specs/`; 88/88 existing tests passing | Ready to begin Phase 0 |
 | 2026-09-13 | Antigravity (Phase 0 Execution) | Phase 0 completed (SB2-P0-01 through SB2-P0-10): frontmatter parser, JSDoc types, typecheck, monotonic ID allocator, derived reindex, SHA-256 staleness, concurrency guard, Node >= 18 preflight, migration tool, 1.x branch | 88/88 main tests pass; 7 new test suites pass; 0 typescript errors | Ready to begin Phase 1 (`SB2-P1-01`) |
 | 2026-09-13 | Antigravity (Phase 1 Execution) | Phase 1 completed (SB2-P1-01 through SB2-P1-07): scene card & templates overhaul, chapter break rationale validation, pack-scene drafting kit, same-POV voice anchor resolution engine, obligatory scene ledger validator, 27 questionnaire blueprints updated, ongoing ingest decomposition, The Bracket Method playbook, craft card & CLI packer | 88/88 main tests pass; 8/8 Phase 1 suites pass; okf-lint 0 errors; 0 typescript errors | Ready to begin Phase 2 (`SB2-P2-01`) |
+| 2026-09-13 | Antigravity (Phase 2 Option A Execution) | Phase 2 Option A completed (SB2-P2-01, SB2-P2-02, SB2-P2-04): scene-scoped audits (< 500ms AI-tell scan + scene continuity against canon), chapter-scoped audits (multi-scene cadence variability + break efficacy verification against authored rationale), honest coverage reporting (examined, skipped, undrafted, null value shifts), and CLI wiring | 88/88 main tests pass; 14/14 scene audit tests pass; 20/20 chapter audit tests pass; okf-lint 0 errors; 0 typescript errors | Ready for Commandment Advisory Audit (`SB2-P2-03`) or Thread Sentry & Canon 2.0 (`SB2-P2-05`, `SB2-P2-06`) |
 
 ---
+
 

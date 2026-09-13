@@ -722,6 +722,13 @@ async function handleAudit(customArgs) {
   runAudit(auditArgs);
 }
 
+async function handleChapterAudit(customArgs) {
+  const { runChapterAudit } = await import('./chapter_audit.js');
+  const chArgs = customArgs !== undefined ? customArgs : args.slice(1);
+  const target = chArgs.length > 0 ? chArgs[0] : null;
+  runChapterAudit(target);
+}
+
 async function handleContinuity(customArgs) {
   const { runContinuityScan } = await import('./continuity_scan.js');
   const contArgs = customArgs !== undefined ? customArgs : args.slice(1);
@@ -1921,9 +1928,9 @@ Usage:
   node scripts/${BIN_NAME}.js run-stage <stage_id>   Compile the stage packet for the executing agent
   node scripts/${BIN_NAME}.js pack <name> [args]     Assemble mechanical context pack (unstuck, heat, scene, etc.)
   node scripts/${BIN_NAME}.js pack-chapter <N>       Assemble token-disciplined drafting kit for Chapter N
-  node scripts/${BIN_NAME}.js okf-index              Rebuild index.md catalogs for OKF knowledge bundles
-  node scripts/${BIN_NAME}.js audit [path ...]       Scan chapters for AI prose tells
-  node scripts/${BIN_NAME}.js continuity [dir]       Scan chapters for proper-noun consistency
+  node scripts/${BIN_NAME}.js audit [path ...]       Scene-scoped AI prose tell & rhythm scan (<sc-id|path>)
+  node scripts/${BIN_NAME}.js chapter-audit [ch]     Chapter-scoped multi-scene cadence & break efficacy audit
+  node scripts/${BIN_NAME}.js continuity [dir|sc]    Scan scenes/chapters for proper-noun consistency & canon match
   node scripts/${BIN_NAME}.js canon query <entity>   Query established canon facts for an entity
   node scripts/${BIN_NAME}.js canon check            Check canon for unverified tags
   node scripts/${BIN_NAME}.js timeline               Verify story chronology and temporal anchors
@@ -2055,10 +2062,13 @@ switch (command) {
     handleOkfIndex();
     break;
   case 'audit':
-    handleAudit();
+    await handleAudit(args.slice(1));
+    break;
+  case 'chapter-audit':
+    await handleChapterAudit(args.slice(1));
     break;
   case 'continuity':
-    handleContinuity();
+    await handleContinuity(args.slice(1));
     break;
   case 'audio':
   case 'audiobook':

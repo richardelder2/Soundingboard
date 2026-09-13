@@ -14,7 +14,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDraftingDir, getReviewDir } from './path_helper.js';
-import { strip } from './frontmatter.js';
+import { parse, strip } from './frontmatter.js';
+import { findScenePath } from './hash_staleness.js';
+import { calculateCoverage, formatCoverageMarkdown, formatCoverageConsole } from './coverage_reporter.js';
 
 const DEFAULT_INPUT = getDraftingDir();
 const REPORT_DIR = getReviewDir();
@@ -297,11 +299,17 @@ function buildFlags(r) {
 
 // ---------- report ----------
 
-function fmtReport(name, r, flags) {
+function fmtReport(name, r, flags, sceneMeta = null, coverageStats = null) {
   const lines = [];
-  lines.push(`# Narrative Audit — ${name}`);
+  const sceneId = sceneMeta?.id || (name.startsWith('sc-') ? name : null);
+  const title = sceneId ? `Narrative Audit — Scene ${sceneId} (${name})` : `Narrative Audit — ${name}`;
+  lines.push(`# ${title}`);
   lines.push('');
-  lines.push(`Generated: ${new Date().toISOString()}  |  Scanner: scripts/narrative_audit.js  |  Rules: _config/narrative_authenticity.md`);
+  lines.push(`Generated: ${new Date().toISOString()}  |  Scanner: scripts/narrative_audit.js (Scene-Scoped)  |  Rules: _config/narrative_authenticity.md`);
+  if (sceneMeta) {
+    lines.push(`**Scene ID:** \`${sceneId}\`  |  **Chapter:** \`${sceneMeta.chapter || 'unassigned'}\`  |  **POV:** \`${sceneMeta.pov || 'unspecified'}\``);
+    lines.push(`**Value Shift:** \`${sceneMeta.value_in || 'null'}\` -> \`${sceneMeta.value_out || 'null'}\``);
+  }
   lines.push('');
   const reds = flags.filter(f => f.level === 'RED').length;
   const warns = flags.filter(f => f.level === 'WARN').length;
@@ -309,7 +317,10 @@ function fmtReport(name, r, flags) {
   lines.push('');
   if (flags.length) {
     lines.push('## Flags');
-    flags.forEach(f => lines.push(`- **[${f.level}]** ${f.msg}`));
+    flags.forEach(f => {
+      const scenePrefix = sceneId ? `[${sceneId}] ` : '';
+      lines.push(`- **[${f.level}]** ${scenePrefix}${f.msg}`);
+    });
     lines.push('');
   }
   lines.push('## Metrics');
@@ -349,6 +360,11 @@ function fmtReport(name, r, flags) {
     });
   }
 
+  if (coverageStats) {
+    lines.push('');
+    lines.push(formatCoverageMarkdown(coverageStats));
+  }
+
   lines.push('');
   lines.push('> Structural features (subplots, resolution variety, recontextualizing revelations, moral ambivalence) cannot be counted mechanically — score them with `_config/narrative_audit_rubric.md`.');
   return lines.join('\n');
@@ -359,17 +375,42 @@ function fmtReport(name, r, flags) {
 function collectFiles(targets) {
   const files = [];
   for (const t of targets) {
-    if (!fs.existsSync(t)) {
-      console.error(`\x1b[33mSkipping missing path: ${t}\x1b[0m`);
-      continue;
+    // If target is a scene ID like "sc-0001" or numeric like "1"
+    let candidatePath = t;
+    if (/^sc-\d+$/i.test(t)) {
+      const found = findScenePath(t.toLowerCase());
+      if (found) candidatePath = found;
     }
-    const stat = fs.statSync(t);
+
+    if (!fs.existsSync(candidatePath)) {
+      // Check if manuscript tree has it
+      const found = findScenePath(t.toLowerCase());
+      if (found) {
+        candidatePath = found;
+      } else {
+        console.error(`\x1b[33mSkipping missing path: ${t}\x1b[0m`);
+        continue;
+      }
+    }
+    const stat = fs.statSync(candidatePath);
     if (stat.isDirectory()) {
-      fs.readdirSync(t)
-        .filter(f => /\.(md|txt|markdown)$/i.test(f))
-        .forEach(f => files.push(path.join(t, f)));
+      // If it's a directory (e.g. manuscript/ or manuscript/ch-01), recursively or flat collect markdown files
+      const entries = fs.readdirSync(candidatePath, { withFileTypes: true });
+      for (const entry of entries) {
+        const subPath = path.join(candidatePath, entry.name);
+        if (entry.isDirectory() && /^ch-/i.test(entry.name)) {
+          fs.readdirSync(subPath)
+            .filter(f => /^sc-\d+\.md$/i.test(f) || /\.(md|txt|markdown)$/i.test(f))
+            .filter(f => f !== 'chapter.md')
+            .forEach(f => files.push(path.join(subPath, f)));
+        } else if (entry.isFile() && /\.(md|txt|markdown)$/i.test(entry.name)) {
+          if (entry.name !== 'chapter.md') {
+            files.push(subPath);
+          }
+        }
+      }
     } else {
-      files.push(t);
+      files.push(candidatePath);
     }
   }
   return files;
@@ -379,25 +420,45 @@ export function runAudit(targets) {
   const inputs = targets && targets.length ? targets : [DEFAULT_INPUT];
   const files = collectFiles(inputs);
   if (files.length === 0) {
-    console.error(`No chapter files found in: ${inputs.join(', ')}`);
-    console.error('Pass a file or directory: node scripts/narrative_audit.js <path>');
+    console.error(`No chapter or scene files found in: ${inputs.join(', ')}`);
+    console.error('Pass a file, scene ID, or directory: node scripts/narrative_audit.js <path|sc-id>');
     process.exitCode = 1;
     return;
   }
 
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const summary = [];
+  const examinedSceneIds = [];
 
   for (const file of files) {
-    const text = fs.readFileSync(file, 'utf8');
-    const r = analyze(text);
-    const flags = buildFlags(r);
+    const rawText = fs.readFileSync(file, 'utf8');
+    let sceneMeta = null;
+    try {
+      sceneMeta = parse(rawText, file);
+    } catch (e) {
+      sceneMeta = null;
+    }
+
     const name = path.basename(file).replace(/\.(md|txt|markdown)$/i, '');
+    const sceneId = sceneMeta?.id || (/^sc-\d+/i.test(name) ? name : null);
+    if (sceneId) examinedSceneIds.push(sceneId);
+
+    const r = analyze(rawText);
+    const flags = buildFlags(r);
+
+    // Track scene ID on each flag for audit consumption
+    flags.forEach(f => {
+      f.scene_id = sceneId;
+    });
+
     const reportPath = path.join(REPORT_DIR, `audit_${name}.md`);
-    fs.writeFileSync(reportPath, fmtReport(name, r, flags), 'utf8');
+    fs.writeFileSync(reportPath, fmtReport(name, r, flags, sceneMeta), 'utf8');
 
     // T-10: Save scan verdict artifact for machine-checkable gate
-    const chNumMatch = name.match(/(\d+)/);
+    const rawChapterTarget = sceneMeta?.chapter !== undefined && sceneMeta?.chapter !== null
+      ? String(sceneMeta.chapter)
+      : String(name);
+    const chNumMatch = rawChapterTarget.match(/(\d+)/);
     if (chNumMatch) {
       const chNum = parseInt(chNumMatch[1], 10);
       try {
@@ -406,15 +467,17 @@ export function runAudit(targets) {
         const vPayload = {
           check: 'scan',
           chapter: chNum,
+          scene_id: sceneId,
           verdict: flags.some(f => f.level === 'RED') ? 'FAIL' : 'PASS',
           evidence: flags.some(f => f.level === 'RED')
             ? `Mechanical audit failed with ${flags.filter(f => f.level === 'RED').length} RED flag(s).`
             : `Mechanical audit passed with 0 RED flags and ${flags.filter(f => f.level === 'WARN').length} WARN flag(s).`,
           details: {
+            scene_id: sceneId,
             words: r.words,
             reds: flags.filter(f => f.level === 'RED').length,
             warns: flags.filter(f => f.level === 'WARN').length,
-            flags: flags.map(f => ({ level: f.level, msg: f.msg }))
+            flags: flags.map(f => ({ level: f.level, msg: f.msg, scene_id: sceneId }))
           },
           timestamp: new Date().toISOString()
         };
@@ -427,22 +490,29 @@ export function runAudit(targets) {
     const reds = flags.filter(f => f.level === 'RED').length;
     const warns = flags.filter(f => f.level === 'WARN').length;
     const badge = reds > 0 ? '\x1b[31mFAIL\x1b[0m' : warns > 0 ? '\x1b[33mREVIEW\x1b[0m' : '\x1b[32mCLEAN\x1b[0m';
-    console.log(`${badge}  ${name}  (${r.words} words, ${reds} red / ${warns} warn)  → ${reportPath}`);
+    const tag = sceneId ? `[${sceneId}] ${name}` : name;
+    console.log(`${badge}  ${tag}  (${r.words} words, ${reds} red / ${warns} warn)  → ${reportPath}`);
     flags.filter(f => f.level === 'RED').forEach(f => console.log(`   \x1b[31m•\x1b[0m ${f.msg}`));
-    summary.push({ name, reds, warns, words: r.words });
+    summary.push({ name, reds, warns, words: r.words, sceneId });
   }
+
+  // Calculate honest coverage
+  const coverage = calculateCoverage(examinedSceneIds);
+  console.log(`\n${formatCoverageConsole(coverage)}`);
 
   updateManifest(summary);
 
   const summaryMd = [
     '# Narrative Audit Summary', '',
     `Generated: ${new Date().toISOString()}`, '',
-    '| Chapter | Words | Red | Warn |', '|---|---|---|---|',
-    ...summary.map(s => `| ${s.name} | ${s.words} | ${s.reds} | ${s.warns} |`),
+    '| Unit / Scene | Words | Red | Warn |', '|---|---|---|---|',
+    ...summary.map(s => `| ${s.sceneId || s.name} | ${s.words} | ${s.reds} | ${s.warns} |`),
+    '',
+    formatCoverageMarkdown(coverage),
     '', 'Structural audit still required: `_config/narrative_audit_rubric.md`.',
   ].join('\n');
   fs.writeFileSync(path.join(REPORT_DIR, 'audit_summary.md'), summaryMd, 'utf8');
-  console.log(`\nSummary written to ${path.join(REPORT_DIR, 'audit_summary.md')}`);
+  console.log(`Summary written to ${path.join(REPORT_DIR, 'audit_summary.md')}`);
   console.log('Reminder: this scanner covers prose tells only. Structural tells require the rubric audit.');
 }
 
