@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Space Opera & Galactic Empire
 description: Brainstorming interview for designing grand-scale space opera and interstellar political sagas with dynastic houses, capital ship fleet engagements, jump-gate logistics, and cosmic discoveries.
 stages: 7
-total_questions: 21
+total_questions: 23
 last_modified: 2026-09-11
 ---
 
@@ -48,7 +48,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative scale and perspective will you use? (Close multi-POV spanning the captain on the bridge, the marine boots on the planetary surface, and the diplomat in the imperial senate; or single tight POV aboard one vessel?)."
 18. "How does the pacing balance sweeping interstellar politics with claustrophobic shipboard tension?"
 19. "The Series Horizon: What new quadrant of space, terrifying alien fleet, or galactic revelation is glimpsed on the long-range sensors as the credits roll?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an epic, thunderous space opera architecture featuring grand fleet tactical authenticity, memorable crew dynamics, and galaxy-shaking political stakes. Present back for approval.
-21. Once approved, craft a 12-word pitch and a cinematic commercial logline ready for an international space opera launch.
+22. Review all answers. Synthesize them into an epic, thunderous space opera architecture featuring grand fleet tactical authenticity, memorable crew dynamics, and galaxy-shaking political stakes. Present back for approval.
+23. Once approved, craft a 12-word pitch and a cinematic commercial logline ready for an international space opera launch.

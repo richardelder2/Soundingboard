@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Hardboiled Detective & Noir
 description: Brainstorming interview for designing gritty, morally ambiguous hardboiled noir crime stories with corrupt institutions, tarnished integrity, cynical private eyes, and fatal twists.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What voice register do you want for the narration? (First-person past with poetic, razor-sharp hardboiled metaphors and caustic world-weariness; or sparse, objective third-person with brutal Hemingway cadence?)."
 18. "How does the pacing handle the detective's legwork? (Alternating between cigarette-smoke interviews in smoky bars and sudden explosive violence; tracking matches, phone records, and pawn shop tickets)."
 19. "What is the lingering note of melancholy at the end? (How does the final line echo the tragic fatalism of classic noir?)."
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an evocative, rain-soaked noir crime narrative with razor-sharp dialogue, institutional cynicism, and deep moral weight. Present back for approval.
-21. Once approved, craft a 12-word pitch and a hardboiled commercial blurb hook.
+22. Review all answers. Synthesize them into an evocative, rain-soaked noir crime narrative with razor-sharp dialogue, institutional cynicism, and deep moral weight. Present back for approval.
+23. Once approved, craft a 12-word pitch and a hardboiled commercial blurb hook.

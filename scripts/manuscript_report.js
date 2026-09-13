@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { parse, strip } from './frontmatter.js';
 
 const STOP_4GRAM_WORDS = new Set([
   'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
@@ -7,28 +8,6 @@ const STOP_4GRAM_WORDS = new Set([
   'above', 'it', 'was', 'is', 'that', 'this', 'there', 'he', 'she', 'they', 'i',
   'you', 'we', 'had', 'have', 'were', 'been', 'would', 'could', 'should'
 ]);
-
-function stripFrontmatter(text) {
-  return text.replace(/^\uFEFF/, '').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
-}
-
-function parseFrontmatter(text) {
-  const match = text.replace(/^\uFEFF/, '').match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) return {};
-  const meta = {};
-  match[1].split(/\r?\n/).forEach(line => {
-    const colon = line.indexOf(':');
-    if (colon > 0) {
-      const key = line.slice(0, colon).trim().toLowerCase();
-      let val = line.slice(colon + 1).trim();
-      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-        val = val.slice(1, -1);
-      }
-      meta[key] = val;
-    }
-  });
-  return meta;
-}
 
 export function analyzeManuscript(options = {}) {
   const chaptersDir = path.join('stages', '03_drafting', 'output', 'chapters');
@@ -80,8 +59,8 @@ export function analyzeManuscript(options = {}) {
 
   for (const ch of chapterFiles) {
     const raw = fs.readFileSync(ch.path, 'utf8');
-    const meta = parseFrontmatter(raw);
-    const body = stripFrontmatter(raw);
+    const meta = parse(raw);
+    const body = strip(raw);
 
     // Words & sentences
     const words = body.match(/[\w'’-]+/g) || [];

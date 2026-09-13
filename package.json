@@ -17,6 +17,7 @@
     "check-update": "node ./scripts/soundingboard.js check-update",
     "update": "node ./scripts/soundingboard.js update",
     "doctor": "node ./scripts/soundingboard.js doctor",
+    "typecheck": "tsc --noEmit",
     "test": "node ./tests/run_tests.js"
   },
   "engines": {
@@ -38,5 +39,8 @@
   ],
   "author": "Richard Elder & Antigravity",
   "license": "MIT",
-  "dependencies": {}
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "typescript": "^7.0.2"
+  }
 }

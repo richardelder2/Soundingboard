@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Post-Apocalyptic & Survival Fiction
 description: Brainstorming interview for designing harrowing, atmospheric post-apocalyptic survival fiction with resource scarcity, tribal breakdown, hostile wastelands, and the moral preservation of humanity.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What prose style and pacing best fits the story? (Sparse, rhythmic, evocative prose reminiscent of Cormac McCarthy's *The Road*; or detailed, tactical, step-by-step survivalist realism?)."
 18. "How will you handle violence and morality? (Ensuring violence is terrifying, messy, and traumatizing rather than sensationalized; keeping the preservation of human empathy at the center)."
 19. "The Ending Horizon: Does the story conclude on arrival at a genuine haven, or an open road where the flame of human dignity has been successfully protected?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into a haunting, deeply moving post-apocalyptic survival architecture featuring visceral realism, tight resource stakes, and unforgettable emotional core. Present back for approval.
-21. Once approved, craft a 12-word pitch and a stirring commercial logline for a post-apocalyptic masterpiece.
+22. Review all answers. Synthesize them into a haunting, deeply moving post-apocalyptic survival architecture featuring visceral realism, tight resource stakes, and unforgettable emotional core. Present back for approval.
+23. Once approved, craft a 12-word pitch and a stirring commercial logline for a post-apocalyptic masterpiece.

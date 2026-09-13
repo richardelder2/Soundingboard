@@ -46,6 +46,7 @@ The **Universal Narrative Rosetta Stone** maps every major school's terms direct
 
 ### A. Story Grid Lexicon (Shawn Coyne)
 *   **The 5 Commandments of the Scene:** Inciting Incident $\rightarrow$ Progressive Complication $\rightarrow$ Crisis Question $\rightarrow$ Climax $\rightarrow$ Resolution. Codified in [`scene_level_five_commandments_coyne.md`](scene_level_five_commandments_coyne.md).
+*   **The Coyne Micro-Beat (Evaluative Quantum):** The action/reaction pair (Swain Motivating-Reaction Unit). In Soundingboard 2.0, the **Scene Card** is the atomic quantum for storage and drafting, while the **Coyne Beat** is the atomic quantum for diagnostic evaluation (Stage 04 audits, dialogue friction, and The Bracket Method).
 *   **Crisis Question (Binary Dilemma):** Must be either *Best Bad Choice* (both options bring painful sacrifice) or *Irreconcilable Goods* (two righteous goals that cannot co-exist).
 *   **Obligatory Scenes & Conventions:** Non-negotiable genre covenants that reader expectations demand. Codified in `setup/genre_bibles/` and OKF genre structures.
 *   **Foolscap Global Story Grid:** 1-page architectural ledger covering global genre, value shifts, controlling idea, and beginning/middle/end hooks. Codified in `stages/02_planning/output/01_macro_arc/foolscap.md`.

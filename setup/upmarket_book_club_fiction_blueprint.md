@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Upmarket & Book Club Fiction
 description: Brainstorming interview for designing emotionally resonant upmarket and book club fiction with rich moral dilemmas, domestic secrets, social network fallout, complex character arcs, and discussion-worthy endings.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative structure and POV style best serves the emotional depth? (Single intimate first-person; rotating multi-POV between three women; or a non-linear 'Before and After' timeline tracking the countdown to the catalyst event?)."
 18. "How will you handle psychological interiority and voice? (Layered, observant, beautifully crafted sentences that capture the quiet humor, sharp social observations, and raw vulnerabilities of modern life)."
 19. "The Ending & Discussion Question: How does the book end? (Upmarket fiction favors bittersweet, earned emotional resolutions over tidy Hollywood bows—what is the central question the author wants readers debating?)."
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an irresistible, provocative, and deeply moving upmarket fiction blueprint packed with emotional truth, sharp dialogue, and profound discussion potential. Present back for approval.
-21. Once approved, craft a 12-word pitch and a compelling book club commercial blurb hook.
+22. Review all answers. Synthesize them into an irresistible, provocative, and deeply moving upmarket fiction blueprint packed with emotional truth, sharp dialogue, and profound discussion potential. Present back for approval.
+23. Once approved, craft a 12-word pitch and a compelling book club commercial blurb hook.

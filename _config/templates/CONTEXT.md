@@ -12,12 +12,13 @@ Per ICM §3.2, agents consult this index to instantiate schema skeletons per sta
 | `outline.template.md` | `stages/02_planning/output/outline.md` | Beat-sheet outline. |
 | `structure_plan.template.md` | `stages/02_planning/output/structure_plan.md` | Scene ledger, subplots, escalation, dials. |
 | `character_arcs.template.md` | `stages/02_planning/output/character_arcs.md` | Cast arcs and lie/truth schedules. |
-| `scene_beat.template.md` | `stages/02_planning/output/beats/chNN.md` | Granular 5-commandments and scene dials. |
-| `manuscript.template.json` | `manuscript.json` | Central production ledger. |
-| `canon.template.md` | `stages/02_planning/output/canon.md` | Living fact registry. |
+| `scene_card.template.md` | `manuscript/ch-XX/sc-YYYY.md` | Atomic scene card with 5 commandments, dials, and frontmatter. |
+| `chapter.template.md` | `manuscript/ch-XX/chapter.md` | Chapter presentation assembly and mandatory break_rationale. |
+| `manuscript.template.json` | `manuscript.json` | Central production ledger (unit_type: scene). |
+| `canon.template.md` | `stages/02_planning/output/canon.md` | Living fact registry with epistemic status and provenance. |
 | `voice_exemplars.template.md` | `stages/02_planning/output/voice_exemplars.md` | Anti-drift voice exemplars. |
 | `tracker_lore_debt.template.md` | `stages/02_planning/output/trackers/lore_debt.md` | Narrative questions and payoffs. |
-| `threads.template.md` | `stages/02_planning/output/trackers/threads.md` | Subplot and thread ledger. |
+| `threads.template.md` | `stages/02_planning/output/threads.md` | Subplot and thread ledger (Spine & Subplots). |
 
 ---
 

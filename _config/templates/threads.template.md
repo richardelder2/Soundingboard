@@ -1,20 +1,27 @@
 ---
 type: Narrative Threads Tracker
+dormancy_threshold_words: 5000
 last_modified: [YYYY-MM-DD]
 ---
 
 # Narrative Thread Ledger
 
-*Tracks main plot, subplots, open questions, relationship arcs, and narrative promises across chapters. Updated during planning (Stage 02) and verified across revisions (Stage 04).*
+*Tracks main plot, subplots, open questions, relationship arcs, and narrative promises across scenes and chapters. Updated during planning (Stage 02) and audited during revisions (Stage 04).*
 
 ## Active Threads
-| Thread ID | Description | Type | Introduced | Latest Development | Target Resolution | Status |
-|---|---|---|---|---|---|---|
-| T-01 | [Main murder investigation] | main | ch 1 | ch 3 | ch 18 | open |
-| T-02 | [Romance tension between Evelyn and Julian] | relationship | ch 2 | ch 4 | ch 15 | open |
-| T-03 | [The missing pocket watch] | mystery | ch 1 | ch 1 | ch 6 | open |
+| Thread ID | Name / Description | Type | Spine? | Value Spectrum (Trough → Peak) | Introduced In | Target Resolution | Status |
+|---|---|---|---|---|---|---|---|
+| th-01 | [Main Story Arc] | main | yes | Despair → Triumph | sc-0001 | sc-0040 | open |
+| th-02 | [Romance / Relationship Foil] | relationship | no | Estrangement → Intimacy | sc-0003 | sc-0036 | open |
+| th-03 | [Mystery / Secret Investigation] | mystery | no | Deception → Truth | sc-0005 | sc-0025 | open |
+
+## Act & Milestones Mapping
+| Thread ID | Act I Catalyst | Act II Turning Point | Act III Crisis / Climax | Target Payoff |
+|---|---|---|---|---|
+| th-01 | sc-0004 | sc-0020 | sc-0038 | sc-0040 |
+| th-02 | sc-0006 | sc-0018 | sc-0032 | sc-0036 |
 
 ## Resolved / Closed Threads
 | Thread ID | Description | Type | Introduced | Resolved In | Resolution Summary |
 |---|---|---|---|---|---|
-| T-00 | [Sample resolved thread] | subplot | ch 1 | ch 2 | [Resolved cleanly] |
+| th-00 | [Sample resolved subplot] | subplot | sc-0001 | sc-0008 | [Resolved cleanly without loose ends] |

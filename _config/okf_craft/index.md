@@ -114,6 +114,7 @@ last_indexed: 2026-09-05
 - [Systemic Opposition & Antagonist Logic: Beyond the Monolithic Villain](systemic_opposition_and_antagonist_logic.md) — `type: craft_rule`
 - [The Tenacious Engine: Prolific Architecture, Closed Doors & Relentless Execution](tenacious_writing_and_sanderson_le_guin_habits.md) — `type: craft_rule`
 - [Textual Actual Worlds (TAW) & Modal Narratology](textual_actual_worlds_and_modal_narratology.md) — `type: craft_primitive`
+- [The Bracket Method: Developmental Editing & Micro-Beat Sequencing](the_bracket_method_developmental_editing.md) — `type: craft_structure`
 - [The Three Registers of Dramatic Dialogue](three_registers_of_dialogue_subtext.md) — `type: craft_rule`
 - [Thriller Escalation: Reversals, False Relief & Pacing Loops](thriller_escalation_pacing.md) — `type: craft_structure`
 - [The Tragic Corruption Arc: The Inevitable Surrender to the Shadow](tragic_corruption_arc_godfather.md) — `type: craft_structure`

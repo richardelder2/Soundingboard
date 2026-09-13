@@ -66,10 +66,10 @@ if (beatFile) {
   packer.emitSection(`Current Beat File (${path.basename(beatFile)})`, ContextPacker.readTextSafe(beatFile));
 }
 
-// 4. Scene Beat Template
-const templatePath = path.join(cwd, '_config', 'templates', 'scene_beat.template.md');
+// 4. Scene Card Template
+const templatePath = path.join(cwd, '_config', 'templates', 'scene_card.template.md');
 if (fs.existsSync(templatePath)) {
-  packer.emitSection('Scene Beat Standard Template', ContextPacker.readTextSafe(templatePath));
+  packer.emitSection('Scene Card Standard Template', ContextPacker.readTextSafe(templatePath));
 }
 
 packer.emitSummary();

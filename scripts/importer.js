@@ -2,6 +2,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { spawnSync } from 'child_process';
+import { detectSceneSplits, ensureSpineThread } from './migrate_to_scenes.js';
+import { allocateSceneId } from './id_allocator.js';
+import { reindex } from './reindex.js';
 
 function stripBOM(str) {
   return str.replace(/^\uFEFF/, '');
@@ -440,12 +443,71 @@ export function importManuscript(sourcePath, options = {}) {
         manifest.chapters.push(chapterEntry);
       }
 
+      // Decompose chapter into manuscript/ch-XX/sc-YYYY.md and chapter.md
+      const chDirName = `ch-${pad}`;
+      const chDirPath = path.join(process.cwd(), 'manuscript', chDirName);
+      fs.mkdirSync(chDirPath, { recursive: true });
+
+      const { segments } = detectSceneSplits(ch.content);
+      const sceneIds = [];
+
+      for (const segment of segments) {
+        const scId = allocateSceneId(process.cwd());
+        sceneIds.push(scId);
+        const scFilePath = path.join(chDirPath, `${scId}.md`);
+        const scWords = (segment.match(/[\w'’-]+/g) || []).length;
+
+        let detectedPov = null;
+        if (entities.length > 0) {
+          detectedPov = entities[0];
+        }
+
+        const scFrontmatter = [
+          '---',
+          `id: ${scId}`,
+          `chapter: ${chDirName}`,
+          `pov: ${detectedPov ? `"${detectedPov}"` : 'null'}`,
+          'threads: [th-01]',
+          'status: drafted',
+          `word_count: ${scWords}`,
+          'schema: 2.0',
+          '---',
+          '',
+          segment.trim() + '\n'
+        ].join('\n');
+
+        fs.writeFileSync(scFilePath, scFrontmatter, 'utf8');
+      }
+
+      const chMdPath = path.join(chDirPath, 'chapter.md');
+      const chMdContent = [
+        '---',
+        `id: ${chDirName}`,
+        `number: ${targetId}`,
+        `title: "${ch.title.replace(/"/g, '\\"')}"`,
+        `scenes: [${sceneIds.join(', ')}]`,
+        'break_rationale: >',
+        '  Ingested chapter draft. Review and update break rationale.',
+        'status: drafted',
+        'schema: 2.0',
+        '---',
+        ''
+      ].join('\n');
+
+      fs.writeFileSync(chMdPath, chMdContent, 'utf8');
+
       allImported.push(chapterEntry);
     });
   });
 
+  ensureSpineThread(process.cwd());
+
   manifest.chapters.sort((a, b) => a.id - b.id);
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+
+  if (manifest.unit_type === 'scene') {
+    reindex(process.cwd());
+  }
 
   // Maintain backward-compatible output message for existing tests
   console.log(`\n\x1b[32m✔ Successfully imported ${allImported.length} chapter(s) from "${path.basename(resolvedSource)}"\x1b[0m`);

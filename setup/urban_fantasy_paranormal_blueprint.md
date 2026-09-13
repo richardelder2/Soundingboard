@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Urban Fantasy & Paranormal Investigator
 description: Brainstorming interview for designing gritty urban fantasy and paranormal detective stories with modern city worldbuilding, the masquerade, municipal supernatural politics, and magical investigation tradecraft.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -46,7 +46,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative voice will carry the story? (Signature first-person snark, dry humor, high emotional stakes, and world-weary investigative observation in the classic Jim Butcher / Ben Aaronovitch vein)."
 18. "How does the pacing balance investigation and action set-pieces? (Interspersing gritty clue gathering and magical ritual preparations with explosive, kinetic action sequences)."
 19. "The Aftermath: How is the Masquerade repaired, what debt is left unpaid for Book 2, and what beer is cracked open to wash down the blood?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an addictive, punchy, and atmospheric urban fantasy architecture with rock-solid magical mechanics, witty dialogue, and rich series runway. Present back for approval.
-21. Once approved, craft a 12-word pitch and a commercial blurb hook ready to headline an urban fantasy shelf.
+22. Review all answers. Synthesize them into an addictive, punchy, and atmospheric urban fantasy architecture with rock-solid magical mechanics, witty dialogue, and rich series runway. Present back for approval.
+23. Once approved, craft a 12-word pitch and a commercial blurb hook ready to headline an urban fantasy shelf.

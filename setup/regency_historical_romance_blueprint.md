@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Regency & Historical Romance
 description: Brainstorming interview for designing elegant, high-tension Regency and historical romance stories with Ton society etiquette, ballroom chemistry, reputation ruin, dowry stakes, and guaranteed HEA.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What heat level and pacing will you establish? (Sweet and witty closed-door romance in the Georgette Heyer/Austen tradition; simmering sensual slow-burn; or passionate, explicit Regency romance with modern emotional agency?)."
 18. "How does the story weave authentic period detail without slowing the romantic tension? (Carriage mechanics, clothing rituals, cards of address, calling hours)."
 19. "The Epilogue & Guaranteed HEA: Describe the domestic bliss, the wedding, or the quiet country terrace scene that rewards the readers' emotional investment."
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an irresistible, witty, and deeply romantic Regency blueprint filled with high-society tension, sparkling dialogue, and emotional resonance. Present back for approval.
-21. Once approved, craft a 12-word pitch and a breathless commercial blurb hook.
+22. Review all answers. Synthesize them into an irresistible, witty, and deeply romantic Regency blueprint filled with high-society tension, sparkling dialogue, and emotional resonance. Present back for approval.
+23. Once approved, craft a 12-word pitch and a breathless commercial blurb hook.

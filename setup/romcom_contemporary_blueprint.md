@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Contemporary Rom-Com & Summer Reads
 description: Brainstorming interview for designing witty, high-spark contemporary romantic comedies, small-town returns, banter engines, and sun-drenched summer reads.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -49,7 +49,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What POV structure will best deliver the comedy? (Alternating dual first-person POV so the reader sees how completely infatuated the Grump is while the Sunshine thinks he hates her, or third-person intimate?)"
 18. "How will you seed the next book's couple? (Interconnected standalone series let the leads of Book 2 cameo as bickering secondary characters in Book 1—who is waiting in the wings?)"
 19. "What pop-culture, music, or local references will ground this world in authentic, vibrant contemporary life?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an effervescent, sparkling romantic comedy concept summary that feels like your favorite beach read. Present this back to the author.
-21. Once approved, craft a snappy 12-word pitch and a punchy blurb hook.
+22. Review all answers. Synthesize them into an effervescent, sparkling romantic comedy concept summary that feels like your favorite beach read. Present this back to the author.
+23. Once approved, craft a snappy 12-word pitch and a punchy blurb hook.

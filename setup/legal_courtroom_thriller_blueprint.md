@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Legal & Courtroom Thriller
 description: Brainstorming interview for designing high-stakes legal thrillers with procedural authenticity, evidence battles, bench conferences, and ticking jury verdict clocks.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative structure best fits the case? (e.g., linear countdown through jury selection, opening statements, evidence, and verdict; or a dual timeline alternating between the crime that occurred and the courtroom battle today?)."
 18. "How does the story handle legal jargon and procedure? (Authentic procedural tension should rise organically from statutory rules, objections, and bench conferences without pausing for dry textbook exposition)."
 19. "What personal B-plot is crumbling outside the courtroom? (e.g., an estranged marriage, health issues, or an orphaned nephew that provides grounding emotional counterpoint to the legal war)."
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into a taut, compelling legal thriller architecture featuring an unyielding institutional battle, fair-play evidence tracking, and explosive courtroom confrontations. Present back for approval.
-21. Once approved, craft a 12-word pitch and a punchy commercial logline suitable for a legal thriller bestseller jacket.
+22. Review all answers. Synthesize them into a taut, compelling legal thriller architecture featuring an unyielding institutional battle, fair-play evidence tracking, and explosive courtroom confrontations. Present back for approval.
+23. Once approved, craft a 12-word pitch and a punchy commercial logline suitable for a legal thriller bestseller jacket.

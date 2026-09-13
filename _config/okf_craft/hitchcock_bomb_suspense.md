@@ -42,8 +42,8 @@ Alfred Hitchcock famously distinguished between **Surprise** and **Suspense** us
 
 ---
 
-## 3. Application in SAGA Scene Beats
-* In `scene_beat.md`, explicitly declare:
+## 3. Application in Scene Cards
+* In `scene_card.md`, explicitly declare:
   - **What the reader knows:** (e.g., The killer is in the attic).
   - **What the POV character knows:** (e.g., Believes they are alone making tea).
   - **The ticking clock:** (e.g., Kettle boils in 2 minutes; floorboards creak).

@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Domestic Thriller & Psychological Suspense
 description: Brainstorming interview for designing high-tension psychological domestic thrillers with gaslight engines, techno-paranoia, and fair-play twists.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -43,7 +43,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What POV and timeline structure do you want? (e.g., single intimate first-person present, dual 'Now / Then' timeline counting down to a police interview, or dual POV between the target and the hidden architect?)"
 18. "How adventurous should the narrative timeline be? Will you use an in media res flash-forward prologue with a chilling image that only makes sense 40 chapters later?"
 19. "What messy, unresolved subplot would you like running underneath the main thriller spine? (e.g., an aging parent's dementia that mirrors the protagonist's fears of memory loss, or a petty neighborhood feud that provides noisy misdirection?)"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into a taut, pitch-perfect domestic suspense narrative summary. Present this back to the author and ask: "How does this gaslight architecture feel? Are the planted clues fair, and does the twist hit with maximum psychological impact?"
-21. Once approved, craft a 12-word pitch and a commercial logline ready for the book jacket.
+22. Review all answers. Synthesize them into a taut, pitch-perfect domestic suspense narrative summary. Present this back to the author and ask: "How does this gaslight architecture feel? Are the planted clues fair, and does the twist hit with maximum psychological impact?"
+23. Once approved, craft a 12-word pitch and a commercial logline ready for the book jacket.

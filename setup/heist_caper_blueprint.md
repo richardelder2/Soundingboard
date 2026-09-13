@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Heist & Caper Mechanics
 description: Brainstorming interview for designing intricate heist and caper stories with target casing, specialist crew assembly, blueprint infiltration, complication cascades, and the double-bluff payoff.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -50,7 +50,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative structure best fits the caper? (Linear chronometer with ticking timestamps; or a non-linear structure using clever flashbacks to reveal hidden crew preparations?)."
 18. "How should the dialogue and banter register? (Fast-paced, witty, overlapping dialogue with status-play reversals and slick verbal timing)."
 19. "The Getaway & the Split: Where does the crew end up? How do they celebrate, where is the treasure stashed, and what hook hints at the next legendary mark?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an irresistible, razor-sharp heist blueprint with precision timing, charismatic specialists, escalating security obstacles, and a brilliant double-bluff climax. Present back for approval.
-21. Once approved, craft a 12-word pitch and a high-energy commercial blurb hook.
+22. Review all answers. Synthesize them into an irresistible, razor-sharp heist blueprint with precision timing, charismatic specialists, escalating security obstacles, and a brilliant double-bluff climax. Present back for approval.
+23. Once approved, craft a 12-word pitch and a high-energy commercial blurb hook.

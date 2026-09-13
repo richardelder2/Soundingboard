@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Espionage & Black Ops Action
 description: Brainstorming interview for designing high-velocity tactical spy thrillers with clandestine tradecraft, burn notices, geopolitical stakes, and relentless ticking clocks.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What pacing tempo and narrative point-of-view do you want? (e.g., relentless third-person close with precise millisecond action blocking; or split POV between the rogue operative in the mud and the CIA director in Langley watching satellite telemetry?)."
 18. "How deep should the tactical and mechanical authenticity run? (e.g., authentic weapons mechanics, reload counts, ballistics, counter-surveillance routes, and cybersecurity realism)."
 19. "What lingering moral ambiguity remains at the end? (Espionage thrillers rarely end in pure triumph—what is the price of keeping the world asleep for another day?)."
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an adrenaline-fueled, high-stakes tactical espionage architecture complete with tradecraft authenticity, lethal pacing, and high-level geopolitical conspiracies. Present back for approval.
-21. Once approved, craft a 12-word pitch and an explosive commercial logline ready for an action thriller jacket.
+22. Review all answers. Synthesize them into an adrenaline-fueled, high-stakes tactical espionage architecture complete with tradecraft authenticity, lethal pacing, and high-level geopolitical conspiracies. Present back for approval.
+23. Once approved, craft a 12-word pitch and an explosive commercial logline ready for an action thriller jacket.

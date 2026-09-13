@@ -12,16 +12,13 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { strip } from './frontmatter.js';
 
 const DEFAULT_INPUT = path.join('stages', '03_drafting', 'output', 'chapters');
 const REPORT_DIR = path.join('stages', '04_diagnostics_edits', 'output', 'reports');
 
 // Common capitalized non-names to ignore (sentence starters slip through the mid-sentence filter occasionally)
 const STOPWORDS = new Set(['The', 'She', 'He', 'They', 'It', 'And', 'But', 'Then', 'When', 'What', 'That', 'This', 'There', 'Her', 'His', 'You', 'Not', 'Now', 'Once', 'After', 'Before', 'Inside', 'Outside', 'Chapter', 'God', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'North', 'South', 'East', 'West', 'Earth', 'Everyone', 'Everything', 'Nobody', 'Nothing', 'Someone', 'Something', 'Maybe', 'Yes', 'No', 'Okay', 'Fine', 'Right', 'Well', 'Look', 'Wait', 'Stop', 'Please', 'Thanks', 'Sorry', 'Jesus', 'Christ', 'Mom', 'Dad', 'Mother', 'Father', 'Doctor', 'Captain', 'Sergeant', 'Commander', 'Chief', 'Professor', 'Mister', 'Miss']);
-
-function stripFrontmatter(text) {
-  return text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
-}
 
 // Extract capitalized tokens with positional evidence. Names in prose usually OPEN
 // sentences, so a pure mid-sentence filter misses them; instead we count every
@@ -78,7 +75,7 @@ export function runContinuityScan(targets) {
   // word → { total, mid, poss, chapters: Map(file → count), first: file }
   const registry = new Map();
   for (const file of files) {
-    const text = stripFrontmatter(fs.readFileSync(path.join(dir, file), 'utf8'));
+    const text = strip(fs.readFileSync(path.join(dir, file), 'utf8'));
     for (const [word, t] of extractTokens(text)) {
       if (!registry.has(word)) registry.set(word, { total: 0, mid: 0, poss: 0, chapters: new Map(), first: file });
       const entry = registry.get(word);

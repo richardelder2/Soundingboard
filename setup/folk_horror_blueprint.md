@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Folk Horror & Gothic Dread
 description: Brainstorming interview for designing atmospheric folk horror, dual timelines, seductive communal dread, ancient ritual contracts, and chilling screenshot imagery.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -52,7 +52,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "How should the timelines alternate? (A 2:1 ratio of NOW:THEN chapters, converging at the solstice threshold in Act 3)?"
 18. "How will you maintain the claustrophobic dread? (Limiting phone/internet connectivity authentically, tracking weather and fading daylight)."
 19. "Would you like to include in-world artifacts (e.g., diary entries from the missing person, transcripts of folklore field recordings, weathered parish register fragments)?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an eerie, hypnotic, and unforgettable folk horror concept summary. Present this back to the author.
-21. Once approved, craft a chilling 12-word pitch and a haunting tagline.
+22. Review all answers. Synthesize them into an eerie, hypnotic, and unforgettable folk horror concept summary. Present this back to the author.
+23. Once approved, craft a chilling 12-word pitch and a haunting tagline.

@@ -6,6 +6,12 @@ import { fork } from 'child_process';
 import { fileURLToPath } from 'url';
 import { checkUpdate, handleCheckUpdate, handleUpdate, renderUpdateBanner } from './updater.js';
 import { handleDoctor, diagnoseEnvironment, autoFixEnvironment } from './doctor.js';
+import { parse, strip } from './frontmatter.js';
+import { verifyNodeRuntime } from './preflight.js';
+
+if (!verifyNodeRuntime()) {
+  process.exit(1);
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -646,7 +652,11 @@ function handlePack(type, extraArgs = []) {
     bloom: 'pack-sensory-bloom.js',
     'sensory-bloom': 'pack-sensory-bloom.js',
     scene: 'pack-stage-scene.js',
+    'pack-scene': 'pack-scene.js',
     'stage-scene': 'pack-stage-scene.js',
+    bracket: 'pack-bracket.js',
+    'bracket-method': 'pack-bracket.js',
+    'pack-bracket': 'pack-bracket.js',
     theme: 'pack-theme-weaver.js',
     'theme-weaver': 'pack-theme-weaver.js',
     causality: 'pack-causality.js',
@@ -692,7 +702,10 @@ Available context packers:
     return;
   }
 
-  const scriptFile = packMap[type];
+  let scriptFile = packMap[type];
+  if (type === 'scene' && extraArgs[0] && /^sc-\d+/i.test(extraArgs[0])) {
+    scriptFile = 'pack-scene.js';
+  }
   if (!scriptFile) {
     console.error(`Unknown context packer: "${type}". Run "node scripts/${BIN_NAME}.js pack list" to see available packers.`);
     return;
@@ -1101,6 +1114,46 @@ function handleThreads() {
     }
   });
 
+  // Fallback: Check frontmatter threads array or bullet lists
+  if (threads.length === 0) {
+    try {
+      const meta = parse(threadContent, threadsFile);
+      if (Array.isArray(meta.threads)) {
+        meta.threads.forEach(t => {
+          if (typeof t === 'object' && t.id) {
+            threads.push({
+              id: t.id,
+              description: t.name || t.description || 'Main Story (Spine)',
+              type: t.spine ? 'main' : (t.type || 'subplot'),
+              introduced: t.introduced || 'ch 1',
+              latest: t.latest || 'ch 1',
+              target: t.target || 'ch 20',
+              status: t.status || 'open'
+            });
+          }
+        });
+      }
+    } catch (_) {}
+
+    // Fallback: parse bullet points like "- **th-01**: Main Story (Spine) [open]"
+    if (threads.length === 0) {
+      lines.forEach(line => {
+        const bMatch = line.match(/^-\s+\*\*([a-zA-Z0-9_-]+)\*\*:\s*(.*?)(\[(.*?)\])?$/);
+        if (bMatch) {
+          threads.push({
+            id: bMatch[1],
+            description: bMatch[2].trim() || 'Tracked Thread',
+            type: /spine|main/i.test(bMatch[2]) ? 'main' : 'subplot',
+            introduced: 'ch 1',
+            latest: 'ch 1',
+            target: 'ch 20',
+            status: bMatch[4] ? bMatch[4].trim() : 'open'
+          });
+        }
+      });
+    }
+  }
+
   if (threads.length === 0) {
     console.log('No threads tracked yet in ' + threadsFile + '\n');
     return;
@@ -1150,24 +1203,6 @@ async function handleCompile() {
   compileManuscript(args.slice(1));
 }
 
-function parseFrontmatterList(content, key) {
-  const clean = content.replace(/^\uFEFF/, '');
-  const fm = clean.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!fm) return [];
-  const lines = fm[1].split(/\r?\n/);
-  const items = [];
-  let inBlock = false;
-  for (const line of lines) {
-    if (new RegExp(`^${key}:\\s*$`).test(line)) { inBlock = true; continue; }
-    if (inBlock) {
-      const item = line.match(/^\s+-\s+(\S[^#]*?)\s*(#.*)?$/);
-      if (item) items.push(item[1].trim());
-      else if (/^\S/.test(line)) inBlock = false;
-    }
-  }
-  return items;
-}
-
 const PACKET_FILE_CAP = 48 * 1024;
 let totalPacketChars = 0;
 
@@ -1203,8 +1238,9 @@ function handleRunStage(stageId) {
   console.log(`=== STAGE PACKET: ${matchingStage} ===`);
   emitPacketEntry('CONTRACT', contractPath);
 
-  const inputs = parseFrontmatterList(contract, 'inputs');
-  const templates = parseFrontmatterList(contract, 'templates');
+  const contractMeta = parse(contract, contractPath);
+  const inputs = Array.isArray(contractMeta.inputs) ? contractMeta.inputs : [];
+  const templates = Array.isArray(contractMeta.templates) ? contractMeta.templates : [];
   const missing = [];
 
   for (const [label, group] of [['INPUT', inputs], ['TEMPLATE', templates]]) {
@@ -1968,6 +2004,10 @@ switch (command) {
   case 'pack-stage-scene':
     handlePack('scene', args.slice(1));
     break;
+  case 'pack-bracket':
+  case 'pack-bracket-method':
+    handlePack('bracket', args.slice(1));
+    break;
   case 'pack-theme':
   case 'pack-theme-weaver':
     handlePack('theme', args.slice(1));
@@ -2054,6 +2094,29 @@ switch (command) {
   case 'compile':
     handleCompile();
     break;
+  case 'reindex': {
+    const { reindex } = await import('./reindex.js');
+    const result = reindex();
+    console.log(`\x1b[32m✔ Reindexed manuscript:\x1b[0m ${result.chapters.length} chapters, ${result.scenes.length} scenes, ${result.total_words} words.`);
+    break;
+  }
+  case 'migrate-to-scenes': {
+    const { migrateToScenes } = await import('./migrate_to_scenes.js');
+    const report = migrateToScenes();
+    console.log(`\x1b[32m✔ Migration completed successfully!\x1b[0m`);
+    console.log(`  - Backup created at: ${report.backupDir}`);
+    console.log(`  - Chapters migrated: ${report.chaptersMigrated}`);
+    console.log(`  - Scenes created: ${report.scenesCreated}`);
+    console.log(`  - Average words per scene: ${report.averageWordsPerScene}`);
+    if (report.averageWordsPerScene > 0 && report.averageWordsPerScene < 800) {
+      console.log(`  \x1b[33m⚠ Warning: Average scene length is < 800 words (${report.averageWordsPerScene}w). Review for over-splitting.\x1b[0m`);
+    }
+    if (report.unwrittenBreakRationales > 0) {
+      console.log(`  \x1b[33m⚠ Action required: ${report.unwrittenBreakRationales} chapters need human-authored break_rationale.\x1b[0m`);
+    }
+    console.log(`  - Unfilled fields (nulls): ${report.nullFieldCount}\n`);
+    break;
+  }
   case 'visualizer':
   case 'console':
     await handleVisualizer(subCommand, args.slice(2));

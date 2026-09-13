@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Cozy Fantasy & Cottagecore
 description: Brainstorming interview for designing gentle, heartwarming cozy fantasy novels with inherited shops, kitchen magic, low-stakes comfort, and beloved animal companions.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -51,7 +51,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "How should the narrative pace unfold? (Cozy craft thrives on a rhythmic, episodic flow: alternating between quiet baking/crafting sequences, warm customer encounters, and gradual community connection)."
 18. "What village secret will be peeled back across books? (e.g., the ancient friendly spirit sleeping beneath the village mill, the origins of the festival)? How much is revealed in Book 1?"
 19. "Would you like each chapter to open with an in-world element (e.g., an artisanal recipe, a tea-steeping guide, or an excerpt from an herbology journal)?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an utterly comforting, warm-hearted cozy fantasy pitch and series blueprint. Present this back to the author.
-21. Once approved, craft a cozy 12-word pitch and an inviting series tag.
+22. Review all answers. Synthesize them into an utterly comforting, warm-hearted cozy fantasy pitch and series blueprint. Present this back to the author.
+23. Once approved, craft a cozy 12-word pitch and an inviting series tag.

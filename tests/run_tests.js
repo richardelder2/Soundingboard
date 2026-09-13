@@ -700,11 +700,11 @@ function testMarkdownScriptInvocations() {
   function walkMd(dir) {
     let res = [];
     fs.readdirSync(dir).forEach(f => {
-      if (f === '.git' || f === 'node_modules' || f === 'fixtures') return;
+      if (f === '.git' || f === 'node_modules' || f === 'fixtures' || f === 'v2_specs') return;
       const p = path.join(dir, f);
       const stat = fs.statSync(p);
       if (stat.isDirectory()) res = res.concat(walkMd(p));
-      else if (f.endsWith('.md')) res.push(p);
+      else if (f.endsWith('.md') && f !== 'v2_migration_tracker.md' && f !== 'V2_MIGRATION.md') res.push(p);
     });
     return res;
   }

@@ -13,12 +13,12 @@ last_modified: [YYYY-MM-DD]
 *Stage 02 plan. Stage 03 drafts against it; Stage 04 audits against it. All sections required.*
 
 ## 1. Obligatory-scene ledger (reader contract — beats here are untouchable)
-| # | Promised beat (from genre bible / trope stack) | Bible position | Scheduled chapter | Delivered |
+| # | Promised beat (from genre bible / trope stack) | Bible position | Scheduled scene ID | Delivered |
 |---|---|---|---|---|
-| 1 | [e.g., moment of unwilling respect] | [~ch. 8 / 20%] | | ☐ |
+| 1 | [e.g., moment of unwilling respect] | [~20%] | sc-0008 | ☐ |
 
 ## 2. Subplot map (≥ 2; at least one NOT tightly serving the theme)
-| Subplot | Characters | Integration mode (parallel / contrasting / loose) | Touchpoint chapters | Resolves? |
+| Subplot | Characters | Integration mode (parallel / contrasting / loose) | Touchpoint scenes | Resolves? |
 |---|---|---|---|---|
 
 ## 3. Nonlinearity plan

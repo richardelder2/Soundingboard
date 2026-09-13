@@ -1,21 +1,53 @@
 {
   "schema_version": "2.0.0",
+  "unit_type": "scene",
   "title": "[working title]",
   "author": "[author or pen name]",
   "form": "novel",
-  "unit_type": "chapter",
   "target_words": 90000,
   "genre_bible": "setup/genre_bibles/[bible].md",
   "trope_stack": "[dynamic] + [situation] + [flavor]",
   "chapters": [
-    { "id": 1, "title": "[Ch 1]", "pov": "[POV 1]", "escalation": 2, "entities": ["[Lead]"], "beat_file": "stages/02_planning/output/beats/ch01.md", "draft_file": "stages/03_drafting/output/chapters/ch01.md", "status": "planned", "target_words": 2500, "last_audit": null },
-    { "id": 2, "title": "[Ch 2]", "pov": "[POV 1]", "escalation": 3, "entities": ["[Lead]", "[Foil]"], "beat_file": "stages/02_planning/output/beats/ch02.md", "draft_file": "stages/03_drafting/output/chapters/ch02.md", "status": "planned", "target_words": 2500, "last_audit": null },
-    { "id": 3, "title": "[Ch 3]", "pov": "[POV 2]", "escalation": 3, "entities": ["[Lead]", "[Ally]"], "beat_file": "stages/02_planning/output/beats/ch03.md", "draft_file": "stages/03_drafting/output/chapters/ch03.md", "status": "planned", "target_words": 2500, "last_audit": null }
+    {
+      "id": "ch-01",
+      "number": 1,
+      "title": "[Chapter 1 Title]",
+      "scenes": ["sc-0001"],
+      "break_rationale": "[Human-authored explanation of chapter break]",
+      "status": "planned",
+      "schema": "2.0"
+    }
   ],
+  "scenes": [
+    {
+      "id": "sc-0001",
+      "chapter": "ch-01",
+      "file": "manuscript/ch-01/sc-0001.md",
+      "pov": "[Lead Character]",
+      "location": "[Location, Time]",
+      "threads": ["th-01"],
+      "value_in": "Ignorance (+)",
+      "value_out": "Doubt (-)",
+      "commandments": {
+        "inciting_incident": "[Inciting event]",
+        "progressive_complication": "[Complication]",
+        "crisis": "[Crisis choice]",
+        "climax": "[Irrevocable action]",
+        "resolution": "[New equilibrium]"
+      },
+      "voice_anchor": null,
+      "anchor_provisional": false,
+      "craft_modules": [],
+      "status": "planned",
+      "word_count": 0,
+      "schema": "2.0"
+    }
+  ],
+  "threads": ["th-01"],
+  "total_words": 0,
   "_conventions": {
-    "status": "planned → drafted → audited → passed",
-    "last_audit": "CLEAN | REVIEW | FAIL",
-    "escalation": "1–5 from structure_plan.md",
-    "entities": "Active character/location/item names for Layer 4 canon filtering"
+    "status": "planned → drafted → diagnosed → passed",
+    "value_shifts": "value_in to value_out tracking dynamic emotional polarities",
+    "voice_anchor": "Previous same-POV scene ID used to calibrate prose voice"
   }
 }

@@ -14,6 +14,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDraftingDir, getReviewDir } from './path_helper.js';
+import { strip } from './frontmatter.js';
 
 const DEFAULT_INPUT = getDraftingDir();
 const REPORT_DIR = getReviewDir();
@@ -80,10 +81,6 @@ const ANACHRONY_MARKERS = /\b(?:years? (?:later|earlier|before|ago)|months? (?:l
 
 // ---------- helpers ----------
 
-function stripFrontmatter(text) {
-  return text.replace(/^\uFEFF/, '').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
-}
-
 function loadTellAllowlist() {
   const candidates = [
     path.join('stages', '01_onboarding', 'output', 'tell_allowlist.md'),
@@ -135,7 +132,7 @@ function per1k(count, words) {
 // ---------- core analysis ----------
 
 function analyze(text) {
-  const body = stripFrontmatter(text);
+  const body = strip(text);
   const words = (body.match(/[\w'’-]+/g) || []).length;
   const sentences = splitSentences(body);
   const sentenceLens = sentences.map(s => (s.match(/[\w'’-]+/g) || []).length).filter(n => n > 0);

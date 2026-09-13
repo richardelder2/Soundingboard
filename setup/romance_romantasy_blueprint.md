@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Romantasy & Dark Romance
 description: Brainstorming interview for designing addictive, high-stakes romantic fantasy and dark romance novels with structural enmity, forced proximity, and explosive chemistry.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -52,7 +52,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What POV approach best serves this chemistry? (Dual POV alternating chapters—giving the reader delicious dramatic irony—or single first-person deep POV focused on the heroine's intense subjective experience?)"
 18. "How will you handle the pacing of the tension? (Authentic romantasy lets the hostility simmer with genuine ideological friction before the romantic shift—avoiding instant love)."
 19. "What loyal companion, war-beast, or comedic second-in-command provides respite and banter between the heavy romantic set-pieces?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an electrifying, emotionally charged narrative concept summary. Present this back to the author and ask: "Does this capture the heat, the danger, and the emotional resonance you want?"
-21. Once approved, craft a 12-word pitch designed to blow up BookTok / Bookstagram and a killer series hook.
+22. Review all answers. Synthesize them into an electrifying, emotionally charged narrative concept summary. Present this back to the author and ask: "Does this capture the heat, the danger, and the emotional resonance you want?"
+23. Once approved, craft a 12-word pitch designed to blow up BookTok / Bookstagram and a killer series hook.

@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Historical Epic & Generational Family Saga
 description: Brainstorming interview for designing sweeping historical epics and multi-generational family sagas with authentic period detail, macro-historical inflection points, dynasty fortunes, and intimate human drama.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -43,7 +43,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What temporal span and narrative structure will you employ? (A single dramatic year framed by a war; or an expansive 30-year multi-generational timeline structured into distinct historical acts in the tradition of Ken Follett, Hilary Mantel, and Min Jin Lee?)."
 18. "How does the story balance rigorous historical fidelity with engaging character agency? (Ensuring historical research enriches the characters' dilemmas without turning into an encyclopedia)."
 19. "The Poignant Ending: What enduring family legacy or quiet heirloom survives the passage of time in the final pages?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an emotionally profound, panoramic historical epic architecture rich with period texture, complex family dynamics, and immense dramatic weight. Present back for approval.
-21. Once approved, craft a 12-word pitch and a sweeping commercial logline worthy of a historical fiction bestseller.
+22. Review all answers. Synthesize them into an emotionally profound, panoramic historical epic architecture rich with period texture, complex family dynamics, and immense dramatic weight. Present back for approval.
+23. Once approved, craft a 12-word pitch and a sweeping commercial logline worthy of a historical fiction bestseller.

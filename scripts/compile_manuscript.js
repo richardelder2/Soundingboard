@@ -10,14 +10,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { spawnSync } from 'child_process';
+import { strip } from './frontmatter.js';
 
 const CHAPTERS_DIR = path.join('stages', '03_drafting', 'output', 'chapters');
 const OUT_DIR = path.join('stages', '05_publishing', 'output');
 const MANIFEST = 'manuscript.json';
-
-function stripFrontmatter(text) {
-  return text.replace(/^\uFEFF/, '').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
-}
 
 function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -121,7 +118,7 @@ export function compileManuscript(args = []) {
   let totalWords = 0;
 
   const bodyHtml = chapters.map((ch, i) => {
-    const raw = stripFrontmatter(fs.readFileSync(ch.file, 'utf8'));
+    const raw = strip(fs.readFileSync(ch.file, 'utf8'));
     totalWords += (raw.match(/[\w'’-]+/g) || []).length;
     // Drop a leading markdown H1 if it duplicates the chapter title slot
     const cleaned = raw.replace(/^#\s+.*\n+/, '');

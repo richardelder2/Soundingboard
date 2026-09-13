@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: First Contact & Hard Sci-Fi Xenobiology
 description: Brainstorming interview for designing rigorous hard science fiction first-contact stories with scientific authenticity, linguistic barriers, incomprehensible alien biology, and ontological shock.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative cadence and tone best suits the story? (Rigorous, intellectually gripping, analytical prose in the tradition of Ted Chiang, Arthur C. Clarke, and Peter Watts; combining intense emotional wonder with real scientific inquiry)."
 18. "How will you handle scientific exposition? (Embedding hypotheses, lab notes, and sensor readings organically into active dialogue and physical problem-solving without stopping the story's narrative engine)."
 19. "The Ending Reverberation: Does the contact change human destiny forever, or leave us staring into the cosmic abyss with humble awe?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an intellectually thrilling, scientifically profound first contact architecture featuring rigorous xenobiology, high-tension communication puzzles, and profound philosophical stakes. Present back for approval.
-21. Once approved, craft a 12-word pitch and a thought-provoking commercial logline suitable for an award-winning hard sci-fi novel.
+22. Review all answers. Synthesize them into an intellectually thrilling, scientifically profound first contact architecture featuring rigorous xenobiology, high-tension communication puzzles, and profound philosophical stakes. Present back for approval.
+23. Once approved, craft a 12-word pitch and a thought-provoking commercial logline suitable for an award-winning hard sci-fi novel.

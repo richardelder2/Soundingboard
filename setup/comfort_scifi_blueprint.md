@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Hard Sci-Fi Comfort Book
 description: Brainstorming process for designing scientifically rigorous, high-stakes hard sci-fi comfort novels.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-07-07
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "How adventurous should the story's *structure* be? Are you comfortable with flashbacks, time skips, or opening after a disaster and spiraling backward — or do you want mostly linear time with only occasional jumps? (Nonlinear time is one of the strongest markers of human-feeling fiction.)"
 18. "How much side-story appetite do you have? Human novels almost always carry subplots — a crewmate's failing marriage, a station politics feud — and not all of them tie neatly into the main theme. Name one or two subplot seeds you'd enjoy, including one allowed to stay messy or unresolved."
 19. "Should characters reference the real world by name — actual books, songs, scientists, brands ('she reread her battered copy of *Gravity's Rainbow*') — or should the story world have its own invented named works and brands that characters cite specifically?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into a rich, cohesive, mathematically grounded narrative concept summary. Present this back to the user with high enthusiasm and ask: "How does this hard sci-fi blueprint feel? What adjustments should we make to the science or the stakes?"
-21. Once approved, craft a final, punchy logline using the classic hook formula.
+22. Review all answers. Synthesize them into a rich, cohesive, mathematically grounded narrative concept summary. Present this back to the user with high enthusiasm and ask: "How does this hard sci-fi blueprint feel? What adjustments should we make to the science or the stakes?"
+23. Once approved, craft a final, punchy logline using the classic hook formula.

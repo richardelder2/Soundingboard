@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Cozy Mystery & Fair-Play Whodunit
 description: Brainstorming interview for designing charming, puzzle-tight cozy mystery series with hook occupations, festival murders, quirky gossip networks, and loyal pet deputies.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-04
 ---
 
@@ -43,7 +43,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "How should the investigation pace alternate between lighthearted village subplots and tightening danger? (Cozy pacing balances tea-and-banter scenes with steady, rhythmic clue discovery every 2–3 chapters)."
 18. "What recurring village subplot or comic rivalry should run in the background? (e.g., two rival bakers fighting over the prize ribbon, an eccentric aunt's disastrous matchmaking scheme?)"
 19. "How much local color and craft lore should season the prose? (e.g., opening each chapter with an authentic recipe excerpt, gardening tip, or antique restoration trick?)"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an irresistible, commercial cozy mystery concept with a vibrant village cast, a rock-solid puzzle spine, and endless series potential. Present this back for approval.
-21. Once approved, craft a charming 12-word pitch and a back-cover blurb hook.
+22. Review all answers. Synthesize them into an irresistible, commercial cozy mystery concept with a vibrant village cast, a rock-solid puzzle spine, and endless series potential. Present this back for approval.
+23. Once approved, craft a charming 12-word pitch and a back-cover blurb hook.

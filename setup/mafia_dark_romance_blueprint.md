@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Mafia & Dark Contemporary Romance
 description: Brainstorming interview for designing intense, high-heat mafia and dark contemporary romance stories with arranged blood marriages, syndicate code, morally gray anti-heroes, and fierce protective dynamics.
 stages: 7
-total_questions: 20
+total_questions: 22
 last_modified: 2026-09-11
 ---
 
@@ -40,7 +40,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What heat level and POV structure will you use? (Dual first-person present POV is the commercial gold standard; high spice, primal tension, and explicit erotic pacing balanced with emotional vulnerability)."
 18. "Content Warnings & Emotional Safety: What dark themes and boundary edges will you navigate? (Establishing clear boundaries between consensual darkness, primal kink, and genuine emotional devotion)."
 19. "The HEA & The Coronation: How does the book end with them ruling the family together as undisputed king and queen of the underworld?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an addictive, heart-racing dark mafia romance blueprint loaded with primal chemistry, unbreakable protective instincts, and gripping mob war tension. Present back for approval.
-21. Once approved, craft a 12-word pitch and an intoxicating commercial blurb hook.
+22. Review all answers. Synthesize them into an addictive, heart-racing dark mafia romance blueprint loaded with primal chemistry, unbreakable protective instincts, and gripping mob war tension. Present back for approval.
+23. Once approved, craft a 12-word pitch and an intoxicating commercial blurb hook.

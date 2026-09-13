@@ -3,7 +3,7 @@ type: QuestionnaireBlueprint
 name: Grimdark & Mercenary Fantasy
 description: Brainstorming interview for designing gritty, morally exhausted grimdark fantasy stories with mercenary camaraderie, muddy battlefields, subverted prophecies, and brutal survival pragmatism.
 stages: 7
-total_questions: 19
+total_questions: 21
 last_modified: 2026-09-11
 ---
 
@@ -43,7 +43,9 @@ These answers set the structural authenticity dials in `_config/narrative_authen
 17. "What narrative perspective and tone do you want? (Close, visceral third-person with dark gallows banter, visceral combat choreography, and psychological trauma; avoiding glorification of violence)."
 18. "How will you handle character mortality? (Grimdark requires stakes where beloved squad members can die suddenly and unglamorously, impacting the survivors)."
 19. "The Ending Note: Does the story end on cynical resignation, or a tiny, hard-won ember of human warmth in a cold, indifferent universe?"
+20. "Scene Density & Target Rhythm: What is your preferred scene density per chapter? (e.g., 1 continuous 2,500-word scene per chapter, or 2–3 sharp 1,000–1,500 word scenes separated by scene breaks? This sets the atomic unit for planning and drafting)."
+21. "Point of View & Voice Anchoring: What is your POV architecture (first-person singular, close-third single POV, alternating dual POV, or multi-POV ensemble)? For multi-POV, our voice engine automatically walks back to the latest scene in the same character's voice to maintain stylistic continuity."
 
 ## STAGE 7: SYNTHESIS
-20. Review all answers. Synthesize them into an unsparing, morally complex, and atmospheric grimdark mercenary blueprint with unforgettable squad camaraderie and brutal combat tension. Present back for approval.
-21. Once approved, craft a grim 12-word pitch and a commercial logline that cuts like cold steel.
+22. Review all answers. Synthesize them into an unsparing, morally complex, and atmospheric grimdark mercenary blueprint with unforgettable squad camaraderie and brutal combat tension. Present back for approval.
+23. Once approved, craft a grim 12-word pitch and a commercial logline that cuts like cold steel.
