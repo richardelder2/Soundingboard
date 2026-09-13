@@ -104,8 +104,8 @@ function collectContinuityFiles(targets) {
   return files;
 }
 
-function loadCanonEntities(rootDir = process.cwd()) {
-  const canonEntities = new Map(); // entityName -> { tier, fact, status }
+export function loadCanonEntities(rootDir = process.cwd(), options = {}) {
+  const canonEntities = new Map(); // entityName -> { tier, fact, status, readerKnownAsOf }
   const canonSources = [];
   const bookCanon = path.join(rootDir, 'stages', '02_planning', 'output', 'canon.md');
   if (fs.existsSync(bookCanon)) canonSources.push({ level: 'Book Local', path: bookCanon });
@@ -124,6 +124,21 @@ function loadCanonEntities(rootDir = process.cwd()) {
   const worldCanon = worldCandidates.find(c => fs.existsSync(c));
   if (worldCanon) canonSources.push({ level: 'World Universe', path: worldCanon });
 
+  // Helper to parse scene number integer from string (e.g. "sc-0010" -> 10)
+  const parseSceneNumber = (scId) => {
+    if (!scId) return 0;
+    const m = String(scId).match(/\d+/);
+    return m ? parseInt(m[0], 10) : 0;
+  };
+
+  const isKnownToReader = (readerKnownAsOf, currentSceneId) => {
+    if (!readerKnownAsOf || !currentSceneId) return true;
+    const knownNum = parseSceneNumber(readerKnownAsOf);
+    const currentNum = parseSceneNumber(currentSceneId);
+    if (knownNum === 0 || currentNum === 0) return true;
+    return currentNum >= knownNum;
+  };
+
   for (const source of canonSources) {
     const raw = fs.readFileSync(source.path, 'utf8').replace(/^\uFEFF/, '');
     const lines = raw.split(/\r?\n/);
@@ -133,11 +148,25 @@ function loadCanonEntities(rootDir = process.cwd()) {
         if (cells.length >= 2) {
           const entityName = cells[0].replace(/[\[\]]/g, '').trim();
           if (entityName.length >= 2 && !STOPWORDS.has(entityName)) {
+            // Check for reader_known_as_of in 2.0 schema (col 4 or 5)
+            let readerKnownAsOf = null;
+            if (cells.length >= 7) {
+              readerKnownAsOf = cells[4] ? cells[4].replace(/[\[\]]/g, '').trim() : null;
+            }
+
+            if (options.forSceneId && readerKnownAsOf) {
+              if (!isKnownToReader(readerKnownAsOf, options.forSceneId)) {
+                // Suppressed by reader spoiler guard
+                continue;
+              }
+            }
+
             canonEntities.set(entityName.toLowerCase(), {
               name: entityName,
               tier: source.level,
               fact: cells[1] || '',
-              status: cells[2] || ''
+              status: cells[2] || '',
+              readerKnownAsOf
             });
           }
         }
@@ -169,7 +198,16 @@ export function runContinuityScan(targets, options = {}) {
     }
   }
 
-  const { canonEntities, canonSources } = loadCanonEntities(detectedRoot);
+  // If single scene specified, extract sceneId for spoiler guard if not already in options
+  let forSceneId = options.forSceneId;
+  if (!forSceneId && files.length === 1) {
+    const base = path.basename(files[0], '.md');
+    if (/^sc-\d+$/i.test(base)) {
+      forSceneId = base.toLowerCase();
+    }
+  }
+
+  const { canonEntities, canonSources } = loadCanonEntities(detectedRoot, { ...options, forSceneId });
 
   // word → { total, mid, poss, chapters: Map(file → count), first: file }
   const registry = new Map();

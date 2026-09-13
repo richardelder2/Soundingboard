@@ -173,11 +173,11 @@ These decisions have been author-approved and must NOT be altered or second-gues
   - ASCII Thread Lane View: terminal visualization of thread trajectories and braid points.
   - *Acceptance:* Dormancy warning triggers when word count gap exceeds threshold. Orphaned scene triggers non-zero exit. (Verified by `tests/threads.test.js`)
 
-- [ ] **SB2-P2-06: Canon 2.0 & Decision Queues (`scripts/canon.js`)**
+- [x] **SB2-P2-06: Canon 2.0 & Decision Queues (`scripts/canon.js`)**
   - Provenance validation: checks that `established_in` scenes still exist.
   - Gap queues: surfaces Unbound, Orphaned, and Absent facts with HITL decision menus.
   - Spoiler guard: suppresses facts where `reader_known_as_of > current_scene`.
-  - *Acceptance:* Facts marked `reader_known_as_of: sc-0030` are omitted from continuity checks on `sc-0010`.
+  - *Acceptance:* Facts marked `reader_known_as_of: sc-0030` are omitted from continuity checks on `sc-0010`. (Verified by `tests/canon.test.js`)
 
 ---
 
@@ -222,6 +222,7 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Phase 2 Option A Execution) | Phase 2 Option A completed (SB2-P2-01, SB2-P2-02, SB2-P2-04): scene-scoped audits (< 500ms AI-tell scan + scene continuity against canon), chapter-scoped audits (multi-scene cadence variability + break efficacy verification against authored rationale), honest coverage reporting (examined, skipped, undrafted, null value shifts), and CLI wiring | 88/88 main tests pass; 14/14 scene audit tests pass; 20/20 chapter audit tests pass; okf-lint 0 errors; 0 typescript errors | Ready for Commandment Advisory Audit (`SB2-P2-03`) or Thread Sentry & Canon 2.0 (`SB2-P2-05`, `SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Commandment Advisory Audit) | Completed SB2-P2-03 (Commandment Advisory Audit): evaluated Shawn Coyne's 5 Commandments from scene prose against Stage 02 frontmatter intent, side-by-side comparison, advisory options in Revision Playbook without failing machine gates, CLI wiring (`soundingboard commandments`), and test suite | 91/91 main tests pass; 21/21 commandment audit tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Diagnostics Suite (`SB2-P2-05`) and Canon 2.0 (`SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Thread Diagnostics Suite) | Completed SB2-P2-05 (Thread Diagnostics Suite): polarity turn detection, word-count-based Dormancy Sentry, hard Orphan Guard on unbound scenes, ASCII Thread Lane View, CLI integration (`soundingboard threads`), and test suite | 92/92 main tests pass; 37/37 thread diagnostic tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Canon 2.0 & Epistemic Decision Queues (`SB2-P2-06`) |
+| 2026-09-13 | Antigravity (Canon 2.0 & Phase 2 Complete) | Completed SB2-P2-06 (Canon 2.0 & Decision Queues): provenance validation (`established_in`), Reader Spoiler Guard (`reader_known_as_of`), 3 epistemic gap decision queues (Orphaned, Unbound, Absent), CLI integration (`soundingboard canon check/query/queues`), and test suite. Phase 2 is 100% complete. | 93/93 main tests pass; 8/8 canon tests pass; 0 typescript errors; okf-lint 0 errors | Phase 2 Complete; Ready for Phase 3 (`SB2-P3-01`) |
 
 ---
 

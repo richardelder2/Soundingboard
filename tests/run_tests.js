@@ -805,6 +805,13 @@ try {
   assert(false, 'Thread Diagnostics Suite (SB2-P2-05)', e.message);
 }
 
+try {
+  execSync('node tests/canon.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Canon 2.0 & Decision Queues (SB2-P2-06)');
+} catch (e) {
+  assert(false, 'Canon 2.0 & Decision Queues (SB2-P2-06)', e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

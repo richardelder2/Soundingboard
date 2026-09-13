@@ -744,146 +744,26 @@ async function handleContinuity(customArgs) {
 }
 
 
-function handleCanon(action, extraArgs = []) {
-  const canonSources = [];
-  const cwd = process.cwd();
-
-  // 1. Local Book Canon
-  const bookCandidates = [
-    path.join('stages', '02_planning', 'output', 'canon.md'),
-    path.join('canon.md')
-  ];
-  const bookCanon = bookCandidates.find(c => fs.existsSync(c));
-  if (bookCanon) {
-    canonSources.push({ level: 'Book Local', path: bookCanon });
-  }
-
-  // 2. Series Canon
-  const seriesCandidates = [
-    path.join('..', 'series', 'series_canon.md'),
-    path.join('..', 'series_canon.md'),
-    path.join('series', 'series_canon.md')
-  ];
-  const seriesCanon = seriesCandidates.find(c => fs.existsSync(c));
-  if (seriesCanon) {
-    canonSources.push({ level: 'Series', path: seriesCanon });
-  }
-
-  // 3. World Canon
-  const worldCandidates = [
-    path.join('..', '..', 'world', 'world_canon.md'),
-    path.join('..', 'world', 'world_canon.md'),
-    path.join('world', 'world_canon.md')
-  ];
-  const worldCanon = worldCandidates.find(c => fs.existsSync(c));
-  if (worldCanon) {
-    canonSources.push({ level: 'World Universe', path: worldCanon });
-  }
-
-  if (canonSources.length === 0) {
-    const templateCanon = path.join('_config', 'templates', 'canon.template.md');
-    if (fs.existsSync(templateCanon)) {
-      canonSources.push({ level: 'Template', path: templateCanon });
-    }
-  }
-
-  if (canonSources.length === 0) {
-    console.error('No canon file found (checked stages/02_planning/output/canon.md, series/, and world/).');
-    return;
-  }
+async function handleCanon(action, extraArgs = []) {
+  const { runCanonCheck, queryCanon, buildDecisionQueues } = await import('./canon.js');
+  const sceneArg = extraArgs.find(a => a.startsWith('--scene='));
+  const scene = sceneArg ? sceneArg.split('=')[1] : undefined;
+  const filteredArgs = extraArgs.filter(a => !a.startsWith('--scene=') && a !== '--strict' && a !== '--json');
 
   if (action === 'query') {
-    const queryTerm = extraArgs.join(' ').trim();
-    printHeader(`Cascading Canon Query: "${queryTerm || 'ALL ENTITIES'}"`);
-    console.log(`Searching ${canonSources.length} active tier(s): ${canonSources.map(s => `[${s.level}: ${s.path}]`).join(', ')}\n`);
-
-    const results = [];
-
-    canonSources.forEach(source => {
-      const fileContent = readText(source.path);
-      const lines = fileContent.split(/\r?\n/);
-      let currentSection = '';
-
-      lines.forEach(line => {
-        const h = line.match(/^#{1,3}\s+(.*)$/);
-        if (h) {
-          currentSection = h[1];
-          return;
-        }
-        if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| entity |') && !line.toLowerCase().includes('| character |')) {
-          const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-          if (cells.length >= 3) {
-            const entity = cells[0];
-            const attrOrFact = cells[1];
-            const valOrStatus = cells[2];
-            const firstAsserted = cells[3] || '';
-            const status = cells[4] || '';
-
-            if (!queryTerm || line.toLowerCase().includes(queryTerm.toLowerCase())) {
-              results.push({
-                tier: source.level,
-                sourcePath: source.path,
-                section: currentSection,
-                entity,
-                attribute: attrOrFact,
-                value: valOrStatus,
-                firstAsserted,
-                status
-              });
-            }
-          }
-        }
-      });
+    const queryTerm = filteredArgs.join(' ').trim();
+    queryCanon(queryTerm, { scene });
+  } else if (action === 'check' || action === 'queues') {
+    runCanonCheck({
+      strict: extraArgs.includes('--strict'),
+      json: extraArgs.includes('--json')
     });
-
-    if (results.length === 0) {
-      console.log(`No canon entries matching "${queryTerm}" found in any active tier.\n`);
-      return;
-    }
-
-    console.log(`Found ${results.length} matching canon entry/entries across tiers:\n`);
-    console.log(`| Tier | Entity | Attribute / Fact | Value | Established | Status |`);
-    console.log(`|---|---|---|---|---|---|`);
-    results.forEach(r => {
-      console.log(`| **[${r.tier}]** | **${r.entity}** | ${r.attribute} | ${r.value} | ${r.firstAsserted} | ${r.status} |`);
-    });
-    console.log('');
-  } else if (action === 'check') {
-    printHeader('Cascading Canon Integrity & Verification Check');
-    let totalUnverified = 0;
-
-    canonSources.forEach(source => {
-      const fileContent = readText(source.path);
-      const unverified = [];
-      const lines = fileContent.split(/\r?\n/);
-      lines.forEach((line, idx) => {
-        const match = line.match(/\[unverified\s+ch(\d+)\]/i);
-        if (match) {
-          unverified.push({ lineNum: idx + 1, chapter: parseInt(match[1], 10), text: line.trim() });
-        }
-      });
-
-      if (unverified.length === 0) {
-        console.log(`\x1b[32m✔ [${source.level}] ${source.path}: All entries verified.\x1b[0m`);
-      } else {
-        totalUnverified += unverified.length;
-        console.log(`\x1b[33m▲ [${source.level}] ${source.path}: ${unverified.length} unverified tag(s):\x1b[0m`);
-        unverified.forEach(u => {
-          console.log(`    • Line ${u.lineNum} (Ch ${u.chapter}): ${u.text}`);
-        });
-      }
-    });
-
-    if (totalUnverified === 0) {
-      console.log('\n\x1b[32m✔ All canon entries across all tiers are fully verified.\x1b[0m\n');
-    } else {
-      console.log(`\nRun "soundingboard gate <chapter>" upon audit completion to promote tags to verified status.\n`);
-    }
   } else {
     console.log(`
 Soundingboard Cascading Canon Commands:
-  node scripts/${binName}.js canon query <entity>    Query canon facts across Book, Series, and World tiers
-  node scripts/${binName}.js canon check              Audit all active canon tiers for [unverified chN] tags
+  node scripts/${binName}.js canon query <entity> [--scene=sc-XXXX]    Query canon facts across Book, Series, and World tiers (with spoiler guard)
+  node scripts/${binName}.js canon check [--strict] [--json]          Audit all active tiers for unverified facts & broken provenance
+  node scripts/${binName}.js canon queues                             Inspect Orphaned, Unbound, and Absent decision queues
     `);
   }
 }
@@ -2003,7 +1883,7 @@ switch (command) {
     await handleDiagnostic('audio', args.slice(1));
     break;
   case 'canon':
-    handleCanon(subCommand, args.slice(2));
+    await handleCanon(subCommand, args.slice(2));
     break;
   case 'promote':
   case 'upgrade-scope':
