@@ -6,7 +6,7 @@ academic_basis: "Robert Towne, Roman Polanski & Classical Aristotelian Hamartia 
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime, mystery_detective]
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [fatal_investigator_flaw, hamartia_engine]

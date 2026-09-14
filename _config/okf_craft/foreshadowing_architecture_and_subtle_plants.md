@@ -5,7 +5,7 @@ title: "Foreshadowing Architecture: Subtle Cues, Inevitability & Retroactive Cla
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [subtle_foreshadowing, cognitive_seeding]

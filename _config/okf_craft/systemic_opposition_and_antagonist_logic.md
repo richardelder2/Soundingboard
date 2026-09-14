@@ -6,7 +6,7 @@ academic_basis: "John Truby (The Anatomy of Story) & Shawn Coyne (Story Grid)"
 last_modified: 2026-09-06
 stages: [01_onboarding, 02_planning, 03_drafting]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [systemic_opposition, antagonist_logic, secondary_character_agency]

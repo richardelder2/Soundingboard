@@ -5,7 +5,7 @@ title: "Emergent AI & Synthetic Archetypes: Goblins, Demons, Nova"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [scifi_dystopian]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [synthetic_psychology, post_human_archetypes]

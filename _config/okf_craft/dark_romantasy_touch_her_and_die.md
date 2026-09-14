@@ -6,7 +6,7 @@ academic_basis: "Romance Narratology, Archetypal Shadow Integration & Commercial
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning, 03_drafting]
 genres: [romance_romantasy]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [shadow_protector, forced_proximity]

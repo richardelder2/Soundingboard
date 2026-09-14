@@ -47,7 +47,7 @@ Legal values (use empty array `[]` for universal / cross-genre craft principles)
 
 ### C. Structural Scope (`scope: <value>`)
 Exact single enum value:
-- `book` — Macro architecture spanning the entire novel/series.
+- `manuscript` (or `book`) — Macro architecture spanning the entire novel/series.
 - `chapter` — Structural containers, escalation steps, hooks.
 - `scene` — Local dramatic units, 5 commandments, micro value shifts.
 - `sentence` — Syntax, acoustic cadence, diction, line-level craft.

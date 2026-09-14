@@ -5,7 +5,7 @@ title: "Four-Corner Opposition & Character Foil Matrix"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [four_corner_foils, ideological_quadrant]

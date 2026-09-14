@@ -6,7 +6,7 @@ academic_basis: "Cormac McCarthy, Joel & Ethan Coen ('No Country for Old Men'), 
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [thriller_suspense, noir_crime]
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [inexorable_antagonist, unreasoning_nemesis]

@@ -1,8 +1,8 @@
-# The 114-Module Narrative Craft Encyclopedia & Rosetta Stone
+# The 118-Module Narrative Craft Encyclopedia & Rosetta Stone
 
 ## Overview: Literature as an Engineered Art
 
-Soundingboard ships with a self-validating, token-disciplined library of **114 narrative craft modules** located in `_config/okf_craft/`. Rather than relying on generic LLM instincts, Soundingboard provides your conversational agent with explicit, codified dramaturgical equations from the masters of the craft.
+Soundingboard ships with a self-validating, token-disciplined library of **118 narrative craft modules** located in `_config/okf_craft/`. Rather than relying on generic LLM instincts, Soundingboard provides your conversational agent with explicit, codified dramaturgical equations from the masters of the craft.
 
 Every module adheres to the **Open Knowledge Format (OKF)**:
 - **Token Disciplined:** Strict budget ceiling ($\le 750$ words, $\le 900$ tokens) to minimize context window bloat.

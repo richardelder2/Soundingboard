@@ -6,7 +6,7 @@ academic_basis: "Brandon Sanderson"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [epic_fantasy, scifi_dystopian]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [magic_system_limits, hard_vs_soft_magic]

@@ -6,7 +6,7 @@ academic_basis: "Henry James (The Art of the Novel), Ian McEwan & Stephen King"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning, 03_drafting]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [novella_structure, compressed_turn, intense_focalization]

@@ -5,7 +5,7 @@ title: "The Universal Narrative Rosetta Stone: Cross-School Craft Lexicon & Stru
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning, 03_drafting, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: peer_reviewed
 provides: [lexicon_translation, craft_taxonomy_bridge]

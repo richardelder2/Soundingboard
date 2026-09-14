@@ -5,7 +5,7 @@ title: "The Mythic Character Masks: Archetypal Functions & Mask-Shifting"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [vogler_character_masks, mythic_archetype_functions]

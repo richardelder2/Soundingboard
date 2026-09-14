@@ -5,7 +5,7 @@ title: "The Anti-Hero Arc: Moral Ambiguity, Justified Transgression & Downfall/R
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime, thriller_suspense]
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [moral_ambivalence, anti_hero_engine]

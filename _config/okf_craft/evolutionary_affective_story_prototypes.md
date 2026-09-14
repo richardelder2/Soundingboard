@@ -5,7 +5,7 @@ title: "Affective Narratology & Evolutionary Story Prototypes: The Neuro-Emotion
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: peer_reviewed
 provides: [affective_priming, survival_salience]

@@ -6,7 +6,7 @@ academic_basis: "Francis Ford Coppola, Mario Puzo & Robert McKee's Moral Corrupt
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime, thriller_suspense]
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [corruption_arc, moral_inversion]

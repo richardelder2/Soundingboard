@@ -6,7 +6,7 @@ academic_basis: "Marie-Laure Ryan, Lubomír Doležel"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: peer_reviewed
 provides: [modal_world_building, private_world_clash]

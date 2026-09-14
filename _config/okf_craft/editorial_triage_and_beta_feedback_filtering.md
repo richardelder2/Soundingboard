@@ -5,7 +5,7 @@ title: "Editorial Triage: Filtering Beta Feedback & Navigating Conflict"
 last_modified: 2026-09-11
 stages: [04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [beta_filtering, revision_prioritization]

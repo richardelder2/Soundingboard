@@ -6,7 +6,7 @@ academic_basis: "Gothic Literary Theory, Shirley Jackson, Daphne du Maurier & Gi
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime, horror_weird, mystery_detective]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [gothic_claustrophobia, domestic_peril]

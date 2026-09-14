@@ -6,7 +6,7 @@ academic_basis: "Steven Soderbergh, Elmore Leonard & Narrative Misdirection Theo
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [thriller_suspense]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [caper_phases, head_fake_reveal]

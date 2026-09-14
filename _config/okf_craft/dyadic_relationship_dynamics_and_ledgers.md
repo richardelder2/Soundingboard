@@ -6,7 +6,7 @@ academic_basis: "John Truby (The Anatomy of Story) & Keith Johnstone (Impro)"
 last_modified: 2026-09-06
 stages: [01_onboarding, 02_planning, 03_drafting, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: practitioner_method
 provides: [relationship_ledger, dyadic_dynamics, interpersonal_friction]

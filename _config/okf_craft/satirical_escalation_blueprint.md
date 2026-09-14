@@ -5,7 +5,7 @@ title: "Satirical Escalation & Institutional Irony: The Straight-Man Dynamic"
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [comedy_satire]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [satirical_escalation, institutional_absurdity]

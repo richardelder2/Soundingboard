@@ -6,7 +6,7 @@ academic_basis: "Susan Bell (The Artful Edit) & Browne & King (Self-Editing for 
 last_modified: 2026-09-04
 stages: [04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: prose_style
 confidence: practitioner_method
 provides: [revision_methodology, edit_triage, the_cut_pass]

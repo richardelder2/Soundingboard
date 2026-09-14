@@ -6,7 +6,7 @@ academic_basis: "René Girard ('Deceit, Desire and the Novel'), Mimetic Theory &
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: peer_reviewed
 provides: [mimetic_conflict, triangular_desire]

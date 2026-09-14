@@ -5,7 +5,7 @@ title: "The Mythic Archetypal Journey: Collective Unconscious & Cyclical Trials"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [adventure_survival, epic_fantasy]
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: peer_reviewed
 provides: [monomyth_stages, threshold_crossing]

@@ -6,7 +6,7 @@ academic_basis: "Pamela Regis (A Natural History of the Romance Novel) & Michael
 last_modified: 2026-09-06
 stages: [01_onboarding, 02_planning, 03_drafting]
 genres: [romance_romantasy]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [romance_conflict, mutual_agency, authentic_barriers]

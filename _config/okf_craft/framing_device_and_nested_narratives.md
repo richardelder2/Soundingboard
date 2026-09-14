@@ -5,7 +5,7 @@ title: "The Framing Device & Nested Narrative: The Arabian Nights & The Unreliab
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: []
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: peer_reviewed
 provides: [frame_story, nested_diegesis]

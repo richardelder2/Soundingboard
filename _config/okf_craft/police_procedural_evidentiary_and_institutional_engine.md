@@ -5,7 +5,7 @@ title: "The Police & Legal Procedural: Evidentiary Fair-Play & Institutional Fri
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [mystery_detective, noir_crime]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [chain_of_custody, procedural_interview_grid]

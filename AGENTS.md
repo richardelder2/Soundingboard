@@ -28,20 +28,26 @@ Five stages, each with a `CONTEXT.md` contract declaring inputs, outputs, and pr
 
 To run a stage: `node scripts/soundingboard.js run-stage <id>` prints a **stage packet** — the contract plus every declared input file — as a single context block. Consume it, execute the contract's Process section, and write outputs to the declared paths, using the matching template in `_config/templates/` where one exists. Or simply read the contract and input files yourself; the packet is a convenience, not a requirement.
 
-## The per-chapter production loop
+## The atomic scene and chapter production loop (Soundingboard 2.0)
 
-Stages 01–02 run once per book. Chapters then cycle 03 → 04 until passed:
+In Soundingboard 2.0, **scene is the atomic dramatic unit**, stored as plain markdown with YAML frontmatter in `manuscript/ch-XX/sc-YYYY.md`. **Chapter** is an assembly layer in `manuscript/ch-XX/chapter.md` defining scene order and an authored `break_rationale`. `manuscript.json` is a **derived index cache** that can be deleted and reconstructed losslessly at any time via `node scripts/soundingboard.js reindex`.
 
-1. `manuscript.json` (project root, created by Stage 02) is the production ledger: per-chapter `status` (`planned → drafted → audited → passed`), draft paths, targets, audit verdicts. `node scripts/soundingboard.js status` renders it and names the next action.
-2. **Draft** (Stage 03): load the chapter kit — beats + structure-plan entries + **canon.md** (facts must agree) + the **voice kit** (`voice_exemplars.md` + final ~500 words of the previous chapter, mandatory anti-drift calibration). Choose the drafting pathway (which can be switched fluidly on a per-chapter basis):
-   - **Path A (Co-Writing / Agent-Drafted):** The agent generates the active prose based on the chapter kit and style guidelines.
-   - **Path B (Solo-Writing / Author-Drafted):** The author writes the prose directly. The agent acts as **workspace custodian** (auto-detects the new draft, moves it to the target chapter path, formats frontmatter, and updates `manuscript.json` with word counts and status).
-   - **Hybrid transitions:** When moving from Path B to Path A, the agent reads the last 500 words of the author's chapter to calibrate the voice kit and maintain stylistic consistency.
-   Upon completion of drafting, ensure `status` is set to `drafted` in `manuscript.json`, append new established facts to `canon.md` tagged `[unverified chN]`, and prepare for auditing.
-3. **Audit** (Stage 04): mechanical scan (`audit`), continuity scan (`continuity`), canon verification (draft loses conflicts unless canon is deliberately amended), rubric + trope-delivery audits. If audit failures are found, instantiate the **Revision Playbook** (`_config/templates/revision_playbook.template.md`), propose 2–3 resolution options for each failure to the author, compile their choices into a final approved plan, rewrite the chapter, and re-audit. On gate-clear: `status: passed`, untag canon entries, optionally harvest a voice exemplar.
-4. When all chapters pass: `node scripts/soundingboard.js compile` (Stage 05) builds the gated HTML/EPUB.
+Stages 01–02 run once per book. Production then cycles through atomic scenes and chapter assemblies:
 
-Keep `manuscript.json` truthful — it is the shared state that lets any agent resume the project cold.
+1. **Scene Planning (Stage 02):** Scene cards define `pov`, `location`, `value_in`, `value_out`, 5 commandments (`inciting_incident`, `progressive_complication`, `crisis`, `climax`, `resolution`), and assigned narrative threads. Chapters group scenes and MUST provide an authored craft rationale for each break (`break_rationale`).
+2. **Drafting (Stage 03):** Pack scene kit via `node scripts/soundingboard.js pack scene <sc-id>`.
+   - **POV-Consistent Voice Anchors:** Voice anchoring walks back to the most recent drafted scene sharing the **same POV** (preventing voice drift across POV chapter transitions). If no prior scene exists for that POV, use the Stage 01 sample tagged `anchor_provisional: true`.
+   - **Pathways:** Path A (Agent-drafted), Path B (Author-drafted), or Hybrid.
+   - On draft completion, update scene frontmatter (`status: drafted`), record new facts in `canon.md` tagged `[unverified chN]`, and reindex.
+3. **Editorial & Scoped Diagnostics (Stage 04):**
+   - **Scene-scoped audits (< 500ms):** AI prose tell & rhythm scan (`node scripts/soundingboard.js audit <sc-id>`), proper-noun continuity (`node scripts/soundingboard.js continuity <sc-id>`), and advisory 5 Commandments comparison (`node scripts/soundingboard.js commandments <sc-id>`).
+   - **Chapter-scoped audits:** Multi-scene cadence variability and break efficacy audit (`node scripts/soundingboard.js chapter-audit <ch-id>`) testing whether the chapter actually ends where `break_rationale` claims.
+   - **Whole-book & thread sentry:** Inspect polarity turns, dormancy gaps, and orphan guards via `node scripts/soundingboard.js threads` and `node scripts/soundingboard.js threads --view`. Check epistemic gaps via `node scripts/soundingboard.js canon check` and `canon queues`.
+   - **Mandatory Coverage Principle:** Every diagnostic pass reports what went unexamined (skipped scenes, undrafted scenes, null value shifts).
+   - **Revision Playbook & The Bracket Method:** When audit issues occur, present 2–3 collaborative revision forks per scene using the HITL playbook or The Bracket Method (`node scripts/soundingboard.js pack bracket <sc-id>`).
+4. **Publishing (Stage 05):** Multi-tier manuscript compiler (`node scripts/soundingboard.js compile`) verifies that all scenes in a chapter exist and are drafted, assembling scenes → chapters → `manuscript.html` (+ `.epub` via pandoc). Configurable scene break glyphs (`***`, blank line, none).
+
+Keep markdown files truthful — the files are the ground truth; `manuscript.json` is rebuilt automatically from them.
 
 ## Meet the author where they are (intake & nonlinear work)
 
@@ -149,6 +155,9 @@ The terminal wizards in `scripts/` (`wizard unstuck`, `wizard heat`, `wizard int
 17. **Discovery Ingest Debrief (The Writer's Mirror):** When debriefing newly ingested chapters or raw drafts:
     - Packer: `node scripts/soundingboard.js pack debrief [chapter_or_file]` (or `node scripts/pack-ingest-debrief.js [chapter_or_file]`)
     - Contract: `_config/templates/ingest_debrief_playbook.template.md` (Value Shift & Polarity ➔ Narrative Promises / IOUs ➔ Status Transactions & Voice ➔ Canon Sentry ➔ 3 Creative Runways).
+18. **The Bracket Method (Developmental Editing):** When performing line-by-line developmental editing without overwriting author voice:
+    - Packer: `node scripts/soundingboard.js pack bracket <scene>` (or `node scripts/pack-bracket.js <scene>`)
+    - Contract: `_config/templates/bracket_method_playbook.template.md` (Swain MRU order, bracketed editorial voice `[like this]`, verbatim prose preservation, 3 targeted resolution forks).
 
 ## Non-negotiable craft rules
 
@@ -164,28 +173,29 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | Command | Canonical Usage | Description |
 |---|---|---|
 | `init` | `node scripts/soundingboard.js init [folder] [--form]` | Scaffold a clean workspace (forms: `novel`, `novella`, `short_story`, `series`). |
-| `status` | `node scripts/soundingboard.js status [--stage=N]` | Per-stage pipeline telemetry, chapter ledger, and word count progress. |
+| `status` | `node scripts/soundingboard.js status [--stage=N]` | Soundingboard 2.0 Model Health Console, chapter ledger, and word count progress. |
 | `brief` | `node scripts/soundingboard.js brief` | Dense single-line cold-start facts for agent context initialization (alias: `resume`). |
+| `reindex` | `node scripts/soundingboard.js reindex` | Reconstruct derived `manuscript.json` cache losslessly from `manuscript/` tree. |
 | `run-stage` | `node scripts/soundingboard.js run-stage <id>` | Compile the stage packet (contract + declared inputs) as a single context block. |
-| `pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks (`unstuck`, `heat`, `bloom`, etc.). |
+| `pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks (`unstuck`, `heat`, `bracket`, etc.). |
 | `pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
-| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 114 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
+| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 118 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
 | `okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits (alias: `lint`). |
 | `okf-index` | `node scripts/soundingboard.js okf-index` | Rebuild static markdown catalogs (`index.md`) across OKF knowledge bundles. |
 | `audit` | `node scripts/soundingboard.js audit [path ...]` | Scan scenes for AI prose tells, rhythm variance, and emotion modes (< 500ms). |
 | `chapter-audit` | `node scripts/soundingboard.js chapter-audit [ch]` | Chapter-scoped multi-scene cadence variability and break efficacy audit. |
 | `commandments` | `node scripts/soundingboard.js commandments [sc\|ch]` | Advisory audit of Shawn Coyne's 5 Commandments against Stage 02 scene cards. |
 | `continuity` | `node scripts/soundingboard.js continuity [dir]` | Proper-noun continuity scan (detects near-duplicates and orphaned names). |
-| `canon` | `node scripts/soundingboard.js canon query "<q>"` / `check` | Query established facts for an entity, or check for unverified canon tags. |
+| `canon` | `node scripts/soundingboard.js canon query "<q>"` / `check` | Query established facts for an entity, or check for unverified canon tags and gap queues. |
 | `timeline` | `node scripts/soundingboard.js timeline` | Verify story chronology and temporal anchors across chapter drafts. |
-| `threads` | `node scripts/soundingboard.js threads` | Inspect narrative threads, subplots, open promises, and loose-end ledger. |
+| `threads` | `node scripts/soundingboard.js threads [--view]` | Inspect narrative threads, subplots, open promises, and visualizer (ASCII + interactive HTML). |
 | `gate` | `node scripts/soundingboard.js gate <chapter>` | Machine-evaluate Stage 04 gate verdicts (scan, canon, rubric, ledger); sets `passed`. |
 | `manuscript-report` | `node scripts/soundingboard.js manuscript-report` | Whole-book diagnostic report: POV distribution, repeating 4-grams, and rhythm contour. |
 | `ingest` | `node scripts/soundingboard.js ingest <file\|dir>` | Ingest raw drafts with immutable archiving, provenance hash, and canon harvesting (alias: `import`). |
 | `check-update` | `node scripts/soundingboard.js check-update` | Check remote repository for new studio releases, craft cards, and tools. |
 | `update` | `node scripts/soundingboard.js update [--force]` | Safely pull upstream updates with auto-snapshot and conflict preservation. |
-| `doctor` | `node scripts/soundingboard.js doctor [--fix]` | Environment diagnostic and concierge auto-healing for workspace tools & configs. |
-| `compile` | `node scripts/soundingboard.js compile [--all]` | Compile verified passed chapters into `manuscript.html` (+ `.epub` via pandoc). |
+| `doctor` | `node scripts/soundingboard.js doctor [--fix]` | Environment and story model health diagnostic, with concierge auto-healing. |
+| `compile` | `node scripts/soundingboard.js compile [--all]` | Multi-tier manuscript compiler: assemble scenes → chapters → `manuscript.html` (+ `.epub`). |
 | `export` | `node scripts/soundingboard.js export [--format=...]` | Export compiled manuscript to `.html`, `.epub`, or `.docx`. |
 | `diag` | `node scripts/soundingboard.js diag [name] [args]` | Run diagnostic tools directly (rhythm, dialogue, tense, dread, lore, sensory, etc.). |
 | `wizard` | `node scripts/soundingboard.js wizard [name] [args]` | Interactive CLI wizards for terminal environments (`onboard`, `unstuck`, `heat`, etc.). |

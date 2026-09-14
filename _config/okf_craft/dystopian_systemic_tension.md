@@ -5,7 +5,7 @@ title: "Dystopian Systemic Tension: Panopticon Mechanics & Compliance Cycles"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [scifi_dystopian]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [systemic_oppression, panoptic_surveillance]

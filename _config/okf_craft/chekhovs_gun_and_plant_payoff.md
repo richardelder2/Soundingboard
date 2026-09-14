@@ -5,7 +5,7 @@ title: "Chekhov's Arsenal: Structural Necessity, Inverted Guns & False Triggers"
 last_modified: 2026-09-05
 stages: [02_planning, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [plant_payoff_matrix, evidentiary_promise]

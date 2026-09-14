@@ -5,7 +5,7 @@ title: "The Typology of Moral Degeneration"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime, thriller_suspense]
-scope: book
+scope: manuscript
 subtype: character_engine
 confidence: peer_reviewed
 provides: [moral_decay_steps, rationalization_engine]

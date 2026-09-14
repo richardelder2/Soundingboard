@@ -5,7 +5,7 @@ title: "The Misdirection Matrix: Red Herrings, Plausible Guilt & Double Bluffs"
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [mystery_detective, thriller_suspense]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [red_herrings, cognitive_misdirection]

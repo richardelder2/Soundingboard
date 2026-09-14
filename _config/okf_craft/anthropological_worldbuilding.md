@@ -5,7 +5,7 @@ title: "Anthropological Worldbuilding: Culture, Taboo & Internal Logic"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [cultural_institutions, material_culture]

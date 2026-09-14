@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync, spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { assessModelHealth } from './model_health.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -241,6 +242,22 @@ export function diagnoseEnvironment(projectDir = process.cwd()) {
     fixDescription: 'Scaffold inputs/drafts/, inputs/notes/, and README.md'
   });
 
+  // 8. Story Model Health (Soundingboard 2.0)
+  const health = assessModelHealth(projectDir);
+  checks.push({
+    id: 'model_health',
+    name: 'Story Model Health',
+    level: 'recommended',
+    status: health.manuscriptPresent
+      ? (health.summary.status === 'HEALTHY' ? 'pass' : (health.summary.status === 'DEGRADED' ? 'fail' : 'warn'))
+      : 'info',
+    current: health.manuscriptPresent ? `${health.summary.status} (schema: ${health.schema})` : 'uninitialized',
+    required: 'synchronized 2.0 story model',
+    message: health.manuscriptPresent ? health.summary.message : 'No active manuscript yet (starts in Stage 01/02)',
+    canFix: false,
+    details: health
+  });
+
   const mandatoryPass = checks.filter(c => c.level === 'mandatory').every(c => c.status === 'pass');
   const canFixCount = checks.filter(c => c.canFix).length;
 
@@ -402,6 +419,23 @@ export function handleDoctor(args = []) {
   console.log('\n  \x1b[1m[Studio Vaults & Environment]\x1b[0m');
   for (const c of workspace) {
     printCheckLine(c);
+  }
+
+  const modelHealthCheck = diag.checks.find(c => c.id === 'model_health');
+  if (modelHealthCheck && modelHealthCheck.details && modelHealthCheck.details.manuscriptPresent) {
+    const mh = modelHealthCheck.details;
+    console.log('\n  \x1b[1m[Story Model Health (Soundingboard 2.0)]\x1b[0m');
+    printCheckLine(modelHealthCheck);
+    const chIcon = mh.chapters.missingRationale.length === 0 ? '\x1b[32m✔\x1b[0m' : '\x1b[33m▲ [WARN]\x1b[0m';
+    console.log(`    ${chIcon} Chapter Break Rationales      \x1b[90m${mh.chapters.total - mh.chapters.missingRationale.length}/${mh.chapters.total} authored (${mh.chapters.missingRationale.length} missing)\x1b[0m`);
+    const valIcon = mh.scenes.nullValueShifts.length === 0 ? '\x1b[32m✔\x1b[0m' : '\x1b[33m▲ [WARN]\x1b[0m';
+    console.log(`    ${valIcon} Value Shift Completeness      \x1b[90m${mh.scenes.total - mh.scenes.nullValueShifts.length}/${mh.scenes.total} scenes populated (${mh.scenes.nullValueShifts.length} null shifts)\x1b[0m`);
+    const ancIcon = mh.scenes.provisionalAnchors.length === 0 ? '\x1b[32m✔\x1b[0m' : '\x1b[33m▲ [WARN]\x1b[0m';
+    console.log(`    ${ancIcon} Voice Anchor Stability        \x1b[90m${mh.scenes.total - mh.scenes.provisionalAnchors.length}/${mh.scenes.total} stable (${mh.scenes.provisionalAnchors.length} provisional)\x1b[0m`);
+    const staleIcon = mh.findings.stale.length === 0 ? '\x1b[32m✔\x1b[0m' : '\x1b[33m▲ [WARN]\x1b[0m';
+    console.log(`    ${staleIcon} Diagnostic Freshness          \x1b[90m${mh.findings.stale.length === 0 ? 'All findings fresh against prose' : `${mh.findings.stale.length} findings stale`}\x1b[0m`);
+    const thIcon = (mh.threads.orphanedScenes.length === 0 && mh.threads.dormantThreads.length === 0) ? '\x1b[32m✔\x1b[0m' : '\x1b[33m▲ [WARN]\x1b[0m';
+    console.log(`    ${thIcon} Thread & Subplot Sentry       \x1b[90m${mh.threads.tracked} threads, ${mh.threads.orphanedScenes.length} orphans, ${mh.threads.dormantThreads.length} dormant\x1b[0m`);
   }
 
   console.log('\n------------------------------------------------------------');

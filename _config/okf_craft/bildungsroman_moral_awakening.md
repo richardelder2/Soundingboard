@@ -5,7 +5,7 @@ title: "The Bildungsroman: Innocence, Disillusionment & Moral Self-Integration"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: peer_reviewed
 provides: [coming_of_age_stages, loss_of_innocence]

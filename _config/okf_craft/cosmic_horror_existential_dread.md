@@ -5,7 +5,7 @@ title: "Cosmic Horror & Existential Dread: The Epistemological Break"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning, 03_drafting]
 genres: [horror_weird]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [existential_dread, unknowable_sublime]

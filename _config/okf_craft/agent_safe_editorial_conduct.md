@@ -6,7 +6,7 @@ academic_basis: "ICM Glass-Box Invariant Principles & Universal Narrative Protoc
 last_modified: 2026-09-06
 stages: [03_drafting, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: prose_style
 confidence: practitioner_method
 provides: [agent_conduct_rules, minimal_intervention, canon_invariance]

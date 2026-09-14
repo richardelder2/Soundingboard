@@ -6,7 +6,7 @@ academic_basis: "Gillian Flynn ('Gone Girl'), Chuck Palahniuk ('Fight Club'), Ka
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [thriller_suspense, horror_weird, mystery_detective]
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: peer_reviewed
 provides: [unreliable_narration, psychological_fracture]

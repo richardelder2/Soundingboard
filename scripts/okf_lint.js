@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const LEGAL_STAGES = new Set(['01_onboarding', '02_planning', '03_drafting', '04_diagnostics_edits', '05_publishing']);
 const LEGAL_GENRES = new Set(['thriller_suspense', 'mystery_detective', 'romance_romantasy', 'horror_weird', 'scifi_dystopian', 'epic_fantasy', 'noir_crime', 'adventure_survival', 'comedy_satire', 'kishotenketsu']);
-const LEGAL_SCOPES = new Set(['book', 'chapter', 'scene', 'sentence']);
+const LEGAL_SCOPES = new Set(['manuscript', 'book', 'chapter', 'scene', 'sentence']);
 const LEGAL_SUBTYPES = new Set(['genre_convention', 'plot_template', 'character_engine', 'narrative_mode', 'dialectic_pattern', 'pacing_rhythm', 'prose_style']);
 const LEGAL_CONFIDENCE = new Set(['peer_reviewed', 'practitioner_method', 'workshop_heuristic']);
 const LEGAL_DIAGNOSTICS = new Set(['rhythm', 'dread', 'lore_density', 'sensory_anchor', 'lexical_tells', 'dialogue_ratio', 'voice_drift', 'narrative_audit', 'continuity']);

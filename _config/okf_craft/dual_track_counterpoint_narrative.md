@@ -6,7 +6,7 @@ academic_basis: "Cormac McCarthy ('No Country for Old Men'), Michael Mann ('Heat
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: []
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: peer_reviewed
 provides: [counterpoint_braiding, polyphonic_resonance]

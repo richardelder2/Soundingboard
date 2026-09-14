@@ -6,7 +6,7 @@ academic_basis: "John Truby (The Anatomy of Story: 22 Steps to Becoming a Master
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: dialectic_pattern
 confidence: practitioner_method
 provides: [designing_principle, moral_argument]

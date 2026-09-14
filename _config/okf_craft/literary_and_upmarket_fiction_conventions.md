@@ -6,7 +6,7 @@ academic_basis: "James Wood (How Fiction Works), Francine Prose & Wayne C. Booth
 last_modified: 2026-09-06
 stages: [01_onboarding, 02_planning, 03_drafting, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [literary_conventions, upmarket_pacing, textured_resolution]

@@ -6,7 +6,7 @@ academic_basis: "Bong Joon-ho ('Parasite'), Spatial Dramaturgy & Architectural A
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [thriller_suspense, comedy_satire]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: peer_reviewed
 provides: [spatial_allegory, vertical_class_architecture]

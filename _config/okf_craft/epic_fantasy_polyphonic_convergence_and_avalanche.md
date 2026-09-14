@@ -5,7 +5,7 @@ title: "Epic Fantasy & Space Opera: Polyphonic Voice Integrity & Avalanche Conve
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [epic_fantasy]
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [polyphonic_convergence, sanderlanche_avalanche]

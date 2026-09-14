@@ -8,6 +8,7 @@ import { checkUpdate, handleCheckUpdate, handleUpdate, renderUpdateBanner } from
 import { handleDoctor, diagnoseEnvironment, autoFixEnvironment } from './doctor.js';
 import { parse, strip } from './frontmatter.js';
 import { verifyNodeRuntime } from './preflight.js';
+import { assessModelHealth, formatModelHealthTerminal } from './model_health.js';
 
 if (!verifyNodeRuntime()) {
   process.exit(1);
@@ -402,6 +403,11 @@ function printManuscriptStatus() {
     }[next.status] || 'check its status value';
     console.log(`  Next action → chapter ${next.id}: ${action}`);
   }
+
+  const health = assessModelHealth();
+  if (health.manuscriptPresent) {
+    console.log('\n' + formatModelHealthTerminal(health));
+  }
 }
 
 function handleBrief() {
@@ -484,6 +490,14 @@ function handleBrief() {
   const failedAudits = chapters.filter(c => c.last_audit === 'FAIL');
   const reviewAudits = chapters.filter(c => c.last_audit === 'REVIEW');
   console.log(`Audit Status:    ${failedAudits.length > 0 ? `\x1b[31m${failedAudits.length} chapters failed audit (Ch ${failedAudits.map(c => c.id).join(', ')})\x1b[0m` : '\x1b[32m0 failed audit flags\x1b[0m'}${reviewAudits.length > 0 ? ` (${reviewAudits.length} in review)` : ''}`);
+
+  // 5. Soundingboard 2.0 Model Health
+  const health = assessModelHealth();
+  if (health.manuscriptPresent) {
+    const healthIcon = health.summary.status === 'HEALTHY' ? '\x1b[32m' : (health.summary.status === 'DEGRADED' ? '\x1b[31m' : '\x1b[33m');
+    console.log(`Model Health:    ${healthIcon}${health.summary.status}\x1b[0m — ${health.summary.message}`);
+    console.log(`                 Scenes: ${health.scenes.total} (${health.scenes.drafted} drafted, ${health.scenes.nullValueShifts.length} null shifts) | Rationales: ${health.chapters.total - health.chapters.missingRationale.length}/${health.chapters.total} authored`);
+  }
 
   console.log('\n*ICM §5.2 State Brief: cold-start telemetry reports factual state without hardcoded next-action prescribing.*\n');
 }
@@ -1601,7 +1615,8 @@ function handleCraftSearch(searchArgs) {
     // Apply CLI flag filters
     if (stageFlag && !stages.includes(stageFlag)) return;
     if (genreFlag && genres.length > 0 && !genres.some(g => g.toLowerCase().includes(genreFlag))) return;
-    if (scopeFlag && scope !== scopeFlag) return;
+    const normScope = (s) => (s === 'book' ? 'manuscript' : s);
+    if (scopeFlag && normScope(scope) !== normScope(scopeFlag)) return;
 
     let score = 0;
     const lowerTitle = title.toLowerCase();

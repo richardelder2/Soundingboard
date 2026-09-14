@@ -5,7 +5,7 @@ title: "Multi-POV Orchestration & Perspective Alternation"
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [epic_fantasy, thriller_suspense]
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: practitioner_method
 provides: [multi_pov_braiding, cliffhanger_handshakes]

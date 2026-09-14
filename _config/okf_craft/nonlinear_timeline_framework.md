@@ -5,7 +5,7 @@ title: "Nonlinear Timelines, Anachrony & Information Delay"
 last_modified: 2026-09-05
 stages: [02_planning, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: peer_reviewed
 provides: [anachrony_mapping, delayed_disclosure]

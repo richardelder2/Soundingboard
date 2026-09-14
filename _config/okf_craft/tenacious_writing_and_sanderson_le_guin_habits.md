@@ -6,7 +6,7 @@ academic_basis: "Stephen King ('On Writing'), Brandon Sanderson, Anne Lamott ('B
 last_modified: 2026-09-05
 stages: [01_onboarding, 03_drafting]
 genres: []
-scope: book
+scope: manuscript
 subtype: prose_style
 confidence: practitioner_method
 provides: [writerly_discipline, output_habits]

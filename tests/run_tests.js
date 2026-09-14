@@ -826,6 +826,13 @@ try {
   assert(false, 'Thread Lane Visualizer (SB2-P3-02)', e.message);
 }
 
+try {
+  execSync('node tests/model_health.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Model Health Console (SB2-P3-04)');
+} catch (e) {
+  assert(false, 'Model Health Console (SB2-P3-04)', e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

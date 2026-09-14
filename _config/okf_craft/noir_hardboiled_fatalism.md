@@ -6,7 +6,7 @@ academic_basis: "Raymond Chandler, Dashiell Hammett & Film Noir Dramaturgy"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [noir_crime]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [hardboiled_fatalism, corrupt_microcosm]

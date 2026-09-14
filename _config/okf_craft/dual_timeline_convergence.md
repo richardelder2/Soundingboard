@@ -5,7 +5,7 @@ title: "Dual Timeline Convergence: The Interlocking Mystery of Past & Present"
 last_modified: 2026-09-05
 stages: [02_planning, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: narrative_mode
 confidence: practitioner_method
 provides: [dual_timeline_sync, historical_braiding]

@@ -42,8 +42,10 @@ Human lives and compelling stories do not move in straight lines. Soundingboard'
 ### 2. Tropes Outrank Dials
 Tropes are not clichés; they are the fundamental contracts of genre fiction. A romance reader expects the "Mirror Scene" and the "Dark Night of the Soul"; a mystery reader demands fair-play evidentiary clues. Soundingboard locks in obligatory genre scenes via the *Obligatory Scene Ledger* before a single chapter is drafted.
 
-### 3. Voice Consistency & Anti-Drift Anchoring
-AI models suffer from stylistic decay: by Chapter 4, third-person limited narration inevitably drifts toward neutral Wikipedia-style summary. Soundingboard counters this by packing every chapter kit with a **trailing voice anchor** (the final 500 words of the preceding chapter) alongside curated author exemplars, keeping tone, psychic distance, and sentence rhythm locked into groove.
+### 3. Voice Consistency & Same-POV Anti-Drift Anchoring
+AI models suffer from stylistic decay: by Chapter 4, narration inevitably drifts toward neutral summary. Furthermore, naive sequence-based trailing prose calibration creates a severe failure mode whenever chapters shift perspective (e.g., calibrating a fresh close-third POV against an entirely different character's trailing thoughts). 
+
+Soundingboard 2.0 resolves this by establishing **the scene as the atomic dramatic unit**. Active scene drafting anchors strictly to the most recent prior scene sharing the **same POV**, alongside curated voice exemplars. This ensures that character idiolect, perceptual filters, and psychic distance remain locked into groove across non-linear drafting sessions without cross-POV contamination.
 
 ### 4. Machine-Checkable Quality Verification
 Before any chapter is marked as complete, Soundingboard's zero-dependency diagnostic tools analyze the draft across multiple objective dimensions:

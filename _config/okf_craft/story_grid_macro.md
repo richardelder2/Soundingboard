@@ -6,7 +6,7 @@ academic_basis: "Coydon & McKee Classical Dramaturgy"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [macro_foolscap, three_movements_fifteen_commandments]

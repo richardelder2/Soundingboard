@@ -6,7 +6,7 @@ academic_basis: "Ronald Knox's 10 Commandments, Agatha Christie & The Golden Age
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning, 04_diagnostics_edits]
 genres: [mystery_detective]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [fair_play_contract, clue_puzzle_matrix]

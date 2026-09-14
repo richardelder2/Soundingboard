@@ -6,7 +6,7 @@ academic_basis: "Blake Snyder, Jessica Brody"
 last_modified: 2026-09-05
 stages: [02_planning]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [fifteen_beats, blake_snyder_sheet]

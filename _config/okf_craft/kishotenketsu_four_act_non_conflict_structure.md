@@ -5,7 +5,7 @@ title: "Kishōtenketsu: East Asian Four-Act Structure"
 last_modified: 2026-09-05
 stages: [02_planning]
 genres: [kishotenketsu]
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: peer_reviewed
 provides: [four_act_twist, non_western_structure]

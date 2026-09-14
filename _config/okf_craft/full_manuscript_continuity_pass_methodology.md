@@ -5,7 +5,7 @@ title: "The Full Manuscript Continuity Pass: Systematic Ripple Remediation"
 last_modified: 2026-09-05
 stages: [04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: plot_template
 confidence: practitioner_method
 provides: [continuity_audit_pass, fact_reconciliation]

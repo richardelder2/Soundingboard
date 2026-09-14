@@ -5,7 +5,7 @@ title: "Thriller Escalation: Reversals, False Relief & Pacing Loops"
 last_modified: 2026-09-05
 stages: [02_planning, 03_drafting]
 genres: [thriller_suspense]
-scope: book
+scope: manuscript
 subtype: pacing_rhythm
 confidence: practitioner_method
 provides: [pressure_escalation, ticking_clock_acceleration]

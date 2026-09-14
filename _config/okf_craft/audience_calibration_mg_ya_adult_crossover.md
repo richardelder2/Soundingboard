@@ -6,7 +6,7 @@ academic_basis: "Commercial Publishing Market Demographics & Developmental Psych
 last_modified: 2026-09-06
 stages: [01_onboarding, 02_planning, 04_diagnostics_edits]
 genres: []
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [audience_calibration, age_category_matrix, developmental_agency]

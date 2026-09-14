@@ -6,7 +6,7 @@ academic_basis: "Ludology, Progression Narratology & Mastery Psychology"
 last_modified: 2026-09-05
 stages: [01_onboarding, 02_planning]
 genres: [epic_fantasy, adventure_survival]
-scope: book
+scope: manuscript
 subtype: genre_convention
 confidence: practitioner_method
 provides: [tier_advancement, metronomic_power_ups]
