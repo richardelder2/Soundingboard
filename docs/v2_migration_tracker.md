@@ -190,10 +190,10 @@ These decisions have been author-approved and must NOT be altered or second-gues
   - Fail-loud verification: halts immediately if any scene in a chapter is missing or undrafted.
   - *Acceptance:* Missing scene throws clear compilation error; full manuscript compiles byte-clean HTML. (Verified by `tests/compile_manuscript.test.js`)
 
-- [ ] **SB2-P3-02: Thread Lane Visualizer (`scripts/thread_visualizer.js`)**
+- [x] **SB2-P3-02: Thread Lane Visualizer (`scripts/thread_visualizer.js`)**
   - Terminal ASCII chart for instant chat feedback.
   - Standalone zero-dependency HTML lane view with polarity trajectories and word-count X-axis.
-  - *Acceptance:* `node scripts/soundingboard.js threads --view` generates valid ASCII and HTML views.
+  - *Acceptance:* `node scripts/soundingboard.js threads --view` generates valid ASCII and HTML views. (Verified by `tests/thread_visualizer.test.js`)
 
 - [ ] **SB2-P3-03: Scope Metadata on 119 OKF Craft Cards**
   - Add `scope: scene | chapter | manuscript` frontmatter to all craft cards in `_config/okf_craft/`.
@@ -224,6 +224,7 @@ These decisions have been author-approved and must NOT be altered or second-gues
 | 2026-09-13 | Antigravity (Thread Diagnostics Suite) | Completed SB2-P2-05 (Thread Diagnostics Suite): polarity turn detection, word-count-based Dormancy Sentry, hard Orphan Guard on unbound scenes, ASCII Thread Lane View, CLI integration (`soundingboard threads`), and test suite | 92/92 main tests pass; 37/37 thread diagnostic tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Canon 2.0 & Epistemic Decision Queues (`SB2-P2-06`) |
 | 2026-09-13 | Antigravity (Canon 2.0 & Phase 2 Complete) | Completed SB2-P2-06 (Canon 2.0 & Decision Queues): provenance validation (`established_in`), Reader Spoiler Guard (`reader_known_as_of`), 3 epistemic gap decision queues (Orphaned, Unbound, Absent), CLI integration (`soundingboard canon check/query/queues`), and test suite. Phase 2 is 100% complete. | 93/93 main tests pass; 8/8 canon tests pass; 0 typescript errors; okf-lint 0 errors | Phase 2 Complete; Ready for Phase 3 (`SB2-P3-01`) |
 | 2026-09-13 | Antigravity (Multi-Tier Compiler) | Completed SB2-P3-01 (Multi-Tier Manuscript Compiler): multi-tier resolution (2.0 atomic scenes -> chapters -> HTML/EPUB/DOCX + 1.x legacy fallback), configurable scene break glyphs (`***`, blank, none, custom), fail-loud missing scene verification, gate enforcement, CLI integration, and test suite. | 94/94 main tests pass; 7/7 compiler tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Thread Lane Visualizer (`SB2-P3-02`) |
+| 2026-09-14 | Antigravity (Thread Lane Visualizer) | Completed SB2-P3-02 (Thread Lane Visualizer): dual renderers (instant ASCII terminal chart + self-contained zero-CDN interactive SVG/HTML visualizer), cumulative word count X-axis, vertical polarity (+1/0/-1), multi-thread braid point stars, unrecorded shift coverage marks, dormancy gap highlights, CLI integration (`soundingboard threads --view`), and test suite. | 95/95 main tests pass; 7/7 visualizer tests pass; 0 typescript errors; okf-lint 0 errors | Ready for Scope Metadata on 118 OKF Craft Cards (`SB2-P3-03`) |
 
 ---
 

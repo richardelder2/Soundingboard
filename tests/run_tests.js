@@ -819,6 +819,13 @@ try {
   assert(false, 'Multi-Tier Manuscript Compiler (SB2-P3-01)', e.message);
 }
 
+try {
+  execSync('node tests/thread_visualizer.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, 'Thread Lane Visualizer (SB2-P3-02)');
+} catch (e) {
+  assert(false, 'Thread Lane Visualizer (SB2-P3-02)', e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

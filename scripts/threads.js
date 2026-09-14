@@ -94,6 +94,13 @@ export function loadThreadTracker(rootDir = process.cwd()) {
       }
     } catch (_) {}
 
+    if (!meta.dormancy_threshold_words) {
+      const dtMatch = raw.match(/dormancy_threshold_words:\s*(\d+)/);
+      if (dtMatch) {
+        globalThreshold = parseInt(dtMatch[1], 10) || DEFAULT_DORMANCY_THRESHOLD;
+      }
+    }
+
     // Check frontmatter threads array
     if (Array.isArray(meta.threads)) {
       meta.threads.forEach(t => {
@@ -111,7 +118,38 @@ export function loadThreadTracker(rootDir = process.cwd()) {
       });
     }
 
-    // If no threads found in frontmatter, parse markdown table or bullet list
+    // If no threads found in frontmatter, check for YAML block sequence
+    if (threads.length === 0) {
+      const blockMatch = raw.match(/threads:\s*\r?\n((?:[ \t]+-[ \t]+[^\r\n]*\r?\n?(?:[ \t]+[^-][^\r\n]*\r?\n?)*)+)/);
+      if (blockMatch) {
+        const itemChunks = blockMatch[1].split(/(?:^|\r?\n)[ \t]+-[ \t]+/);
+        for (const chunk of itemChunks) {
+          if (!chunk.trim()) continue;
+          const idMatch = chunk.match(/(?:^|\n)[ \t]*id:[ \t]*([^\r\n]+)/);
+          if (idMatch) {
+            const id = idMatch[1].trim().replace(/^['"]|['"]$/g, '');
+            const nameMatch = chunk.match(/(?:^|\n)[ \t]*name:[ \t]*([^\r\n]+)/);
+            const spineMatch = chunk.match(/(?:^|\n)[ \t]*spine:[ \t]*([^\r\n]+)/);
+            const valMatch = chunk.match(/(?:^|\n)[ \t]*value_spectrum:[ \t]*([^\r\n]+)/);
+            const statMatch = chunk.match(/(?:^|\n)[ \t]*status:[ \t]*([^\r\n]+)/);
+            const threshMatch = chunk.match(/(?:^|\n)[ \t]*dormancy_threshold_words:[ \t]*([^\r\n]+)/);
+
+            const isSpine = spineMatch ? /true|yes/i.test(spineMatch[1]) : false;
+            threads.push({
+              id,
+              name: nameMatch ? nameMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'Tracked Thread',
+              type: isSpine ? 'main' : 'subplot',
+              spine: isSpine,
+              valueSpectrum: valMatch ? valMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'Unspecified',
+              dormancyThreshold: threshMatch ? parseInt(threshMatch[1].trim(), 10) : null,
+              status: statMatch ? statMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'open'
+            });
+          }
+        }
+      }
+    }
+
+    // If still no threads found, parse markdown table or bullet list
     if (threads.length === 0) {
       const lines = raw.split(/\r?\n/);
       for (const line of lines) {

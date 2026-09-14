@@ -976,6 +976,13 @@ function handleTimeline() {
 }
 
 async function handleThreads(extraArgs = []) {
+  if (extraArgs.includes('--view') || extraArgs.includes('--lanes') || extraArgs.includes('--html')) {
+    const { runThreadVisualizerCli } = await import('./thread_visualizer.js');
+    const thresholdArg = extraArgs.find(a => a.startsWith('--threshold='));
+    const threshold = thresholdArg ? parseInt(thresholdArg.split('=')[1], 10) : undefined;
+    return runThreadVisualizerCli({ threshold });
+  }
+
   const { runThreadDiagnostics } = await import('./threads.js');
   const thresholdArg = extraArgs.find(a => a.startsWith('--threshold='));
   const threshold = thresholdArg ? parseInt(thresholdArg.split('=')[1], 10) : undefined;
