@@ -39,18 +39,24 @@ export function reindex(rootDir = process.cwd()) {
     } catch (_) {}
   }
 
-  // Check preferences for metadata if available
-  const prefsPath = path.join(rootDir, 'stages', '01_onboarding', 'output', 'preferences.json');
+  // Check root preferences.md first (Soundingboard 2.0+), then stages/01_onboarding/output/preferences.json
+  const rootPrefPath = path.join(rootDir, 'preferences.md');
+  const prefsJsonPath = path.join(rootDir, 'stages', '01_onboarding', 'output', 'preferences.json');
   /** @type {Record<string, any>} */
   let prefs = {};
-  if (fs.existsSync(prefsPath)) {
+
+  if (fs.existsSync(rootPrefPath)) {
     try {
-      prefs = JSON.parse(fs.readFileSync(prefsPath, 'utf8'));
+      prefs = parse(fs.readFileSync(rootPrefPath, 'utf8'), rootPrefPath);
+    } catch (_) {}
+  } else if (fs.existsSync(prefsJsonPath)) {
+    try {
+      prefs = JSON.parse(fs.readFileSync(prefsJsonPath, 'utf8'));
     } catch (_) {}
   }
 
   const title = existing.title || prefs.title || '[working title]';
-  const author = existing.author || prefs.author || '[author or pen name]';
+  const author = existing.author || prefs.author_name || prefs.author || '[author or pen name]';
   const form = existing.form || prefs.form || 'novel';
   const targetWords = existing.target_words || prefs.target_words || 90000;
 
@@ -58,44 +64,21 @@ export function reindex(rootDir = process.cwd()) {
   const chapters = [];
   /** @type {any[]} */
   const scenes = [];
+  /** @type {Set<string>} */
+  const assignedSceneIds = new Set();
   let totalWords = 0;
 
   if (fs.existsSync(manuscriptDir)) {
-    // Find all chapter directories: ch-01, ch-02, ...
-    const chapterDirs = fs.readdirSync(manuscriptDir, { withFileTypes: true })
-      .filter(d => d.isDirectory() && /^ch-\d+/i.test(d.name))
-      .map(d => d.name)
-      .sort((a, b) => {
-        const numA = parseInt((a.match(/\d+/) || ['0'])[0], 10);
-        const numB = parseInt((b.match(/\d+/) || ['0'])[0], 10);
-        return numA - numB;
-      });
-
-    for (const chDirName of chapterDirs) {
-      const chDirPath = path.join(manuscriptDir, chDirName);
-      const chapterMdPath = path.join(chDirPath, 'chapter.md');
-
-      /** @type {Record<string, any>} */
-      let chapterMeta = {};
-      if (fs.existsSync(chapterMdPath)) {
-        chapterMeta = parse(fs.readFileSync(chapterMdPath, 'utf8'), chapterMdPath);
-      }
-
-      const chapterNumber = chapterMeta.number !== undefined ?
-        chapterMeta.number :
-        parseInt((chDirName.match(/\d+/) || ['1'])[0], 10);
-
-      // Find all scene files in this chapter directory
-      const sceneFiles = fs.readdirSync(chDirPath, { withFileTypes: true })
-        .filter(f => f.isFile() && /^sc-\d+\.md$/i.test(f.name))
+    // 1. Scan flat scene pool: manuscript/scenes/sc-XXXX.md if present
+    const scenesPoolDir = path.join(manuscriptDir, 'scenes');
+    if (fs.existsSync(scenesPoolDir)) {
+      const poolFiles = fs.readdirSync(scenesPoolDir, { withFileTypes: true })
+        .filter(f => f.isFile() && /^sc-.*\.md$/i.test(f.name))
         .map(f => f.name)
         .sort();
 
-      /** @type {string[]} */
-      const chapterSceneIds = [];
-
-      for (const scFileName of sceneFiles) {
-        const scFilePath = path.join(chDirPath, scFileName);
+      for (const scFileName of poolFiles) {
+        const scFilePath = path.join(scenesPoolDir, scFileName);
         const rawContent = fs.readFileSync(scFilePath, 'utf8');
         const scMeta = parse(rawContent, scFilePath);
         const scBody = strip(rawContent);
@@ -103,13 +86,11 @@ export function reindex(rootDir = process.cwd()) {
         totalWords += scWords;
 
         const sceneId = scMeta.id || path.basename(scFileName, '.md');
-        chapterSceneIds.push(sceneId);
-
         const relPath = path.relative(rootDir, scFilePath).replace(/\\/g, '/');
 
         scenes.push({
           id: sceneId,
-          chapter: scMeta.chapter || chDirName,
+          chapter: scMeta.chapter || null,
           file: relPath,
           pov: scMeta.pov !== undefined ? scMeta.pov : null,
           location: scMeta.location !== undefined ? scMeta.location : null,
@@ -125,16 +106,130 @@ export function reindex(rootDir = process.cwd()) {
           schema: scMeta.schema || '2.0'
         });
       }
+    }
 
-      // If chapter.md defined scenes array explicitly, respect its ordering
-      const orderedScenes = Array.isArray(chapterMeta.scenes) && chapterMeta.scenes.length > 0 ?
-        chapterMeta.scenes : chapterSceneIds;
+    // 2. Scan chapter assembly playlists in manuscript/chapters/ or legacy ch-XX/
+    const chaptersPoolDir = path.join(manuscriptDir, 'chapters');
+    /** @type {Array<{ isPlaylistFile: boolean, filePath?: string, dirPath?: string, id: string }>} */
+    const chapterSources = [];
+
+    if (fs.existsSync(chaptersPoolDir)) {
+      const chFiles = fs.readdirSync(chaptersPoolDir, { withFileTypes: true })
+        .filter(f => f.isFile() && /^ch-.*\.md$/i.test(f.name))
+        .map(f => f.name)
+        .sort((a, b) => {
+          const numA = parseInt((a.match(/\d+/) || ['0'])[0], 10);
+          const numB = parseInt((b.match(/\d+/) || ['0'])[0], 10);
+          return numA - numB;
+        });
+
+      for (const chFile of chFiles) {
+        chapterSources.push({
+          isPlaylistFile: true,
+          filePath: path.join(chaptersPoolDir, chFile),
+          id: chFile.replace(/\.md$/, '')
+        });
+      }
+    }
+
+    // Also scan legacy chapter directories: manuscript/ch-01, ch-02, ...
+    const legacyDirs = fs.readdirSync(manuscriptDir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && /^ch-\d+/i.test(d.name))
+      .map(d => d.name)
+      .sort((a, b) => {
+        const numA = parseInt((a.match(/\d+/) || ['0'])[0], 10);
+        const numB = parseInt((b.match(/\d+/) || ['0'])[0], 10);
+        return numA - numB;
+      });
+
+    for (const chDirName of legacyDirs) {
+      chapterSources.push({
+        isPlaylistFile: false,
+        dirPath: path.join(manuscriptDir, chDirName),
+        id: chDirName
+      });
+    }
+
+    for (const source of chapterSources) {
+      /** @type {Record<string, any>} */
+      let chapterMeta = {};
+      /** @type {string[]} */
+      let orderedScenes = [];
+      let chapterNumber = 1;
+      let chapterId = source.id;
+
+      if (source.isPlaylistFile && source.filePath) {
+        chapterMeta = parse(fs.readFileSync(source.filePath, 'utf8'), source.filePath);
+        chapterId = chapterMeta.id || source.id;
+        chapterNumber = chapterMeta.number !== undefined ?
+          chapterMeta.number :
+          parseInt((source.id.match(/\d+/) || ['1'])[0], 10);
+        orderedScenes = Array.isArray(chapterMeta.scenes) ? chapterMeta.scenes : [];
+        for (const scId of orderedScenes) {
+          assignedSceneIds.add(scId);
+          const scObj = scenes.find(s => s.id === scId);
+          if (scObj && !scObj.chapter) {
+            scObj.chapter = chapterId;
+          }
+        }
+      } else if (source.dirPath) {
+        const chDirPath = source.dirPath;
+        const chapterMdPath = path.join(chDirPath, 'chapter.md');
+        if (fs.existsSync(chapterMdPath)) {
+          chapterMeta = parse(fs.readFileSync(chapterMdPath, 'utf8'), chapterMdPath);
+        }
+        chapterId = chapterMeta.id || source.id;
+        chapterNumber = chapterMeta.number !== undefined ?
+          chapterMeta.number :
+          parseInt((source.id.match(/\d+/) || ['1'])[0], 10);
+
+        // Find scenes in this legacy chapter directory
+        const sceneFiles = fs.readdirSync(chDirPath, { withFileTypes: true })
+          .filter(f => f.isFile() && /^sc-.*\.md$/i.test(f.name))
+          .map(f => f.name)
+          .sort();
+
+        const chapterSceneIds = [];
+        for (const scFileName of sceneFiles) {
+          const scFilePath = path.join(chDirPath, scFileName);
+          const rawContent = fs.readFileSync(scFilePath, 'utf8');
+          const scMeta = parse(rawContent, scFilePath);
+          const scBody = strip(rawContent);
+          const scWords = countWords(scBody);
+          totalWords += scWords;
+
+          const sceneId = scMeta.id || path.basename(scFileName, '.md');
+          chapterSceneIds.push(sceneId);
+          assignedSceneIds.add(sceneId);
+
+          const relPath = path.relative(rootDir, scFilePath).replace(/\\/g, '/');
+          scenes.push({
+            id: sceneId,
+            chapter: scMeta.chapter || chapterId,
+            file: relPath,
+            pov: scMeta.pov !== undefined ? scMeta.pov : null,
+            location: scMeta.location !== undefined ? scMeta.location : null,
+            threads: scMeta.threads || ['th-01'],
+            value_in: scMeta.value_in !== undefined ? scMeta.value_in : null,
+            value_out: scMeta.value_out !== undefined ? scMeta.value_out : null,
+            commandments: scMeta.commandments || null,
+            voice_anchor: scMeta.voice_anchor !== undefined ? scMeta.voice_anchor : null,
+            anchor_provisional: Boolean(scMeta.anchor_provisional),
+            craft_modules: scMeta.craft_modules || [],
+            status: scMeta.status || 'drafted',
+            word_count: scWords,
+            schema: scMeta.schema || '2.0'
+          });
+        }
+        orderedScenes = Array.isArray(chapterMeta.scenes) && chapterMeta.scenes.length > 0 ?
+          chapterMeta.scenes : chapterSceneIds;
+      }
 
       const rawRationale = typeof chapterMeta.break_rationale === 'string' ? chapterMeta.break_rationale.trim() : '';
       const hasBreakRationale = rawRationale.length > 0;
 
       chapters.push({
-        id: chapterMeta.id || chDirName,
+        id: chapterId,
         number: chapterNumber,
         title: chapterMeta.title || `Chapter ${chapterNumber}`,
         scenes: orderedScenes,
@@ -145,6 +240,11 @@ export function reindex(rootDir = process.cwd()) {
       });
     }
   }
+
+  // Compute unassigned (floating) scenes
+  const unassignedScenes = scenes
+    .filter(s => !assignedSceneIds.has(s.id))
+    .map(s => s.id);
 
   // Load threads if present
   const threadsPath = path.join(rootDir, 'stages', '02_planning', 'output', 'threads.md');
@@ -168,6 +268,7 @@ export function reindex(rootDir = process.cwd()) {
     target_words: targetWords,
     chapters,
     scenes,
+    unassigned_scenes: unassignedScenes,
     threads,
     total_words: totalWords
   };

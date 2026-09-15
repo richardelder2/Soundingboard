@@ -833,6 +833,13 @@ try {
   assert(false, 'Model Health Console (SB2-P3-04)', e.message);
 }
 
+try {
+  execSync('node tests/writers_room_graduation.test.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, "Writer's Room, Scene Graduation & Preferences (SB2-WR-01)");
+} catch (e) {
+  assert(false, "Writer's Room, Scene Graduation & Preferences (SB2-WR-01)", e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

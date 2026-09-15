@@ -175,7 +175,28 @@ function handleInit(targetFolder) {
     console.log('  ✔ Created project .gitignore (preserves manuscript.json and stage outputs).');
   }
 
-  // Scaffold inputs/ drop-zone vault
+  // Scaffold preferences.md at root if not present
+  const rootPrefSrc = path.join(templateDir, '_config', 'templates', 'preferences.template.md');
+  const rootPrefDest = path.join(targetDir, 'preferences.md');
+  if (fs.existsSync(rootPrefSrc) && !fs.existsSync(rootPrefDest)) {
+    fs.copyFileSync(rootPrefSrc, rootPrefDest);
+    console.log('  ✔ Created preferences.md (Author collaboration profile & boundaries)');
+  }
+
+  // Scaffold the Writer's Room (Immune creative sanctuary)
+  const writersRoomDir = path.join(targetDir, 'writers_room');
+  fs.mkdirSync(path.join(writersRoomDir, 'notes'), { recursive: true });
+  fs.mkdirSync(path.join(writersRoomDir, 'beats'), { recursive: true });
+  fs.mkdirSync(path.join(writersRoomDir, 'drafts'), { recursive: true });
+  fs.mkdirSync(path.join(writersRoomDir, 'inputs'), { recursive: true });
+
+  const roomReadmeDest = path.join(writersRoomDir, 'README.md');
+  if (!fs.existsSync(roomReadmeDest)) {
+    fs.writeFileSync(roomReadmeDest, `# The Writer's Room (Creative Sanctuary)\n\nThis folder is your creative sandbox. Write freely in any markdown editor (Obsidian, VS Code, iA Writer, etc.) or drop outside materials into \`inputs/\`.\n\n- \`notes/\`: Lore scraps, character brainstorming, scratchpad.\n- \`beats/\`: Rough outlines, bullet points, napkin sketches.\n- \`drafts/\`: Active scenes being drafted.\n- \`inputs/\`: External files, research, and Word documents.\n\n### Inviolable Immunity Shield\nDiagnostic linters and automated tests never scan or police files in this directory unless you explicitly request feedback.\n`, 'utf8');
+  }
+  console.log('  ✔ Created writers_room/ (notes/, beats/, drafts/, inputs/, README.md)');
+
+  // Scaffold inputs/ drop-zone vault (top-level alias / drop zone)
   const inputsDrafts = path.join(targetDir, 'inputs', 'drafts');
   const inputsNotes = path.join(targetDir, 'inputs', 'notes');
   fs.mkdirSync(inputsDrafts, { recursive: true });
@@ -186,6 +207,11 @@ function handleInit(targetFolder) {
     fs.copyFileSync(inputsReadmeSrc, inputsReadmeDest);
   }
   console.log('  ✔ Created inputs/ vault (inputs/drafts/, inputs/notes/, README.md)');
+
+  // Scaffold manuscript/scenes/ and manuscript/chapters/
+  fs.mkdirSync(path.join(targetDir, 'manuscript', 'scenes'), { recursive: true });
+  fs.mkdirSync(path.join(targetDir, 'manuscript', 'chapters'), { recursive: true });
+  console.log('  ✔ Created manuscript/ (scenes/, chapters/)');
 
   // Support --form flag in preferences.json
   const formArg = (process.argv.slice(2) || []).find(a => a.startsWith('--form='));
@@ -688,7 +714,10 @@ function handlePack(type, extraArgs = []) {
     interrogator: 'pack-plot-interrogator.js',
     devil: 'pack-plot-interrogator.js',
     debrief: 'pack-ingest-debrief.js',
-    'ingest-debrief': 'pack-ingest-debrief.js'
+    'ingest-debrief': 'pack-ingest-debrief.js',
+    frontmatter: 'pack-frontmatter.js',
+    graduate: 'pack-frontmatter.js',
+    'lint-bracket': 'pack-bracket.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
@@ -712,6 +741,9 @@ Available context packers:
   node scripts/${BIN_NAME}.js pack blind-reader <chapter>         Pack cold-reading chapter text with zero hindsight
   node scripts/${BIN_NAME}.js pack plot-interrogator <chapter>    Pack scene turning points & constraints for plot audit
   node scripts/${BIN_NAME}.js pack debrief [chapter]              Pack context for developmental ingest debrief
+  node scripts/${BIN_NAME}.js pack frontmatter <file>             Pack draft prose & canon for frontmatter inference
+  node scripts/${BIN_NAME}.js pack graduate <draft_path>          Pack draft for collaborative scene graduation
+  node scripts/${BIN_NAME}.js pack lint-bracket <file|sc>         Pack draft prose for advisory linter bracket review
     `);
     return;
   }
@@ -1767,6 +1799,8 @@ Usage:
   node scripts/${BIN_NAME}.js check-update            Check remote repository for new studio updates
   node scripts/${BIN_NAME}.js update [--force]        Safely pull upstream updates with auto-snapshot & conflict defense
   node scripts/${BIN_NAME}.js doctor [--fix]          Inspect environment and auto-heal missing tools & configs
+  node scripts/${BIN_NAME}.js graduate <draft>       Graduate draft into manuscript/scenes/ with allocated ID
+  node scripts/${BIN_NAME}.js reindex                Rebuild derived manuscript.json from scenes and chapters
   node scripts/${BIN_NAME}.js export [--format=...]  Export manuscript (.html, .docx, .epub)
   node scripts/${BIN_NAME}.js compile [--all]        Compile passed chapters into manuscript.html (+ .epub via pandoc)
   `);
@@ -1934,6 +1968,54 @@ switch (command) {
   case 'compile':
     handleCompile();
     break;
+  case 'graduate': {
+    const draftPath = subCommand || args[1];
+    if (!draftPath) {
+      console.error('\x1b[33mUsage: node scripts/soundingboard.js graduate <draft_file_path>\x1b[0m');
+      break;
+    }
+    const { allocateSceneId } = await import('./id_allocator.js');
+    const { reindex } = await import('./reindex.js');
+    const { parse, stringify } = await import('./frontmatter.js');
+
+    const resolvedDraft = path.resolve(process.cwd(), draftPath);
+    if (!fs.existsSync(resolvedDraft)) {
+      console.error(`\x1b[31mError: Draft file not found at ${resolvedDraft}\x1b[0m`);
+      break;
+    }
+
+    const raw = fs.readFileSync(resolvedDraft, 'utf8');
+    let meta = {};
+    let body = raw;
+    try {
+      meta = parse(raw, resolvedDraft);
+      const { strip } = await import('./frontmatter.js');
+      body = strip(raw).trim();
+    } catch (_) {
+      body = raw.trim();
+    }
+
+    const newSceneId = allocateSceneId(process.cwd());
+    const scenesDir = path.join(process.cwd(), 'manuscript', 'scenes');
+    fs.mkdirSync(scenesDir, { recursive: true });
+    const targetScenePath = path.join(scenesDir, `${newSceneId}.md`);
+
+    meta.id = newSceneId;
+    meta.status = 'drafted';
+    meta.schema = '2.0';
+    if (!meta.threads) meta.threads = ['th-01'];
+
+    fs.writeFileSync(targetScenePath, stringify(meta, body), 'utf8');
+    reindex(process.cwd());
+
+    console.log(`\n\x1b[32m✔ Scene successfully graduated!\x1b[0m`);
+    console.log(`  - Source: ${draftPath}`);
+    console.log(`  - Graduated to: manuscript/scenes/${newSceneId}.md`);
+    console.log(`  - POV: ${meta.pov || 'unassigned'}`);
+    console.log(`  - Value Shift: ${meta.value_in || '?'} → ${meta.value_out || '?'}`);
+    console.log(`  - Status: floating in scene pool (ready for chapter playlist)\n`);
+    break;
+  }
   case 'reindex': {
     const { reindex } = await import('./reindex.js');
     const result = reindex();

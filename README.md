@@ -16,129 +16,119 @@
 
 ---
 
-## Writing a Novel is Hard. Writing One With Raw AI is Frustrating.
+## Writing a Novel is Hard. Most AI Tools Make It Worse.
 
-If you have tried using ChatGPT or Claude in a web browser to write long-form fiction, you have probably run into the same familiar walls:
+If you are a creative writer who has experimented with AI writing tools, you have likely felt the deep frustration of machines that try to seize the keyboard:
 
-* **The Amnesia Problem:** Around Chapter 3 or 4, the model begins forgetting earlier plot turns, subtly changing character details, or dropping established subplots.
-* **The Web Chat Silo:** You spend half your energy copying and pasting snippets between a chat window and Google Docs or Microsoft Word, quickly losing track of drafts and version history.
-* **The "AI Prose" Trap:** Left uncalibrated, language models gravitate toward predictable rhythms, melodramatic clichés (*"a testament to..."*, *"shivers down spines"*), and characters who resolve deep conflict with neat, tidy apologies.
-* **Lack of Narrative Architecture:** AI is great at generating sentences, but weak at long-term dramatic pacing, moral stakes, and structural tension.
+* **The Dread of Voice Flattening:** Autonomous AI rewriters strip away your personal style, quirky cadences, regional dialects, and raw emotional texture—sanding your prose down into polite, homogenous corporate sludge.
+* **The "40,000-Word Murk":** Deep in the messy middle of a book, you spend precious writing hours cross-referencing notes to remember what color Lord Corvus's eyes were in Chapter 2, whether the alchemist's key was silver or brass, or when a dormant subplot was last mentioned.
+* **Outlining Paralysis vs. Discovery Chaos:** Rigid plotting software forces you to plan every chapter before writing a word, while freeform blank documents leave you drowning without structural guidance.
+* **The Black-Box Rewrite Trap:** When conventional AI tools offer edits, they dump wholesale rewrites into your document, leaving you wondering what changed, destroying your subtext, and stealing your artistic ownership.
 
-**Soundingboard doesn't pretend to write your book for you.** Writing a good novel still takes real human taste, emotional vulnerability, and hard editorial decisions. 
+**Soundingboard was built on a radically different premise:**
 
-What Soundingboard does is provide a **disciplined studio environment on your own computer**—getting you out of fragile web chat windows and into clean, plain markdown files you fully own. It gives your AI agent the memory, structure, and craft rules it needs to be a truly helpful sounding board instead of a chaotic autocomplete engine.
+> **The author is the novelist. The AI is the Executive Editorial Assistant, Continuity Sentry, Master Librarian, and Craft Sounding Board.**
 
 ---
 
-## How It Works: A Structural Scaffold for Your Story
+## The Foundational Values Built Into Soundingboard
 
-When you collaborate with an AI coding agent (such as **Claude Code**, **Google Antigravity**, **Cursor**, or **Gemini CLI**), the agent is only as helpful as the context it can see. Overload it with unstructured notes, and it gets confused; starve it of context, and it drifts.
+1. **The System Bends to the Author, Never the Other Way Around:**
+   You set the tempo. Work in whatever mode and tool you love:
+   - **Solo Mode:** You write 100% of the prose in your favorite editor (Obsidian, Scrivener, Microsoft Word, iA Writer, VS Code). The AI operates strictly as your tireless librarian, continuity tracker, and diagnostic reader.
+   - **Hybrid Mode:** You and the AI volley beats, bounce brainstorms, unstick tangled plot logic, or bloom sensory details together.
+   - **Generative Mode (On Demand Only):** The AI drafts scenes from your beat sheets *only when you explicitly request it*.
+2. **The Scene is the Atomic Dramatic Quantum:**
+   Chapters are packaging, pacing, and reading-experience choices; scenes are the true dramatic events. In Soundingboard, scenes exist as independent, atomic units with their own POV, emotional value shifts, and 5-commandment turning points. You can write the climax first, draft an unassigned scene, or restructure your chapter playlists without ever breaking a file path.
+3. **The Red Pen Stays in the Human's Hand (The Bracket Method):**
+   The AI **never silently or unilaterally rewrites your prose**. 
+   - **In Developmental Editing:** Suggestions and structural directions are quarantined in brackets `[like this]` using Dwight Swain's Motivating-Reaction Unit (MRU) sequencing, preserving your prose verbatim.
+   - **In Prose Diagnostics & Linting:** AI-tell scans and rhythm diagnostics present bracketed choices (`[AI-TELL: Cliché idiom. Option A: Cut. Option B: Physical action. Option C: Keep as author voice]`). You hold the red pen; the AI never makes changes to get a "green checkmark."
+4. **The Writer's Room: An Inviolable Creative Sanctuary:**
+   Brainstorming and raw drafting happen in `writers_room/` (`notes/`, `beats/`, `drafts/`, `inputs/`). Background linters and automated tests are strictly locked out by an **Immunity Shield**. Write as messy and raw as you want without being nagged by premature schemas or audit errors. When you decide a scene is ready, you graduate it to the formal manuscript pool.
+5. **No Black-Box Vector Databases:**
+   Built on the *Interpretable Context Methodology* (ICM), your story's brain lives entirely in human-readable plain markdown files (`canon.md`, `threads.md`, `preferences.md`). Open them in any text editor to see exactly what your assistant knows.
 
-Soundingboard acts as the structural spine for your project:
-* **You bring the soul, the premise, and the creative vision.**
-* **Soundingboard keeps the canon organized, the chapter beats focused, and the voice consistent.**
+---
 
-Behind the scenes, Soundingboard manages:
-1. **A Single-Source Canon Ledger:** An auditable, plain-text record of established world rules, character traits, and active story threads so facts stay straight across 80,000 words.
-2. **Same-POV Voice Anchoring:** Calibrates active scene drafting against the most recent prior scene in the same POV to help prevent stylistic decay without cross-POV contamination.
-3. **118 Modular Craft Guides:** Focused reference modules in `_config/okf_craft/` synthesizing practical techniques from Shawn Coyne (*Story Grid*), John Truby (*Anatomy of Story*), Brandon Sanderson, K.M. Weiland, and Dwight Swain.
+## Write Where You Want, How You Want
+
+Soundingboard seamlessly accommodates your natural authorial habitat:
+
+* **Direct in the Project Folder (Obsidian, VS Code, iA Writer, Zed):**
+  Open the Soundingboard novel folder directly as an **Obsidian Vault** or local markdown workspace. Write your notes in `writers_room/notes/` and your drafts in `writers_room/drafts/`. Soundingboard acts as the ambient operating system living quietly inside your vault.
+* **External Ingestion (Scrivener, Microsoft Word, Google Docs):**
+  Love writing in Scrivener or Word? Keep writing there. When you complete a draft, simply drop it into `writers_room/inputs/` or run `node scripts/soundingboard.js ingest <file>`. The engine immutably archives your raw file, formats atomic scenes, and automatically harvests proper nouns into your canon ledger tagged `[unverified]`.
+* **Author Collaboration Preferences (`preferences.md`):**
+  Right at your workspace root, a plain-text `preferences.md` profile lets you declare your working mode (`solo`, `hybrid`), primary editor, prose boundary (`ai_prose_generation: "never"`), and diagnostic tolerance. Edit it anytime; your AI partner immediately adapts.
 
 ---
 
 ## The 5 Creative Studio Workspaces
 
-Soundingboard breaks a book project into five manageable, sequential workspaces:
+Soundingboard organizes novel production into five disciplined, author-paced workspaces:
 
 <p align="center">
   <img src="assets/pipeline_workflow.svg" alt="Soundingboard 5 Creative Workspaces Flowchart" width="100%" />
 </p>
 
 ### 1. 🛋️ The Discovery Lounge (Stage 01 · Onboarding)
-A focused brainstorming session to get your story off the ground. Your agent interviews you about your premise, core cast, world dynamics, and genre expectations. It organizes everything into a clear **Story Bible** and creates an **In-World Allowlist** so your world's unique terminology isn't accidentally flagged as cliché.
+A relaxed story and genre discovery interview. Your assistant helps you define your core premise, genre chassis, trope stack, and primary cast. It establishes your root `preferences.md` and creates an **In-World Allowlist** so unique in-universe terms aren't flagged as clichés.
 
 ### 2. 📋 The Storyboard Wall (Stage 02 · Planning)
-Before jumping into prose, map your book's spine on a virtual storyboard. You establish a **1-Page Foolscap Roadmap**, outline key obligatory genre scenes, balance subplots, and break your narrative into concrete, chapter-by-chapter beat sheets.
+Architect your story's spine without outlining paralysis. Map your **1-Page Foolscap Roadmap**, track narrative subplots in `threads.md`, ledger obligatory genre scenes, and design scene cards with clear emotional value shifts (`value_in` ➔ `value_out`).
 
-### 3. ✍️ The Writing Desk (Stage 03 · Drafting)
-Write in whatever way fits your personal creative rhythm:
-* **Co-Writing:** Brainstorm scene beats with your agent and have it draft scenes against your voice guide for your live review and iteration.
-* **Solo-Writing:** Write the prose yourself. Your agent functions as workspace custodian—formatting frontmatter, tracking word counts, and updating your production ledger.
-* **Anti-Drift Anchoring:** Every drafting packet includes the last 500 words of the previous chapter to help maintain consistent tone and psychic distance.
+### 3. ✍️ The Writing Desk & Writer's Room (Stage 03 · Drafting)
+Write freely in `writers_room/` or draft against focused scene kits:
+* **The Ambient Desk Kit:** Ask your agent for your scene briefing to get a tight 1-page summary of characters in the room, active secrets, sensory registers, and a same-POV voice anchor before you write.
+* **Scene Frontmatter Assistance (Playbook #19):** Whenever you want, ask the AI to infer dramatic frontmatter from your prose, generate a scaffold with in-world suggestions, or talk through the turning point in chat.
+* **The Graduation Ceremony:** When a draft is ready, graduate it into `manuscript/scenes/sc-XXXX.md`. It enters your canonical scene pool, safe and indexed, whether assigned to a chapter yet or floating freely.
 
-### 4. 🔍 The Editorial Desk (Stage 04 · Diagnostics)
-A thorough, automated first-pass editorial sweep before you share your drafts with beta readers:
-* **Continuity Check:** Scans proper nouns and cross-references established facts to catch contradictory eyes, timeline hiccups, or orphaned names.
-* **Cadence & Rhythm Review:** Analyzes sentence length variation and paragraph rhythm to identify monotonous patches.
-* **AI Tell Scanner:** Flags common synthetic phrasing patterns and overused tropes so you can replace them with authentic human voice.
-* **The Human-in-the-Loop Revision Playbook:** When issues are flagged, your agent never performs silent, unilateral rewrites. Instead, it generates a structured decision fork giving you distinct creative strategies for every finding:
-
-> **Example Revision Playbook Fork (Chapter 3):**
-> * **Finding:** *AI Tell / Explained Theme at scene conclusion ("She realized hope was a fragile bird...").*
-> * **Option A (The Cut):** Delete the summary sentence entirely; end cleanly on the character's silence.
-> * **Option B (Dramatize):** Replace the internal thought with physical action (she turns the brass key in the drawer).
-> * **Option C (Subtext Dialogue):** Push the realization into subtext through a sharp, defensive remark in the following exchange.
-> * **Option D (Custom Write-In):** Provide your own direction or keep the original phrasing as an intentional stylistic choice.
->
-> *You choose the direction; your agent executes the revision strictly according to your decision.*
+### 4. 🔍 The Editorial Desk & Diagnostics (Stage 04 · Feedback)
+An advisory diagnostic suite that respects human voice:
+* **Sub-500ms Scoped Audits:** Instant scans for cadence variance, sensory balance, dialogue ratios, and synthetic tell-words.
+* **The Linter Bracket Workflow (Playbook #20):** Diagnostic findings are framed as bracketed choices, never silent file edits.
+* **The Bracket Method for Developmental Editing (Playbook #18):** Restructure cause-and-effect flow, tighten Coyne micro-beats, and fix Swain emotional sequencing while preserving your prose word-for-word.
+* **Thread Sentry & Visualizer:** Detect dormant subplots and orphan scenes, and inspect interactive visual timelines via `node scripts/soundingboard.js threads --view`.
+* **Canon 2.0 & Spoiler Guard:** Automatically flags orphaned facts and suppresses future story spoilers from early chapter continuity checks.
 
 ### 5. 🖨️ The Printing Press (Stage 05 · Publishing)
-Once your chapters have passed their editorial checks, a single command compiles your manuscript into clean, reader-ready **HTML** and standard **EPUB** formats—ready for e-readers, formatting tools, or submission.
+Assemble atomic scenes into chapter playlists (`manuscript/chapters/ch-XX.md`) with authored chapter break rationales. A single command compiles your book into publication-ready, typeset **HTML** and standard **EPUB** formats with configurable scene break dividers (`***`, blank space, or custom glyphs).
 
 ---
 
 ## Quickstart for Writers
 
-You don't need programming experience, command-line skills, or complicated setup to use Soundingboard:
+You don't need programming experience or complex command-line setups:
 
 1. **Clone or download** this repository to a folder on your computer.
-2. **Open the folder** in **Claude Code**, **Google Antigravity**, **Cursor**, or your preferred agent tool.
+2. **Open the folder** in **Google Antigravity**, **Claude Code**, **Cursor**, or your favorite agent harness.
 3. **Start the conversation in chat:**
    > *"Read AGENTS.md and let's brainstorm my novel."*
-4. Your agent will read the contracts and walk you through Stage 01 at your own pace.
-5. **Stay up to date:** Check for new craft cards and diagnostics anytime by asking your agent (*"Check for Soundingboard updates"*) or running `node scripts/soundingboard.js check-update`. Updates automatically safeguard your drafts with pre-update snapshots and preserve your customized settings.
+4. Your agent will read your `preferences.md`, adopt your preferred writing mode, and assist you at your pace.
+5. **Check for updates safely:** Check for new craft modules and refined diagnostics anytime by asking your agent (*"Check for Soundingboard updates"*) or running `node scripts/soundingboard.js check-update`. Updates automatically create timestamped safety snapshots in `.soundingboard/backups/` and never touch your story files.
 
 ---
 
-## What It Looks Like Behind the Scenes
+## Codified Narrative Craft: The 118-Module Library
 
-While you focus on the creative story in chat, your agent uses lightweight, zero-dependency mechanical tools to track state and maintain continuity:
-
-### The Production Console
-Your agent monitors project progression, word count targets, and chapter states through a clean status summary:
-
-<p align="center">
-  <img src="assets/terminal_status.svg" alt="Soundingboard Live Telemetry Console" width="100%" />
-</p>
-
-### The Editorial Diagnostic Scan
-Before marking any chapter as ready, your agent runs a diagnostic sweep to catch continuity slips and cadence issues:
-
-<p align="center">
-  <img src="assets/terminal_audit.svg" alt="Soundingboard Editorial Review Suite" width="100%" />
-</p>
+Soundingboard equips your agent with 118 codified reference modules in `_config/okf_craft/` synthesizing time-tested storytelling theory:
+* **The Story Grid (Shawn Coyne):** Five Commandments of the scene quantum, value progression, and genre obligatories.
+* **The Anatomy of Story (John Truby):** Moral arguments, designing principles, and 4-corner opposition webs.
+* **Sanderson's Laws of Magic:** Hard vs. soft systems, costs, limitations, and escalating consequences.
+* **Character Arc Anatomy (K.M. Weiland):** The Lie, the Wound, the Want vs. the Need, and transformative shift.
+* **Techniques of the Selling Writer (Dwight Swain):** Motivation-Reaction Units (MRUs) for visceral pacing.
+* **Universal Narrative Rosetta Stone:** Instant translation across *Story Grid*, *Save the Cat!*, *Hero's Journey*, and *Story Circle* vocabularies.
 
 ---
 
-## The 118-Module Craft Reference Library
+## Explore the Architecture & Methodology
 
-Soundingboard provides your agent with explicit, codified reference cards in `_config/okf_craft/` covering time-tested storytelling principles:
-* **The Story Grid (Shawn Coyne):** The 5 Commandments of the Micro-Scene and macro value shifts.
-* **The Anatomy of Story (John Truby):** Moral arguments, designing principles, and 4-corner opposition.
-* **Sanderson's Laws of Magic:** Systematic worldbuilding, costs, and escalating consequences.
-* **Character Arc Anatomy (K.M. Weiland):** The Lie characters believe, the Wound, the Want vs. the Need.
-* **Swain MRUs (Dwight Swain):** Motivation-Reaction Units for micro-pacing and dramatic tension.
-* **Universal Narrative Rosetta Stone:** Whether you think in *Save the Cat!*, *Hero's Journey*, or *Story Grid* terms, your agent understands and mirrors your preferred vocabulary.
-
----
-
-## Explore the Deep Architecture
-
-For developers, technical authors, or curious creators who want to peek into the engine room:
+For developers, technical authors, or curious creators who want to inspect the plumbing:
 
 * 📖 **[The Science of Narrative Authenticity](docs/methodology.md):** The *StoryScope* research, why plain folders beat vector databases, and the Interpretable Context Methodology (ICM).
-* ⚙️ **[Technical Architecture & CLI Reference](docs/architecture.md):** The 5-stage state machine, data schemas (`manuscript.json`, `canon.md`), and zero-dependency mechanical CLI.
-* 📚 **[Narrative Craft Encyclopedia & Rosetta Stone](docs/craft_encyclopedia.md):** Complete catalog of the 118 OKF craft cards, theory lineages, and symptom-based craft search.
+* ⚙️ **[Technical Architecture & CLI Reference](docs/architecture.md):** The 2.0 scene resolution architecture, state machines, schemas (`manuscript.json`, `canon.md`), and zero-dependency Node engine.
+* 📚 **[Narrative Craft Encyclopedia & Rosetta Stone](docs/craft_encyclopedia.md):** Complete catalog of the 118 OKF craft cards, theory lineages, and symptom-based search.
 * 🤝 **[Contributing Guide](CONTRIBUTING.md):** Architectural invariants, zero-dependency requirements, and PR checklists.
 
 ---

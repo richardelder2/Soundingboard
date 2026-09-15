@@ -45,6 +45,13 @@ export function findScenePath(sceneId, rootDir = process.cwd()) {
   const manuscriptDir = path.join(rootDir, 'manuscript');
   if (!fs.existsSync(manuscriptDir)) return null;
 
+  // 1. Check flat scene pool: manuscript/scenes/sc-XXXX.md
+  const flatCandidate = path.join(manuscriptDir, 'scenes', `${sceneId}.md`);
+  if (fs.existsSync(flatCandidate)) {
+    return flatCandidate;
+  }
+
+  // 2. Check legacy nested structure: manuscript/ch-XX/sc-XXXX.md
   const chapterDirs = fs.readdirSync(manuscriptDir, { withFileTypes: true })
     .filter(d => d.isDirectory() && /^ch-/i.test(d.name));
 

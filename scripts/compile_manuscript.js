@@ -153,18 +153,26 @@ export function checkChapterGate(chapterId, rootDir = process.cwd()) {
 export function resolveChapterScenes(chDirName, rootDir = process.cwd(), ignoreMissing = false) {
   const chDirPath = path.join(rootDir, MANUSCRIPT_DIR, chDirName);
   const chapterMdPath = path.join(chDirPath, 'chapter.md');
+  const chPlaylistPath = path.join(rootDir, MANUSCRIPT_DIR, 'chapters', `${chDirName}.md`);
   let chapterTitle = chDirName;
   let declaredScenes = [];
 
+  let metaPath = null;
   if (fs.existsSync(chapterMdPath)) {
+    metaPath = chapterMdPath;
+  } else if (fs.existsSync(chPlaylistPath)) {
+    metaPath = chPlaylistPath;
+  }
+
+  if (metaPath) {
     try {
-      const meta = parse(fs.readFileSync(chapterMdPath, 'utf8'), chapterMdPath);
+      const meta = parse(fs.readFileSync(metaPath, 'utf8'), metaPath);
       if (meta.title) chapterTitle = meta.title;
       if (Array.isArray(meta.scenes) && meta.scenes.length > 0) {
         declaredScenes = meta.scenes;
       }
     } catch (e) {
-      console.error(`Warning: could not parse ${chapterMdPath}: ${e.message}`);
+      console.error(`Warning: could not parse ${metaPath}: ${e.message}`);
     }
   }
 
@@ -262,8 +270,14 @@ export function compileManuscript(args = [], options = {}) {
 
     for (const ch of chapterEntries) {
       const chDirPath = path.join(manuscriptRoot, ch.dirName);
-      if (!fs.existsSync(chDirPath)) {
-        skipped.push(`ch ${ch.id} (directory missing: ${ch.dirName})`);
+      const chPlaylistPath = path.join(manuscriptRoot, 'chapters', `${ch.id}.md`);
+      const chAltPlaylistPath = path.join(manuscriptRoot, 'chapters', `${ch.dirName}.md`);
+
+      const hasDir = fs.existsSync(chDirPath);
+      const hasPlaylist = fs.existsSync(chPlaylistPath) || fs.existsSync(chAltPlaylistPath);
+
+      if (!hasDir && !hasPlaylist) {
+        skipped.push(`ch ${ch.id} (chapter source missing: ${ch.dirName})`);
         continue;
       }
 
@@ -467,7 +481,9 @@ ${bodyHtml}
   return {
     htmlPath,
     chaptersCount: compiledChapters.length,
+    chapterCount: compiledChapters.length,
     scenesCount: totalScenes,
+    sceneCount: totalScenes,
     totalWords
   };
 }

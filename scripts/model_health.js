@@ -52,6 +52,112 @@ export function assessModelHealth(rootDir = process.cwd()) {
   const commandmentGaps = [];
 
   if (hasManuscriptDir) {
+    // 1. Scan scenes from flat pool: manuscript/scenes/sc-XXXX.md if present
+    const scenesPoolDir = path.join(manuscriptDir, 'scenes');
+    const scannedSceneIds = new Set();
+
+    function processSceneFile(scFilePath, chId = null) {
+      const rawContent = fs.readFileSync(scFilePath, 'utf8');
+      let scMeta = {};
+      try {
+        scMeta = parse(rawContent, scFilePath);
+      } catch (_) {}
+
+      const scFile = path.basename(scFilePath);
+      const sceneId = scMeta.id || scFile.replace(/\.md$/, '');
+      if (scannedSceneIds.has(sceneId)) return;
+      scannedSceneIds.add(sceneId);
+
+      const prose = strip(rawContent).trim();
+      const words = countWords(prose);
+      const isDrafted = words > 0;
+
+      // Check value shifts
+      const valIn = scMeta.value_in !== undefined && scMeta.value_in !== null ? String(scMeta.value_in).trim() : '';
+      const valOut = scMeta.value_out !== undefined && scMeta.value_out !== null ? String(scMeta.value_out).trim() : '';
+      const missingVals = [];
+      if (!valIn) missingVals.push('value_in');
+      if (!valOut) missingVals.push('value_out');
+
+      if (missingVals.length > 0) {
+        nullValueShifts.push({
+          sceneId,
+          chapterId: chId || scMeta.chapter || 'unassigned',
+          missing: missingVals,
+          file: path.relative(rootDir, scFilePath)
+        });
+      }
+
+      // Check provisional voice anchor
+      if (scMeta.anchor_provisional === true) {
+        provisionalAnchors.push({
+          sceneId,
+          chapterId: chId || scMeta.chapter || 'unassigned',
+          voiceAnchor: scMeta.voice_anchor || null,
+          file: path.relative(rootDir, scFilePath)
+        });
+      }
+
+      // Check commandments (optional in draft, but flagged if entirely null)
+      const cmd = scMeta.commandments;
+      const requiredCmds = ['inciting_incident', 'progressive_complication', 'crisis', 'climax', 'resolution'];
+      if (!cmd || typeof cmd !== 'object') {
+        commandmentGaps.push({ sceneId, chapterId: chId || scMeta.chapter || 'unassigned', missing: requiredCmds });
+      } else {
+        const missingC = requiredCmds.filter(c => !cmd[c] || !String(cmd[c]).trim());
+        if (missingC.length > 0) {
+          commandmentGaps.push({ sceneId, chapterId: chId || scMeta.chapter || 'unassigned', missing: missingC });
+        }
+      }
+
+      scenes.push({
+        id: sceneId,
+        chapter: chId || scMeta.chapter || null,
+        pov: scMeta.pov || null,
+        words,
+        isDrafted,
+        value_in: valIn || null,
+        value_out: valOut || null,
+        anchor_provisional: Boolean(scMeta.anchor_provisional),
+        voice_anchor: scMeta.voice_anchor || null,
+        threads: Array.isArray(scMeta.threads) ? scMeta.threads : []
+      });
+    }
+
+    if (fs.existsSync(scenesPoolDir)) {
+      const poolFiles = fs.readdirSync(scenesPoolDir, { withFileTypes: true })
+        .filter(f => f.isFile() && /^sc-.*\.md$/i.test(f.name))
+        .map(f => f.name)
+        .sort();
+
+      for (const scFile of poolFiles) {
+        processSceneFile(path.join(scenesPoolDir, scFile), null);
+      }
+    }
+
+    // 2. Scan chapter assembly playlists in manuscript/chapters/ or legacy ch-XX/
+    const chaptersPoolDir = path.join(manuscriptDir, 'chapters');
+    let chapterSources = [];
+
+    if (fs.existsSync(chaptersPoolDir)) {
+      const chFiles = fs.readdirSync(chaptersPoolDir, { withFileTypes: true })
+        .filter(f => f.isFile() && /^ch-.*\.md$/i.test(f.name))
+        .map(f => f.name)
+        .sort((a, b) => {
+          const numA = parseInt((a.match(/\d+/) || ['0'])[0], 10);
+          const numB = parseInt((b.match(/\d+/) || ['0'])[0], 10);
+          return numA - numB;
+        });
+
+      for (const chFile of chFiles) {
+        chapterSources.push({
+          isPlaylistFile: true,
+          filePath: path.join(chaptersPoolDir, chFile),
+          id: chFile.replace(/\.md$/, '')
+        });
+      }
+    }
+
     const chEntries = fs.readdirSync(manuscriptDir, { withFileTypes: true })
       .filter(d => d.isDirectory() && /^ch-/i.test(d.name))
       .map(d => d.name)
@@ -62,105 +168,78 @@ export function assessModelHealth(rootDir = process.cwd()) {
       });
 
     for (const chName of chEntries) {
-      const chDirPath = path.join(manuscriptDir, chName);
-      const chapterMdPath = path.join(chDirPath, 'chapter.md');
-      let chapterMeta = {};
+      chapterSources.push({
+        isPlaylistFile: false,
+        dirPath: path.join(manuscriptDir, chName),
+        id: chName
+      });
+    }
 
-      if (fs.existsSync(chapterMdPath)) {
+    for (const source of chapterSources) {
+      let chapterMeta = {};
+      let chapterId = source.id;
+      let chapterNumber = 1;
+      let rationale = null;
+      let orderedScenes = [];
+
+      if (source.isPlaylistFile) {
+        const chapterMdPath = source.filePath;
         try {
           chapterMeta = parse(fs.readFileSync(chapterMdPath, 'utf8'), chapterMdPath);
         } catch (_) {}
-      }
 
-      const chapterId = chapterMeta.id || chName;
-      const rationale = typeof chapterMeta.break_rationale === 'string' ? chapterMeta.break_rationale.trim() : null;
+        chapterId = chapterMeta.id || source.id;
+        chapterNumber = chapterMeta.number !== undefined ? chapterMeta.number : parseInt((source.id.match(/\d+/) || ['1'])[0], 10);
+        rationale = typeof chapterMeta.break_rationale === 'string' ? chapterMeta.break_rationale.trim() : null;
+        orderedScenes = Array.isArray(chapterMeta.scenes) ? chapterMeta.scenes : [];
 
-      if (!rationale) {
-        missingBreakRationales.push({
-          chapterId,
-          file: path.relative(rootDir, chapterMdPath)
-        });
+        if (!rationale) {
+          missingBreakRationales.push({
+            chapterId,
+            file: path.relative(rootDir, chapterMdPath)
+          });
+        }
+      } else {
+        const chDirPath = source.dirPath;
+        const chapterMdPath = path.join(chDirPath, 'chapter.md');
+        if (fs.existsSync(chapterMdPath)) {
+          try {
+            chapterMeta = parse(fs.readFileSync(chapterMdPath, 'utf8'), chapterMdPath);
+          } catch (_) {}
+        }
+
+        chapterId = chapterMeta.id || source.id;
+        chapterNumber = chapterMeta.number !== undefined ? chapterMeta.number : parseInt((source.id.match(/\d+/) || ['1'])[0], 10);
+        rationale = typeof chapterMeta.break_rationale === 'string' ? chapterMeta.break_rationale.trim() : null;
+
+        if (!rationale) {
+          missingBreakRationales.push({
+            chapterId,
+            file: path.relative(rootDir, chapterMdPath)
+          });
+        }
+
+        // Scan scenes in legacy chapter directory
+        const scFiles = fs.readdirSync(chDirPath, { withFileTypes: true })
+          .filter(f => f.isFile() && /^sc-.*\.md$/i.test(f.name))
+          .map(f => f.name)
+          .sort();
+
+        for (const scFile of scFiles) {
+          processSceneFile(path.join(chDirPath, scFile), chapterId);
+        }
+
+        orderedScenes = Array.isArray(chapterMeta.scenes) ? chapterMeta.scenes : scFiles.map(f => f.replace(/\.md$/, ''));
       }
 
       chapters.push({
         id: chapterId,
-        number: chapterMeta.number !== undefined ? chapterMeta.number : parseInt((chName.match(/\d+/) || ['1'])[0], 10),
-        title: chapterMeta.title || chName,
-        scenes: Array.isArray(chapterMeta.scenes) ? chapterMeta.scenes : [],
+        number: chapterNumber,
+        title: chapterMeta.title || chapterId,
+        scenes: orderedScenes,
         break_rationale: rationale,
         status: chapterMeta.status || 'planned'
       });
-
-      // Scan scenes in chapter
-      const scFiles = fs.readdirSync(chDirPath, { withFileTypes: true })
-        .filter(f => f.isFile() && /^sc-.*\.md$/i.test(f.name))
-        .map(f => f.name)
-        .sort();
-
-      for (const scFile of scFiles) {
-        const scFilePath = path.join(chDirPath, scFile);
-        const rawContent = fs.readFileSync(scFilePath, 'utf8');
-        let scMeta = {};
-        try {
-          scMeta = parse(rawContent, scFilePath);
-        } catch (_) {}
-
-        const sceneId = scMeta.id || scFile.replace(/\.md$/, '');
-        const prose = strip(rawContent).trim();
-        const words = countWords(prose);
-        const isDrafted = words > 0;
-
-        // Check value shifts
-        const valIn = scMeta.value_in !== undefined && scMeta.value_in !== null ? String(scMeta.value_in).trim() : '';
-        const valOut = scMeta.value_out !== undefined && scMeta.value_out !== null ? String(scMeta.value_out).trim() : '';
-        const missingVals = [];
-        if (!valIn) missingVals.push('value_in');
-        if (!valOut) missingVals.push('value_out');
-
-        if (missingVals.length > 0) {
-          nullValueShifts.push({
-            sceneId,
-            chapterId,
-            missing: missingVals,
-            file: path.relative(rootDir, scFilePath)
-          });
-        }
-
-        // Check provisional voice anchor
-        if (scMeta.anchor_provisional === true) {
-          provisionalAnchors.push({
-            sceneId,
-            chapterId,
-            voiceAnchor: scMeta.voice_anchor || null,
-            file: path.relative(rootDir, scFilePath)
-          });
-        }
-
-        // Check commandments (optional in draft, but flagged if entirely null)
-        const cmd = scMeta.commandments;
-        const requiredCmds = ['inciting_incident', 'progressive_complication', 'crisis', 'climax', 'resolution'];
-        if (!cmd || typeof cmd !== 'object') {
-          commandmentGaps.push({ sceneId, chapterId, missing: requiredCmds });
-        } else {
-          const missingC = requiredCmds.filter(c => !cmd[c] || !String(cmd[c]).trim());
-          if (missingC.length > 0) {
-            commandmentGaps.push({ sceneId, chapterId, missing: missingC });
-          }
-        }
-
-        scenes.push({
-          id: sceneId,
-          chapter: chapterId,
-          pov: scMeta.pov || null,
-          words,
-          isDrafted,
-          value_in: valIn || null,
-          value_out: valOut || null,
-          anchor_provisional: Boolean(scMeta.anchor_provisional),
-          voice_anchor: scMeta.voice_anchor || null,
-          threads: Array.isArray(scMeta.threads) ? scMeta.threads : []
-        });
-      }
     }
   } else if (manifest && Array.isArray(manifest.chapters)) {
     // 1.x fallback inspection
