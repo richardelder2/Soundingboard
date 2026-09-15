@@ -55,3 +55,13 @@ Claude Code can execute commands and edit files autonomously. To maintain creati
 * **The Single-Chapter Rule:** When drafting or auditing, instruct Claude to work on **one chapter at a time** (e.g., *"Draft the beats for Chapter 4, then pause for my feedback"*).
 * **Never Auto-Approve Bulk Prose Changes:** If Claude suggests rewriting multiple chapters at once, ask it to output a **Revision Playbook** (`_config/templates/revision_playbook.template.md`) first so you can review the 2–3 creative options before text is overwritten.
 * **Auto-Healing Backstage:** Claude will automatically run `soundingboard doctor --fix` if any Git or environment settings are misaligned. Let it heal behind the scenes without interrupting your writing flow.
+
+---
+
+## 5. Git Creative History & Terminal Commit Etiquette
+
+Claude Code operates with direct shell access. To keep Git as a transparent history layer:
+* **The Golden Rule:** *Soundingboard files contain the meaning. Git records the evolution.*
+* **Author-Directed Commits:** Claude must never silently run `git commit` or `git push`. Instruct Claude to run `node scripts/soundingboard.js git status` or `soundingboard git checkpoint` only upon your approval.
+* **Respecting `git_mode`:** Set `git_mode: "gentle"` or `git_mode: "quiet"` in `preferences.md`. Claude will honor this mode and avoid spamming terminal commit prompts.
+* **Checking History:** Use `node scripts/soundingboard.js git status` to get a human-readable summary of modified scenes, moved scenes, resolved brackets, and canon updates.

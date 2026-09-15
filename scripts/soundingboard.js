@@ -717,13 +717,16 @@ function handlePack(type, extraArgs = []) {
     'ingest-debrief': 'pack-ingest-debrief.js',
     frontmatter: 'pack-frontmatter.js',
     graduate: 'pack-frontmatter.js',
-    'lint-bracket': 'pack-bracket.js'
+    'lint-bracket': 'pack-bracket.js',
+    git: 'pack-git.js',
+    'git-history': 'pack-git.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
     printHeader('Soundingboard Context Packers');
     console.log(`
 Available context packers:
+  node scripts/${BIN_NAME}.js pack git [base_ref]                 Pack Git status, creative diff, preferences & Playbook #21
   node scripts/${BIN_NAME}.js pack unstuck [chapter]              Pack context for getting unstuck
   node scripts/${BIN_NAME}.js pack brainstorm [topic]             Pack lore & worldbuilding context
   node scripts/${BIN_NAME}.js pack interview <character>          Pack character voice context
@@ -1766,6 +1769,134 @@ async function handleVisualizer(type, extraArgs = []) {
   console.log('\n\x1b[32m✔ State Road AI Story Console successfully generated! Open the HTML files in your browser to explore.\x1b[0m\n');
 }
 
+async function handleGit(subCmd, extraArgs = []) {
+  const {
+    getGitStatus,
+    analyzeCreativeChanges,
+    formatCreativeSummary,
+    verifyTechnicalIntegrity,
+    createCheckpointCommit,
+    getPushSummary,
+    compareExperiments,
+    runGit
+  } = await import('./git_history.js');
+
+  const action = (subCmd || 'status').toLowerCase();
+
+  if (action === 'status' || action === 'summary') {
+    printHeader('Soundingboard Creative History');
+    const analysis = analyzeCreativeChanges(process.cwd());
+    console.log(formatCreativeSummary(analysis));
+    return;
+  }
+
+  if (action === 'verify' || action === 'check') {
+    printHeader('Technical Integrity Pre-Commit Check');
+    const integrity = verifyTechnicalIntegrity(process.cwd());
+    if (integrity.valid) {
+      console.log('  \x1b[32m✔ Technical Integrity Passed:\x1b[0m All scene frontmatters, chapter playlists, and scene IDs are structurally sound.');
+    } else {
+      console.error(`  \x1b[31m✗ Technical Integrity Failure (${integrity.errors.length} error(s)):\x1b[0m`);
+      integrity.errors.forEach(e => console.error(`    - ${e}`));
+      console.error('\n  \x1b[33m↳ Fix these structural syntax/reference errors before committing.\x1b[0m\n');
+      process.exit(1);
+    }
+    return;
+  }
+
+  if (action === 'checkpoint' || action === 'commit') {
+    printHeader('Creating Creative Checkpoint');
+    const customMsg = extraArgs.join(' ').trim() || null;
+    const result = createCheckpointCommit(process.cwd(), { message: customMsg });
+    if (result.success) {
+      console.log(`  \x1b[32m✔ Checkpoint created:\x1b[0m [${result.commitHash}]`);
+      const status = getGitStatus(process.cwd());
+      console.log(`  Branch: ${status.branch} | Unpushed: ${status.unpushedCommits}`);
+    } else {
+      console.error(`  \x1b[31m✗ Checkpoint failed:\x1b[0m ${result.error}`);
+      if (result.integrityErrors && result.integrityErrors.length > 0) {
+        result.integrityErrors.forEach(e => console.error(`    - ${e}`));
+      }
+      process.exit(1);
+    }
+    return;
+  }
+
+  if (action === 'push-check' || action === 'push-summary') {
+    printHeader('Git Remote Push Summary');
+    const pushSummary = getPushSummary(process.cwd());
+    if (!pushSummary.canPush) {
+      console.log(`  \x1b[33mCannot push:\x1b[0m ${pushSummary.reason}`);
+      return;
+    }
+    console.log(`  • Target Branch:  \x1b[36m${pushSummary.branch}\x1b[0m`);
+    console.log(`  • Remote:         \x1b[36m${pushSummary.remote}\x1b[0m`);
+    console.log(`  • Unpushed:       ${pushSummary.unpushedCommits} commit(s)`);
+    if (pushSummary.commitLog && pushSummary.commitLog.length > 0) {
+      console.log('\n  Commits ready to push:');
+      pushSummary.commitLog.forEach(c => console.log(`    - ${c}`));
+    }
+    console.log('\n  Author approval is required before pushing to remote repository.');
+    return;
+  }
+
+  if (action === 'push') {
+    printHeader('Pushing to Remote Repository');
+    const pushSummary = getPushSummary(process.cwd());
+    if (!pushSummary.canPush) {
+      console.error(`  \x1b[31mError:\x1b[0m ${pushSummary.reason}`);
+      process.exit(1);
+    }
+    try {
+      const branch = pushSummary.branch;
+      const remote = pushSummary.remote;
+      console.log(`  Pushing ${branch} to ${remote}...`);
+      const out = runGit(`push ${remote} ${branch}`, process.cwd());
+      console.log(`  \x1b[32m✔ Successfully pushed to ${remote}/${branch}\x1b[0m`);
+      if (out) console.log(`  ${out}`);
+    } catch (err) {
+      console.error(`  \x1b[31m✗ Push failed:\x1b[0m ${err.message}`);
+      process.exit(1);
+    }
+    return;
+  }
+
+  if (action === 'compare' || action === 'experiment') {
+    const branchA = extraArgs[0];
+    if (!branchA) {
+      console.error('Usage: node scripts/soundingboard.js git compare <branch_name>');
+      return;
+    }
+    printHeader(`Comparing Creative Branches: ${branchA} vs HEAD`);
+    const comp = compareExperiments(process.cwd(), branchA);
+    if (comp.error) {
+      console.error(`  \x1b[31mError:\x1b[0m ${comp.error}`);
+      return;
+    }
+    console.log(`  Total file changes: ${comp.totalFilesChanged}`);
+    if (comp.changedScenes.length > 0) {
+      console.log(`  • Scene differences (${comp.changedScenes.length}):`);
+      comp.changedScenes.forEach(s => console.log(`    - ${s.id} [${s.status}]`));
+    }
+    if (comp.changedChapters.length > 0) {
+      console.log(`  • Chapter differences (${comp.changedChapters.length}):`);
+      comp.changedChapters.forEach(c => console.log(`    - ${c.id} [${c.status}]`));
+    }
+    console.log('\n  Note: Git identifies textual changes; the author chooses which creative direction to adopt.');
+    return;
+  }
+
+  console.log(`
+Usage:
+  node scripts/${BIN_NAME}.js git status              Summarize creative changes since last checkpoint
+  node scripts/${BIN_NAME}.js git checkpoint [msg]    Create local commit (runs technical integrity check)
+  node scripts/${BIN_NAME}.js git verify              Verify technical integrity (scene YAML, playlist IDs)
+  node scripts/${BIN_NAME}.js git push-check          Display unpushed commits and remote target
+  node scripts/${BIN_NAME}.js git push                Push approved commits to remote
+  node scripts/${BIN_NAME}.js git compare <branch>    Compare structural differences between branches
+  `);
+}
+
 function showHelp() {
   console.log(`
 ${APP_NAME} novel engineering CLI
@@ -1775,6 +1906,7 @@ Usage:
   node scripts/${BIN_NAME}.js promote [--to=...]      Upgrade workspace scope (--to=series or --to=world)
   node scripts/${BIN_NAME}.js status                 Show the status of each pipeline stage
   node scripts/${BIN_NAME}.js brief                  Executive summary of manuscript progress & state
+  node scripts/${BIN_NAME}.js git [status|summary...] Creative history & author-paced Git checkpoints
   node scripts/${BIN_NAME}.js visualizer [ekg|net]   Launch State Road AI Story Console (EKG & Cast Network)
   node scripts/${BIN_NAME}.js audio [chapter]        Audiobook acoustic & breath cadence diagnostic
   node scripts/${BIN_NAME}.js craft search <query>   Search ${getCraftModuleCount()} craft modules (flags: --stage, --genre, --scope, --json)
@@ -1950,6 +2082,12 @@ switch (command) {
     break;
   case 'threads':
     await handleThreads(args.slice(1));
+    break;
+  case 'git':
+    await handleGit(subCommand, args.slice(2));
+    break;
+  case 'pack-git':
+    handlePack('git', args.slice(1));
     break;
   case 'gate':
     handleGateCmd(subCommand || args[1], args.slice(2));

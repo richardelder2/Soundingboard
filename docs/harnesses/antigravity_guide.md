@@ -39,3 +39,13 @@ Antigravity natively supports rendering rich, interactive HTML/SVG widgets inlin
 Antigravity can spawn specialized background subagents using `invoke_subagent`:
 * **Research Subagents:** If you need deep historical research (e.g. Victorian poison laws, 12th-century cathedral architecture, or quantum drive physics), Antigravity can dispatch a background research subagent to search the web and compile notes while you continue drafting in the main chat.
 * **Parallel Audit Subagents:** While you are writing Chapter 5, a background subagent can perform the mechanical audit on Chapter 4 without interrupting your train of thought.
+
+---
+
+## 5. Git Creative History & Diff Reviews in Antigravity
+
+Antigravity works seamlessly with Soundingboard's file-first Git architecture:
+* **The Canvas Diff Review:** When your concierge suggests a commit (Playbook #21), you can inspect exact prose and metadata diffs in the left-pane editor before authorizing the commit.
+* **The Golden Rule:** *Soundingboard files contain the meaning. Git records the evolution.*
+* **Author Commits Only:** Antigravity will summarize changes and suggest a checkpoint, but will only create a commit or push when you approve.
+* **Non-Blocking Creative Feedback:** Antigravity's diagnostics provide advisory bracket suggestions; they never block your ability to checkpoint or preserve your work in Git.

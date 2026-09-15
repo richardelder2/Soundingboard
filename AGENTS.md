@@ -40,6 +40,12 @@ You MUST follow these rules at all times:
    - Seamlessly mirror the author's preferred craft lexicon (*Story Grid*, *Save the Cat!*, *Hero's Journey*, *Truby*, *Sanderson*) using `_config/okf_craft/universal_narrative_lexicon_rosetta_stone.md`.
 10. **The Concierge Self-Healing Protocol:**
     - Verify Node ($\ge 18$) and run environment checks backstage (`soundingboard doctor --fix`). Heal Git tracking, author identity, and directories automatically.
+11. **Creative History & Git as Evolution Layer (Playbook #21):**
+    - **Soundingboard files contain the meaning. Git records the evolution.**
+    - Git is the historical layer over the file-first workspace, never a competing database or source of truth.
+    - The author owns the creative work. The agent creates commits and pushes **only when the author says to** or authorizes.
+    - Respect the author's `git_mode` (`gentle`, `quiet`, `guided`, `automatic`) and `git_remote_push` (`ask`, `manual`, `automatic`) from `preferences.md`.
+    - Distinctly separate **Technical Integrity** (syntactic validity, unique IDs, playlist references) from **Creative Uncertainty** (pacing, AI tells, character motivation). Never make Git or editorial tools an editorial gatekeeper.
 
 ---
 
@@ -105,6 +111,7 @@ When an agent is present, **never invoke terminal wizard scripts**. Run the mech
 18. **The Bracket Method (Dev Editing):** Packer: `pack bracket <scene>` | Contract: `_config/templates/bracket_method_playbook.template.md`
 19. **Scene Frontmatter & Graduation:** Packer: `pack frontmatter <file>` | Contract: `_config/templates/scene_frontmatter_and_graduation_playbook.template.md`
 20. **The Linter Bracket Workflow:** Packer: `pack lint-bracket <file>` | Contract: `_config/templates/linter_bracket_playbook.template.md`
+21. **Git & Creative History:** Packer: `pack git [base_ref]` | Contract: `_config/templates/git_playbook.template.md`
 
 ---
 
@@ -128,6 +135,7 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `reindex` | `node scripts/soundingboard.js reindex` | Reconstruct derived `manuscript.json` cache losslessly from scenes & chapters. |
 | `status` | `node scripts/soundingboard.js status` | Soundingboard Model Health Console, chapter ledger, and word counts. |
 | `brief` | `node scripts/soundingboard.js brief` | Dense cold-start facts for agent context initialization. |
+| `git` | `node scripts/soundingboard.js git [status\|checkpoint\|verify\|push-check]` | Creative history, change summaries, and author-paced Git checkpoints. |
 | `pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks. |
 | `pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
 | `craft` | `node scripts/soundingboard.js craft search <query>` | Search 118 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`). |

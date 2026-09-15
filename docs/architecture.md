@@ -89,6 +89,15 @@ The immutable ground truth of narrative facts:
 - When clearing Stage 04 diagnostics, unverified tags are permanently confirmed.
 - Rule of Contradiction: **The draft always loses to canon.** To alter canon, an explicit amendment must be logged with a retrofit list.
 
+### Git as the Historical Evolution Layer (Playbook #21)
+- **The Golden Rule:** *Soundingboard files contain the meaning. Git records the evolution.*
+- Git sits as an open, non-proprietary historical layer over the file-first workspace—**never** a competing database or source of truth.
+- **Scene Identity Stability:** Scenes live in `manuscript/scenes/sc-XXXX.md`. Moving a scene across chapter playlists modifies `manuscript/chapters/ch-XX.md`, leaving scene ID, YAML frontmatter, dramatic context, and author notes completely intact.
+- **Separation of Technical Integrity from Creative Uncertainty:**
+  - *Technical Integrity:* Malformed YAML, duplicate scene IDs, and broken playlist links block commits to prevent repository corruption.
+  - *Creative Uncertainty:* Pacing questions, tell ratios, and character motivations are advisory craft discussions that **never** block commits or pushes.
+- **Preservation of the Tripartite Chain:** Deterministic Tool Observation $\rightarrow$ Agent Craft Interpretation $\rightarrow$ Author Sovereign Decision. The author's verbatim prose is never rewritten behind the scenes.
+
 ---
 
 ## 3. The Atomic Scene & Chapter Production Loop
@@ -120,6 +129,7 @@ All CLI commands run in zero-dependency Node.js ($\ge 18$). The canonical entry 
 | `soundingboard init` | `node scripts/soundingboard.js init [folder] [--form]` | Scaffold a clean workspace (forms: `novel`, `novella`, `short_story`, `series`). |
 | `soundingboard status` | `node scripts/soundingboard.js status [--stage=N]` | Soundingboard 2.0 Model Health Console, chapter ledger, and word count progress. |
 | `soundingboard brief` | `node scripts/soundingboard.js brief` | Dense single-line cold-start facts for agent context initialization (alias: `resume`). |
+| `soundingboard git` | `node scripts/soundingboard.js git [status\|checkpoint\|verify\|push-check]` | Creative history, change summaries, and author-paced Git checkpoints. |
 | `soundingboard reindex` | `node scripts/soundingboard.js reindex` | Reconstruct derived `manuscript.json` cache losslessly from `manuscript/` tree. |
 | `soundingboard run-stage` | `node scripts/soundingboard.js run-stage <id>` | Compile the stage packet (contract + declared inputs) as a single context block. |
 | `soundingboard pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks (`unstuck`, `heat`, `bracket`, etc.). |

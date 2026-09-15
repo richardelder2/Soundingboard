@@ -129,6 +129,13 @@ Soundingboard provides an industrial-grade diagnostic suite to keep your manuscr
 - **118 Standardized Craft Cards:** Distilled narrative wisdom covering Story Grid, Save the Cat!, Truby, and Sanderson.
 - **Structural Scopes:** Searchable by scope (`scene`, `chapter`, `manuscript`, `sentence`) and genre.
 
+### 📜 Git Playbook & Creative History (`soundingboard git`, Playbook #21)
+- **The Golden Rule:** *Soundingboard files contain the meaning. Git records the evolution.*
+- **Historical Layer, Not a Database:** Git sits as a non-proprietary record over your plain files, preserving draft evolutions, bracket resolutions, and structural experiments.
+- **Author Sovereignty:** Checkpoint commits and remote pushes are created **only when you say to**. The AI never commits or pushes behind your back.
+- **Stable Scene Identity:** Moving scenes between chapters reorders playlists; the scene's ID (`sc-XXXX`) and frontmatter context remain permanent.
+- **Non-Blocking Feedback:** Editorial findings never block commits; technical integrity (syntax/validity) protects the workspace.
+
 ---
 
 ## 6. Author Preferences Profile (`preferences.md`)

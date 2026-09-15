@@ -92,6 +92,15 @@ Whether you draft in **Obsidian**, **Scrivener**, **Microsoft Word**, **iA Write
 - **Structural Scopes:** Categorized into `scene`, `chapter`, `manuscript`, and `sentence` scopes.
 - **Instant Search:** `soundingboard craft search <query> [--scope=...] [--genre=...]`.
 
+### 12. Git Playbook & Creative History (`soundingboard git`, Playbook #21)
+- **The Sovereign Author Rule:** *Soundingboard files contain the meaning. Git records the evolution.*
+- **Git as a Transparent Historical Layer:** Git is an open historical record over your file-first workspace, never a competing database.
+- **Author Ownership & Control:** Commits and pushes occur **only when the author says to** or authorizes. The AI never commits or pushes behind your back.
+- **Author Git Modes (`preferences.md`):** Choose between `gentle` (default, milestone suggestions with rationale), `quiet` (no prompts), `guided` (full diff summaries), and `automatic`. Remote pushes are separately controlled (`ask` by default).
+- **Separation of Technical Integrity from Creative Uncertainty:** Malformed YAML, duplicate scene IDs, and broken references warn/block to protect the workspace, while creative critiques (pacing, AI tells, motivations) **never** block commits or pushes.
+- **Stable Scene Identity:** Moving scenes between chapters alters playlist arrays in `manuscript/chapters/ch-XX.md`; scene files (`manuscript/scenes/sc-XXXX.md`) and their YAML context remain unbroken.
+- **Context Packer & Tooling:** Dedicated commands for status (`soundingboard git status`), integrity check (`soundingboard git verify`), checkpoints (`soundingboard git checkpoint`), remote checks (`soundingboard git push-check`), branch experiment comparisons (`soundingboard git compare`), and context packing (`soundingboard pack git`).
+
 ---
 
 ## Zero Runtime Dependencies
@@ -107,6 +116,7 @@ Soundingboard 2.0 maintains a strict **zero runtime dependency** standard (`depe
 | Initialize workspace | `node scripts/soundingboard.js init [dir] [--form]` |
 | Model Health console | `node scripts/soundingboard.js status` |
 | Fast context brief | `node scripts/soundingboard.js brief` |
+| Creative history & Git | `node scripts/soundingboard.js git status` |
 | Rebuild index cache | `node scripts/soundingboard.js reindex` |
 | Graduate a draft | `node scripts/soundingboard.js graduate <file>` |
 | Scan scene for AI tells | `node scripts/soundingboard.js audit [file]` |

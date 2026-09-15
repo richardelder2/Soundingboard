@@ -127,6 +127,7 @@ Soundingboard equips your agent with 118 codified reference modules in `_config/
 For developers, technical authors, or curious creators who want to inspect the plumbing:
 
 * 📖 **[The Science of Narrative Authenticity](docs/methodology.md):** The *StoryScope* research, why plain folders beat vector databases, and the Interpretable Context Methodology (ICM).
+* 📜 **[Git Playbook & Creative History](docs/git_playbook.md):** How Git records the evolution of your file-first workspace, author checkpoint modes, and branch experiments.
 * ⚙️ **[Technical Architecture & CLI Reference](docs/architecture.md):** The 2.0 scene resolution architecture, state machines, schemas (`manuscript.json`, `canon.md`), and zero-dependency Node engine.
 * 📚 **[Narrative Craft Encyclopedia & Rosetta Stone](docs/craft_encyclopedia.md):** Complete catalog of the 118 OKF craft cards, theory lineages, and symptom-based search.
 * 🤝 **[Contributing Guide](CONTRIBUTING.md):** Architectural invariants, zero-dependency requirements, and PR checklists.
