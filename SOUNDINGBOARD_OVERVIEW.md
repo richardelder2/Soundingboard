@@ -1,113 +1,172 @@
-# Soundingboard — Novel Engineering Guide
-## Welcome to Your AI-Collaborative Writing Workspace
+# Soundingboard 2.0 — Executive Author's Guide & Overview
+## The Creative Concierge, Master Librarian & Continuity Sentry for Novelists
 
-Writing a novel is a deeply personal, messy, and creative process. Standard software engineering processes are too rigid, while standard AI text generators are too formless—often leading to repetitive plots, flat characters, and style drift.
+Writing a novel is a deeply personal, complex, and creative journey. Standard software project tools are far too rigid, while generic AI text generators are formless and intrusive—flattening authorial voice, inventing hallucinations, and attempting to ghostwrite your manuscript.
 
-**Soundingboard** (Interpretable Context Methodology) is designed to solve this. It is a portable, lightweight framework that transforms your AI coding agent (like Antigravity, Claude Code, or Codex) into a highly disciplined, encouraging writing partner. 
+**Soundingboard 2.0** is built on a fundamentally different philosophy:
 
-This guide explains how the system works, how your agent supports you, and how the architecture is built to protect and adapt to your creative flow.
+> **The author is the novelist; the system bends to the author, never the author to the system.**  
+> **The human author always holds the red pen. The AI never unilaterally rewrites author prose.**
+
+Whether you write in **Obsidian**, **Scrivener**, **Microsoft Word**, **iA Writer**, or plain markdown, Soundingboard serves as your **Executive Novel Assistant, Master Librarian, Continuity Sentry, and Diagnostic Partner**—protecting your voice, tracking your threads, and organizing your manuscript at your pace.
 
 ---
 
-## 1. How the System Works (The 5 Stages)
+## 1. Core Principles of Soundingboard 2.0
 
-Soundingboard divides the journey from raw idea to published book into five distinct stages. Each stage has a clear contract (`CONTEXT.md`) that defines the inputs needed and the outputs produced.
+1. **Solo & Hybrid First (You Write the Words):**  
+   - **Solo Mode (Default):** You write 100% of the prose in your favorite editor. The AI acts as your Librarian, Continuity Sentry, and Diagnostic Partner. It *never* alters your words without an explicit request.
+   - **Hybrid Mode:** You and the AI volley beats, brainstorm alternate plot branches, or bloom sensory details via **The Bracket Method**.
+   - **Agentic Drafting:** The AI drafts prose *only upon explicit request*. It is never the default or assumed workflow.
+
+2. **Universal Tool Freedom:**  
+   - **In-Vault Writing:** The project folder can function directly as an **Obsidian vault** or markdown directory.
+   - **External Ingest:** Prefer drafting in Scrivener, Word (`.docx`), or Google Docs? Simply drop your files into `writers_room/inputs/` or run `soundingboard ingest <file>`.
+
+3. **The Red Pen Stays in Your Hand (Zero Black-Box Rewrites):**  
+   - The AI never executes silent rewrites to satisfy a linter or audit.
+   - All critiques and diagnostic findings use **The Bracket Method** (Playbooks #18 & #20). Suggestions are quarantined in inline brackets (`[like this]`) with 3 clear choices: *Cut*, *Rephrase*, or *Keep as author voice*.
+
+4. **Scene is the Atomic Dramatic Quantum; Chapters are Playlists:**  
+   - Completed scenes live in a unified flat pool: `manuscript/scenes/sc-XXXX.md`.
+   - Chapters in `manuscript/chapters/ch-XX.md` are flexible assembly playlists with an authored break rationale.
+   - You can write your climax first or draft standalone scenes without assigning them to a chapter yet. Floating scenes remain 100% valid and audited.
+
+5. **Markdown as Ground Truth:**  
+   - Your markdown files are the sole record of truth.
+   - `manuscript.json` is a derived cache that can be deleted and reconstructed losslessly at any time with `node scripts/soundingboard.js reindex`.
+
+---
+
+## 2. The Writer's Room & Inviolable Immunity Shield
+
+Creativity requires an uninhibited, judgment-free space to explore. Soundingboard provides a dedicated sandbox in `writers_room/`:
+
+```
+writers_room/
+├── notes/      # Character sketches, aesthetic moodboards, lore fragments
+├── beats/      # Scratchpad sequences, beat sheets, rough outlines
+├── drafts/     # Raw work-in-progress prose drafted by you
+└── inputs/     # Dropped external files from Scrivener, Word, or Google Docs
+```
+
+### 🛡️ The Immunity Shield
+- Background linters, automated audits, continuity checkers, and test runners **strictly ignore** `writers_room/`.
+- You can draft half-finished paragraphs, fragment bullet notes, and messy first takes with zero automated red ink.
+- When—and only when—you want feedback on a draft, you can explicitly ask (e.g., *"Audit the cadence of `writers_room/drafts/heist_arrival.md`"*).
+
+---
+
+## 3. Scene Graduation & Frontmatter Assistance (Playbook #19)
+
+Drafting in the Writer's Room requires zero metadata or frontmatter. When a scene is in a good place and you are ready to bring it into the manuscript pool, you invoke the **Scene Graduation Ceremony**:
+
+```bash
+node scripts/soundingboard.js graduate writers_room/drafts/my_scene.md
+```
+
+### Three Ways to Complete Frontmatter
+Frontmatter (POV, location, value shifts, 5 commandments, threads) provides the dramatic metadata needed for high-level developmental diagnostics. The AI assists through three painless pathways:
+
+1. **Path 1 (AI Proposal):** The assistant reads your draft prose and proposes all frontmatter fields for your review and approval.
+2. **Path 2 (Author Scaffold):** The assistant inserts a clean YAML block with relevant in-world suggestions (characters from `canon.md`, open threads from `threads.md`) commented inline for you to fill out.
+3. **Path 3 (Conversational Discovery):** You and the assistant discuss the scene's turning point, stakes, and crisis question in chat, and the assistant generates the frontmatter block.
+
+Once graduated, the scene is assigned a canonical ID (`sc-XXXX`), moved to `manuscript/scenes/`, indexed into `manuscript.json`, and any new proper nouns are harvested into `canon.md` tagged `[unverified sc-XXXX]`.
+
+---
+
+## 4. The 5-Stage Author-Paced Pipeline
+
+Soundingboard organizes the novel lifecycle into five stages. These stages are **architectural lenses, not a rigid railroad**:
 
 ```mermaid
 graph TD
-    S1[Stage 1: Onboarding] -->|Character & Genre Bibles| S2[Stage 2: Planning]
-    S2 -->|Foolscap & Scene Beats| S3[Stage 3: Drafting]
-    S3 -->|Raw Drafts| S4[Stage 4: Diagnostics & Edits]
-    S4 -->|Passed Gate| S5[Stage 5: Publishing]
-    S4 -->|Fails Audit| S3
+    S1["Stage 01: Onboarding<br/>(Preferences, Bibles, Tropes)"] --> S2["Stage 02: Planning<br/>(Foolscap, Subplots, Scene Cards)"]
+    S2 --> S3["Stage 03: Drafting<br/>(Writer's Room, Graduation, Desk Kits)"]
+    S3 --> S4["Stage 04: Diagnostics & Edits<br/>(Audits, Continuity, Bracket Method)"]
+    S4 --> S5["Stage 05: Publishing<br/>(Playlists, HTML, EPUB, DOCX)"]
 ```
 
-| Stage | Folder | What Happens | What it Produces |
-| :--- | :--- | :--- | :--- |
-| **01. Onboarding** | `stages/01_onboarding/` | Your agent interviews you to map out your world, characters, and genre tropes. | Preferences, World Bible, Character Seeds, Filled Genre Bible. |
-| **02. Planning** | `stages/02_planning/` | You map the book onto a single sheet (**Foolscap**), structure subplots, and write chapter-by-chapter beats. | **manuscript.json** (Ledger), Foolscap Page, Scene Beats. |
-| **03. Drafting** | `stages/03_drafting/` | You and the agent write the chapter drafts one by one using strict style guidelines. | Chapter Prose (.md files). |
-| **04. Diagnostics** | `stages/04_diagnostics_edits/` | The agent audits drafts for continuity and checks for AI tells. | Audit Reports, Continuity Reports. |
-| **05. Publishing** | `stages/05_publishing/` | When all chapters pass audits, they compile into a book. | Finished HTML / EPUB manuscript. |
+| Stage | Folder | What Happens | Key Outputs |
+|---|---|---|---|
+| **01. Onboarding** | `stages/01_onboarding/` | Discovery interview, root author preferences, character & world bibles, trope stack. | `preferences.md`, `world_bible.md`, `character_bible.md`, `genre_bible.md` |
+| **02. Planning** | `stages/02_planning/` | High-level architecture: 1-page Foolscap outline, subplot thread ledger, scene cards. | `foolscap.md`, `threads.md`, `scene_cards/` |
+| **03. Drafting** | `stages/03_drafting/` | Active writing in the Writer's Room, desk kits, frontmatter assistance, scene graduation. | `writers_room/`, `manuscript/scenes/sc-XXXX.md` |
+| **04. Diagnostics** | `stages/04_diagnostics_edits/` | AI tell density scans, sentence rhythm variance, thread continuity, Bracket Method editing. | Audit reports, `thread_lanes.html`, revision brackets |
+| **05. Publishing** | `stages/05_publishing/` | Curate chapter playlists, verify scene existence, compile to publication formats. | `manuscript/chapters/ch-XX.md`, `manuscript.html`, `.epub`, `.docx` |
 
 ---
 
-## 2. How the Agent Supports You
+## 5. The Diagnostic & Sentry Suite
 
-As a novice user, you don’t need to worry about complex programming, terminal commands, or managing raw configuration files. **Your agent is your interface.**
+Soundingboard provides an industrial-grade diagnostic suite to keep your manuscript cohesive over 80,000+ words:
 
-* **No Terminal Required:** You do not need to run backend setup scripts or manage API configurations. You talk directly to your agent in plain English (e.g., *"Help me draft Chapter 3 beats"* or *"Review my character arcs"*). The agent reads the local contracts, executes the tasks, and updates files for you.
-* **The Concierge Persona:** Your agent is contractually instructed to act as a supportive concierge. It will run all code, check state, and audit drafts behind the scenes, presenting results to you in plain, encouraging language and always suggesting the next two concrete steps to take.
-* **Creative Sounding Board:** Your agent acts as an encouraging, expert developmental editor. It will push you to flesh out weak plot points, brainstorm alternate angles, and suggest three-dimensional conflicts.
-* **The Mechanical Guarddog:** The agent runs local, instant scripts to find typos, detect name spelling inconsistencies, and check for AI-fingerprint phrasing before you compile the book.
+### ⚡ Sub-500ms Scene Diagnostics (`soundingboard audit`)
+- **Lexical Tell Density:** Flags repeated AI-fingerprint phrasing (e.g., *testament, tapestry, palpable, intricate*) normalized per 1,000 words.
+- **Sentence Rhythm Variance:** Analyzes sentence length standard deviation and coefficient of variation to prevent monotonous prose cadence.
+- **Emotional Mode Tracking:** Verifies shift between interior monologue, visceral reaction, and dialogue.
+
+### 🎭 Chapter Cadence & Break Audits (`soundingboard chapter-audit`)
+- Evaluates multi-scene pacing rhythm across a chapter.
+- Audits chapter break efficacy against your authored `break_rationale`.
+
+### 🧵 Thread Diagnostics & Interactive Visualizer (`soundingboard threads`)
+- **Orphan Guard:** Detects and flags scenes with zero subplot linkages.
+- **Dormancy Tracker:** Calculates cumulative word count gaps between thread appearances to ensure subplots aren't forgotten.
+- **Dual Visualizer:** Renders instant ASCII timelines in the terminal and generates a standalone, zero-dependency interactive HTML dashboard (`thread_lanes.html`) with SVG trajectories, value shift markers, and multi-thread braid points.
+
+### 📖 Cascading Canon 2.0 & Decision Queues (`soundingboard canon`)
+- **Provenance Tracking:** Every world fact is tied to its establishing scene.
+- **Spoiler Threshold Guard:** Suppresses future facts when working on earlier chapters.
+- **Epistemic Gap Queues:** Automatically surfaces orphaned facts (when an establishing scene is cut), unbound proper nouns (recurring names not in canon), and unverified facts.
+
+### 🩺 Model Health Console & Doctor (`soundingboard status` / `doctor`)
+- **Health Console:** Instant telemetry on chapter break rationales, value shifts, voice anchor stability, and SHA-256 prose hash staleness.
+- **Concierge Auto-Healing:** `node scripts/soundingboard.js doctor --fix` automatically verifies Node environments, repairs directory structures, and syncs git tracking behind the scenes.
+
+### 📚 OKF Craft Encyclopedia
+- **118 Standardized Craft Cards:** Distilled narrative wisdom covering Story Grid, Save the Cat!, Truby, and Sanderson.
+- **Structural Scopes:** Searchable by scope (`scene`, `chapter`, `manuscript`, `sentence`) and genre.
 
 ---
 
-## 3. Built for the Creative, Non-Linear Mind
+## 6. Author Preferences Profile (`preferences.md`)
 
-Real authors do not write in a perfect straight line. You get sudden inspirations, change your mind about characters, write out of order, or bring half-finished drafts with you. Soundingboard's architecture is built specifically to support and protect this creative flexibility.
+Located at the root of your project, `preferences.md` allows you to customize how the assistant interacts with you:
 
-### 🗺️ A. The Intake Path (Arriving with Existing Material)
-If you aren't starting from scratch, you don't have to go through a repetitive setup wizard. 
-* **Path C Intake** allows you to feed your existing synopses, outlines, notes, or even pre-drafted chapters to the agent.
-* The agent will automatically reverse-engineer the bibles, build the outline, harvest canon facts, and populate `manuscript.json` to match where you are in the project.
-
-### 🔄 B. Out-of-Order Writing (Jumping Around)
-If you want to write the climax (Chapter 25) today, you can. 
-* Soundingboard treats the stage contracts as **gates, not rails**. 
-* The system keeps track of status on a per-chapter basis in `manuscript.json` (e.g. Chapter 1: *passed*, Chapter 25: *drafted*, Chapter 2: *planned*).
-* While writing out of order raises the auditing burden (more connections to verify in Stage 04), the pipeline allows it naturally.
-
-### 🎭 C. Trope Stacks vs. Authenticity Dials
-To write a successful novel, you must satisfy your reader's expectations (tropes) while keeping the prose feeling organic and unpredictable. Soundingboard separates these two elements:
-1. **The Trope Stack (The Reader Contract):** Obligatory scenes (like the "first meeting" in a romance or the "clue drop" in a mystery) are logged in `structure_plan.md`. The architecture ensures these are **never deleted or subverted**.
-2. **Authenticity Dials (The Connective Tissue):** Around those trope scenes, your agent uses adjustable style dials. They introduce subplots, time jumps, moral gray areas, and sensory budgets to make sure the spaces *between* the big beats feel authentic and human.
-
-### 🛡️ D. Redundant Safety Nets (Context Preservation)
-To prevent your agent from "forgetting" details or drifting in style, Soundingboard deploys three redundant layers of truth:
-
-```mermaid
-graph TD
-    M[manuscript.json] -->|Tracks status & chapter targets| C[canon.md]
-    C -->|Logs facts, names, and lore| V[voice_exemplars.md]
-    V -->|Calibrates prose tone & style| D[Active Drafting]
+```yaml
+---
+author_name: "Your Name"
+working_mode: solo            # solo | hybrid | agentic
+primary_editor: obsidian      # obsidian | word | scrivener | ia_writer | markdown
+ai_prose_generation: "never"  # never | on_demand | collaborative
+editorial_style: bracket_options # bracket_options | coaching_notes | minimalist
+tell_tolerance: moderate      # strict | moderate | permissive
+active_genre: "thriller"
+target_word_count: 85000
+---
 ```
 
-* **The Production Ledger (`manuscript.json`):** A shared, single file that tracks the entire project state. Any agent can read this file and instantly know the exact status, word count, and next action for the book.
-* **The Living Fact Bible (`canon.md`):** Every time a chapter is drafted, the agent harvests new facts (e.g., *"[unverified ch2] Mark has a scar on his left shoulder"*). Once the chapter passes Stage 04, the tag is cleared. This ensures facts remain cohesive across the entire book.
-* **The Voice Calibration Kit:** AI text generators tend to slide back toward generic prose. To prevent this, drafting matches your specific style by feeding the agent only the last 500 words of the previous chapter and a short list of *voice exemplars*. This keeps your style perfectly anchored without bloating the AI's memory.
-
-### 🤝 E. Human-in-the-Loop (HITL) Revision Playbooks
-Unlike simple generators that silently overwrite text or make arbitrary edits, Soundingboard utilizes a collaborative revision process when a chapter fails its audits:
-* **The Playbook:** The agent instantiates a custom playbook file (`revision_playbook_ch[X].md`) mapping out audit diagnostics.
-* **Options Proposal:** For each issue (e.g., explained theme, low dialogue ratio), the agent suggests 2–3 specific options to fix it.
-* **Author Control:** You select the best options or suggest your own changes. The agent compiles these choices into a final approved plan.
-* **Execution & Re-Audit:** The agent performs the rewrites and runs a final scan to verify that the chapter has successfully cleared the gate.
-
-### 🏢 F. Turnkey, Self-Contained Workspaces
-To make starting a new book as seamless and turnkey as moving into a fully furnished apartment:
-* **One-Step Setup:** Running `node scripts/soundingboard.js init` inside any empty folder copies everything you need in seconds — the whole system is under 200KB, so there's no real disk cost to giving every project its own full copy.
-* **Fully Self-Contained:** Each book project is a complete, independent copy of the system. Nothing is shared or linked between projects, so editing one book can never affect another, and a project folder works correctly even when copied or cloned to a different computer.
-* **Deliberate Upgrades:** If the core Soundingboard logic improves later, re-run `node scripts/soundingboard.js init` inside an existing project to refresh it — your manuscript, ledger, and `.env` are preserved. Because it's a deliberate step (not automatic), you can review what changed before it touches a book you're actively working on.
-
-### ✍️ G. Solo-Author Mode (Writing Your Own Prose)
-If you prefer to write every word of your own manuscript, Soundingboard remains a powerful partner:
-* **Writing Sandbox:** The agent prepares your outline, character beats, and world facts, setting up a clean sandbox for you to draft.
-* **Workspace Custodian:** The agent automatically detects when you create or drop a draft file, moves it to the correct path, formats the frontmatter, and updates `manuscript.json` word counts and ledger statuses.
-* **Automatic Fact Harvesting:** The agent reads your text, extracts established facts (e.g., character scars, item locations, timeline days), and appends them to `canon.md` automatically, saving you from world-bible bookkeeping.
-
-### 🤝 H. Hybrid Co-Writing Mode (Switching Fluidly)
-You can choose your writing style chapter-by-chapter. There are no global settings to lock you in:
-* **Fluid Transitions:** Write Chapters 1–3 yourself, ask the agent to draft Chapter 4, edit Chapter 4 together, and take over again to write Chapter 5.
-* **Tone Preservation:** When transitioning from your writing to agent-written prose, the agent automatically reads the last 500 words of your chapter to calibrate its voice kit, ensuring a seamless, consistent tone.
-
 ---
 
-## 4. Quick Commands to Tell Your Agent
+## 7. How to Talk with Your Assistant
 
-To get started, simply type these prompts in your chat with the agent:
-* **To start the project:** *"Read AGENTS.md and onboard me for a new novel using Path A."*
-* **To check progress:** *"Run soundingboard status and tell me what chapter needs work next."*
-* **To start drafting:** *"Let's build the drafting kit for Chapter [X] and write it."*
-* **To review your work:** *"Audit my draft for Chapter [X] and show me the reports."*
+As an author, you never need to remember complex syntax or technical flags. Your AI partner operates as an attentive **Creative Concierge**:
 
+- **To start a new book:**  
+  *"Let's start the onboarding interview for my new sci-fi novel."*
+- **To check your manuscript health:**  
+  *"How is our story model looking? Run status and give me the highlights."*
+- **To work through a rough scene:**  
+  *"I dropped rough prose into `writers_room/drafts/escape.md`. Help me brainstorm the frontmatter and turning point."*
+- **To graduate a scene:**  
+  *"The escape scene is ready. Let's graduate it to the manuscript."*
+- **To review prose without rewriting:**  
+  *"Audit `sc-0004` using the Bracket Method and show me options for any repetitive tells."*
+- **To assemble a chapter:**  
+  *"Let's create Chapter 2 from scenes `sc-0003` and `sc-0004` with a break rationale on the betrayal."*
+- **To compile your book:**  
+  *"Compile the manuscript to HTML and EPUB."*
+
+Your assistant runs all the mechanics backstage and presents clear, encouraging craft choices—always proposing two concrete next steps matching your active rhythm.
