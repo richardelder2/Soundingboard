@@ -12,4 +12,5 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+.obsidian/
 .soundingboard/
