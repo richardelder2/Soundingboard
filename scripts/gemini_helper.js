@@ -78,8 +78,8 @@ export async function callGemini(prompt, systemInstruction = '', isHeavy = false
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${openRouterKey}`,
-          'HTTP-Referer': process.env.SAGA_REPO_URL || 'https://github.com/saga-icm',
-          'X-Title': 'SAGA-ICM'
+          'HTTP-Referer': process.env.SOUNDINGBOARD_REPO_URL || process.env.SAGA_REPO_URL || 'https://github.com/richardelder2/Soundingboard',
+          'X-Title': 'Soundingboard'
         },
         body: JSON.stringify(payload),
       });

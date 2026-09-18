@@ -12,6 +12,8 @@ provides: [onomastic_laws, cast_differentiation, toponymic_depth]
 requires: [anthropological_worldbuilding]
 diagnostics: [continuity, voice_drift]
 keywords: ["naming", "onomastics", "character names", "toponymy", "worldbuilding", "phonotactics"]
+budget_exempt: true
+exempt_reason: "Comprehensive onomastic reference matrix containing phonotactics, caste naming rules, and cross-cultural naming generation tables."
 ---
 
 # Tactical Onomastics: World Naming Logic & Anti-Slop Discipline

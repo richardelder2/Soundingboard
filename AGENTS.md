@@ -155,7 +155,7 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks. |
 | `pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
 | `name` | `node scripts/soundingboard.js name [options]` | Tactical onomastic generator (`--culture`, `--genre`, `--target`, `--caste`). |
-| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 119 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`). |
+| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 127 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`). |
 | `okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits. |
 | `audit` | `node scripts/soundingboard.js audit [path ...]` | Scan scenes for AI prose tells, rhythm variance, and emotion modes (< 500ms). |
 | `chapter-audit`| `node scripts/soundingboard.js chapter-audit [ch]` | Multi-scene cadence variability and break efficacy audit. |

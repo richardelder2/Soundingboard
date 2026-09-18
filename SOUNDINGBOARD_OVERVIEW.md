@@ -32,9 +32,24 @@ Whether you write in **Obsidian**, **Scrivener**, **Microsoft Word**, **iA Write
    - Chapters in `manuscript/chapters/ch-XX.md` are flexible assembly playlists with an authored break rationale.
    - You can write your climax first or draft standalone scenes without assigning them to a chapter yet. Floating scenes remain 100% valid and audited.
 
-5. **Markdown as Ground Truth:**  
+5. **Scale-Adaptive Complexity ("From Napkin to Universe"):**  
+   - *Abstraction is a complexity valve, not a publishing contract.* The system dynamically scales across four tiers:
+     - **Tier 0 (The Napkin):** Frictionless `writers_room/` sandbox with on-demand tools.
+     - **Tier 1 (The Atomic Story):** Standalone novel production in `stages/` with local `canon.md` (< 4,000 tokens).
+     - **Tier 2 (The Institutional Canvas):** Multi-volume continuity in `series/` for cross-book character states and romance ladders.
+     - **Tier 3 (The Cosmos Universe Canvas):** Deep worldbuilding in `world/` governed by `world/CONTEXT.md` across 6 ICM domains (`cosmology`, `chronology`, `geography`, `cultures`, `economy`, `factions`) with Dynamic Context Isolation (< 6,000 tokens).
+
+6. **The 5 Foundational Principles of Authorial Sovereignty:**  
+   - **Authorial Truth is Absolute:** An explicit author statement overrules all inferences, schemas, and prior drafts.
+   - **Explicit Uncertainty > Premature Precision:** Ambiguities are flagged as open choices `[Option A | Option B]`; never synthetic hallucinated facts.
+   - **Inference is Never Canon:** Inferred lore remains quarantined with `[unverified]` until explicitly affirmed by the author.
+   - **Dramatic Consequences are Invitations:** Ripple effects and frictions are proposed as creative invitations, never mandatory constraints.
+   - **Intentional Exceptions are Valid:** Facts tagged `[author exception]` represent deliberate narrative sovereignty and are never flagged as defects.
+
+7. **Markdown as Ground Truth & Git as Evolution Layer:**  
    - Your markdown files are the sole record of truth.
    - `manuscript.json` is a derived cache that can be deleted and reconstructed losslessly at any time with `node scripts/soundingboard.js reindex`.
+   - Git sits as an open historical layer recording the evolution of your work—committing only when you authorize.
 
 ---
 
@@ -126,8 +141,12 @@ Soundingboard provides an industrial-grade diagnostic suite to keep your manuscr
 - **Concierge Auto-Healing:** `node scripts/soundingboard.js doctor --fix` automatically verifies Node environments, repairs directory structures, and syncs git tracking behind the scenes.
 
 ### 📚 OKF Craft Encyclopedia
-- **118 Standardized Craft Cards:** Distilled narrative wisdom covering Story Grid, Save the Cat!, Truby, and Sanderson.
-- **Structural Scopes:** Searchable by scope (`scene`, `chapter`, `manuscript`, `sentence`) and genre.
+- **127 Standardized Craft Cards:** Distilled narrative wisdom covering Story Grid, Save the Cat!, Truby, Sanderson, onomastics, and scale-adaptive complexity.
+- **Structural Scopes:** Searchable by scope (`scene`, `chapter`, `manuscript`, `sentence`) and genre via `node scripts/soundingboard.js craft search <query>`.
+
+### 🏛️ Tactical Onomastics & World Codex (Playbooks #22 & #23)
+- **Phonotactic Name Generation (`soundingboard name`):** Generates culturally and sociolinguistically grounded character, place, and faction names based on phonetic geometry (Bouba/Kiki), caste stratification, and linguistic erosion.
+- **The World Codex (`world/`):** Governed by `world/CONTEXT.md`, organizing macro-lore into 6 ICM domains (`cosmology`, `chronology`, `geography`, `cultures`, `economy`, `factions`) with Dynamic Context Isolation (< 6,000 tokens per pack).
 
 ### 📜 Git Playbook & Creative History (`soundingboard git`, Playbook #21)
 - **The Golden Rule:** *Soundingboard files contain the meaning. Git records the evolution.*

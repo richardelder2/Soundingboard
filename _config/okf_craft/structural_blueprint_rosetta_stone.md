@@ -12,6 +12,8 @@ provides: [cross_framework_mapping, structural_sovereignty, beat_translation]
 requires: [story_grid_macro]
 diagnostics: [narrative_audit]
 keywords: ["structure", "rosetta stone", "save the cat", "seven point", "story circle", "heros journey", "snowflake method"]
+budget_exempt: true
+exempt_reason: "Cross-framework structural translation table (Save the Cat, Dan Wells 7-Point, Harmon Story Circle, Campbell). Splitting breaks tabular alignment."
 ---
 
 # Structural Blueprint Rosetta Stone: Translating Beat Models

@@ -7,7 +7,7 @@ Soundingboard is an agent-native, token-disciplined novel engineering studio bui
 ```
                   ┌─────────────────────────────────────┐
                   │          _config/ Layer 3           │
-                  │   Rules, Templates, 118 Craft Cards │
+                  │   Rules, Templates, 127 Craft Cards │
                   └──────────────────┬──────────────────┘
                                      │ Context
                                      ▼
@@ -41,7 +41,7 @@ Every stage folder contains a canonical `CONTEXT.md` defining:
 
 ## 2. Core State Ledgers (Soundingboard 2.0)
 
-### The Ground Truth: Atomic Scene Files (`manuscript/ch-XX/sc-YYYY.md`)
+### The Ground Truth: Atomic Scene Files (`manuscript/scenes/sc-XXXX.md`)
 In Soundingboard 2.0, **the markdown file is the record; the index is a cache**. Scene state lives in YAML frontmatter on the scene file itself:
 ```yaml
 ---
@@ -65,7 +65,7 @@ schema: 2.0
 ---
 ```
 
-### Chapter Assembly Layer (`manuscript/ch-XX/chapter.md`)
+### Chapter Assembly Layer (`manuscript/chapters/ch-XX.md`)
 Chapters are ordered assembly containers with an authored craft break rationale:
 ```yaml
 ---
@@ -134,7 +134,9 @@ All CLI commands run in zero-dependency Node.js ($\ge 18$). The canonical entry 
 | `soundingboard run-stage` | `node scripts/soundingboard.js run-stage <id>` | Compile the stage packet (contract + declared inputs) as a single context block. |
 | `soundingboard pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks (`unstuck`, `heat`, `bracket`, etc.). |
 | `soundingboard pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
-| `soundingboard craft` | `node scripts/soundingboard.js craft search <query>` | Search 118 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
+| `soundingboard graduate` | `node scripts/soundingboard.js graduate <draft>` | Graduate raw draft from `writers_room/` to `manuscript/scenes/` with ID allocation. |
+| `soundingboard name` | `node scripts/soundingboard.js name [options]` | Tactical onomastic generator (`--culture`, `--genre`, `--target`, `--caste`). |
+| `soundingboard craft` | `node scripts/soundingboard.js craft search <query>` | Search 127 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`, `--json`). |
 | `soundingboard okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits (alias: `lint`). |
 | `soundingboard okf-index` | `node scripts/soundingboard.js okf-index` | Rebuild static markdown catalogs (`index.md`) across OKF knowledge bundles. |
 | `soundingboard audit` | `node scripts/soundingboard.js audit [path ...]` | Scan scenes for AI prose tells, rhythm variance, and emotion modes (< 500ms). |
@@ -157,18 +159,46 @@ All CLI commands run in zero-dependency Node.js ($\ge 18$). The canonical entry 
 
 ---
 
-## 5. Multi-Project & Series Architecture
+## 5. Scale-Adaptive Complexity & Cosmos Architecture ("Napkin to Universe")
 
-Soundingboard workspaces are fully self-contained and cwd-relative. Parallel books cannot contaminate each other.
+Soundingboard workspaces are fully self-contained and cwd-relative. Abstraction serves as a **complexity valve, not a publishing contract**—a standalone epic can have a deep cosmos without sequels, while a lean novella needs minimal scaffolding.
 
-For multi-book series, a sibling `series/` folder acts as the shared cross-book layer:
 ```
-my-series/
-  series/               # Shared across all books (Read-mostly)
-  │   ├── series_canon.md
-  │   ├── romance_ladder.md
-  │   └── lore_debt_ledger.md
-  book-01/              # Standard Soundingboard workspace
-  book-02/              # Standard Soundingboard workspace
+┌─────────────────────────────────────────────────────────────────┐
+│ TIER 0: THE NAPKIN (writers_room/)                              │
+│ Unchecked creative sandbox; immunity shield from background CI. │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ▼ (Graduation)
+┌─────────────────────────────────────────────────────────────────┐
+│ TIER 1: THE ATOMIC STORY (stages/ & manuscript/)                │
+│ Single-book production; local canon.md & threads.md (<4k tok).  │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ▼ (Cross-Book Promotion)
+┌─────────────────────────────────────────────────────────────────┐
+│ TIER 2: THE INSTITUTIONAL CANVAS (series/)                      │
+│ Shared series_canon.md, romance ladder, lore debt across books.  │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ▼ (Cosmological Scaffolding)
+┌─────────────────────────────────────────────────────────────────┐
+│ TIER 3: THE COSMOS UNIVERSE CANVAS (world/)                     │
+│ Governed by world/CONTEXT.md across 6 ICM semantic domains.     │
+└─────────────────────────────────────────────────────────────────┘
 ```
-Upon completion of Stage 04 for Book $N$, verified facts and cross-book trackers are promoted to `series/`, giving Book $N+1$ instant, zero-drift series memory.
+
+### The 6 ICM Semantic World Domains (`world/`)
+1. **`cosmology/`:** Metaphysics, magic systems, deities, ontological rules.
+2. **`chronology/`:** Deep history, timelines, epochal shifts, calendar systems.
+3. **`geography/`:** Topography, climates, trade routes, settlements, cartography.
+4. **`cultures/`:** Social structures, taboos, rituals, languages, castes.
+5. **`economy/`:** Currencies, production chains, resource frictions, black markets.
+6. **`factions/`:** Political webs, dynastic houses, sworn guilds, insurgencies.
+
+### Dynamic Context Isolation
+When an agent assists with scene staging or drafting, it loads **only** the specific domain triggered by the active scene card ($\le 6,000$ tokens total), never dumping the entire `world/` folder into prompt memory.
+
+### The 5 Foundational Principles of Authorial Sovereignty
+1. **Authorial Truth is Absolute:** An explicit author statement overrules all inferences, schemas, and prior drafts.
+2. **Explicit Uncertainty > Premature Precision:** Flag ambiguities as open choices `[Option A | Option B]`; never invent synthetic facts to plug gaps.
+3. **Inference is Never Canon:** Inferred lore remains quarantined with `[unverified]` until the author explicitly affirms it.
+4. **Dramatic Consequences are Invitations:** Propose ripple effects and frictions as creative invitations, never mandatory constraints.
+5. **Intentional Exceptions are Valid:** Facts tagged `[author exception]` represent deliberate narrative sovereignty (miracles, anomalies, rule-breaks) and are never flagged as defects.

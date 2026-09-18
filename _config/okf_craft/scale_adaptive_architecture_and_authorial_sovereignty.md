@@ -12,6 +12,8 @@ provides: [scale_adaptive_complexity, authorial_sovereignty_principles, progress
 requires: [anthropological_worldbuilding]
 diagnostics: [continuity, narrative_audit, lore_density]
 keywords: ["scale-adaptive", "author sovereignty", "napkin to universe", "complexity valve", "ICM", "5 foundational principles", "author exception"]
+budget_exempt: true
+exempt_reason: "Foundational architectural specification defining the 4 Complexity Tiers (Napkin to Universe) and the 5 Principles of Authorial Sovereignty."
 ---
 
 # Scale-Adaptive Architecture & The Five Principles of Authorial Sovereignty

@@ -9,7 +9,7 @@
   <a href="https://github.com/richardelder2/Soundingboard/actions"><img src="https://img.shields.io/github/actions/workflow/status/richardelder2/Soundingboard/audit.yml?branch=main&amp;label=CI%20Audit&amp;logo=github" alt="CI Status" /></a>
   <a href="package.json"><img src="https://img.shields.io/badge/dependencies-0%20runtime-brightgreen.svg" alt="Zero Runtime Dependencies" /></a>
   <a href="package.json"><img src="https://img.shields.io/badge/node-%3E%3D18-blue.svg" alt="Node Version" /></a>
-  <a href="_config/okf_craft/"><img src="https://img.shields.io/badge/OKF%20Craft-118%20modules-blueviolet.svg" alt="Craft Bundle" /></a>
+  <a href="_config/okf_craft/"><img src="https://img.shields.io/badge/OKF%20Craft-127%20modules-blueviolet.svg" alt="Craft Bundle" /></a>
   <a href="docs/methodology.md"><img src="https://img.shields.io/badge/methodology-ICM%20(arXiv%3A2603.16021)-orange.svg" alt="Methodology" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
 </p>
@@ -46,8 +46,22 @@ If you are a creative writer who has experimented with AI writing tools, you hav
    - **In Prose Diagnostics & Linting:** AI-tell scans and rhythm diagnostics present bracketed choices (`[AI-TELL: Cliché idiom. Option A: Cut. Option B: Physical action. Option C: Keep as author voice]`). You hold the red pen; the AI never makes changes to get a "green checkmark."
 4. **The Writer's Room: An Inviolable Creative Sanctuary:**
    Brainstorming and raw drafting happen in `writers_room/` (`notes/`, `beats/`, `drafts/`, `inputs/`). Background linters and automated tests are strictly locked out by an **Immunity Shield**. Write as messy and raw as you want without being nagged by premature schemas or audit errors. When you decide a scene is ready, you graduate it to the formal manuscript pool.
-5. **No Black-Box Vector Databases:**
-   Built on the *Interpretable Context Methodology* (ICM), your story's brain lives entirely in human-readable plain markdown files (`canon.md`, `threads.md`, `preferences.md`). Open them in any text editor to see exactly what your assistant knows.
+5. **Scale-Adaptive Complexity ("From Napkin to Universe"):**
+   *Abstraction is a complexity valve, not a publishing contract.* Soundingboard flexes dynamically across four progressive tiers:
+   - **Tier 0 (The Napkin):** Frictionless `writers_room/` sandbox with on-demand tools.
+   - **Tier 1 (The Atomic Story):** Standalone novel production in `stages/` with local `canon.md` (< 4,000 tokens).
+   - **Tier 2 (The Institutional Canvas):** Multi-volume continuity in `series/` for cross-book character states, romance ladders, and lore debt.
+   - **Tier 3 (The Cosmos Universe Canvas):** Deep worldbuilding in `world/` governed by `world/CONTEXT.md` across 6 ICM semantic domains (`cosmology`, `chronology`, `geography`, `cultures`, `economy`, `factions`) with Dynamic Context Isolation (< 6,000 tokens).
+6. **The 5 Foundational Principles of Authorial Sovereignty:**
+   - *Authorial Truth is Absolute:* An explicit author statement overrules all inferences, schemas, and prior drafts.
+   - *Explicit Uncertainty > Premature Precision:* Flag ambiguities as open choices `[Option A | Option B]`; never invent synthetic facts to plug gaps.
+   - *Inference is Never Canon:* Inferred lore remains quarantined with `[unverified]` until the author affirms it.
+   - *Dramatic Consequences are Invitations:* Propose ripple effects and frictions as creative prompts, never as mandates.
+   - *Intentional Exceptions are Valid:* Facts tagged `[author exception]` represent deliberate narrative sovereignty (miracles, anomalies, rule-breaks) and are never flagged as defects.
+7. **Creative History & Git as Evolution Layer (Playbook #21):**
+   *Soundingboard files contain the meaning. Git records the evolution.* Git is an open, non-proprietary historical layer over your file-first workspace—never a competing database. Checkpoints and pushes occur **only when you say to**. Malformed syntax is blocked to prevent repository corruption, while creative uncertainty (pacing, tells) remains completely unblocked.
+8. **No Black-Box Vector Databases:**
+   Built on the *Interpretable Context Methodology* (ICM, arXiv:2603.16021), your story's memory lives entirely in human-readable plain markdown files (`canon.md`, `threads.md`, `preferences.md`, `world/`). Open them in any text editor to see exactly what your assistant knows.
 
 ---
 
@@ -110,14 +124,15 @@ You don't need programming experience or complex command-line setups:
 
 ---
 
-## Codified Narrative Craft: The 118-Module Library
+## Codified Narrative Craft: The 127-Module Library
 
-Soundingboard equips your agent with 118 codified reference modules in `_config/okf_craft/` synthesizing time-tested storytelling theory:
+Soundingboard equips your agent with 127 codified reference modules in `_config/okf_craft/` synthesizing time-tested storytelling theory:
 * **The Story Grid (Shawn Coyne):** Five Commandments of the scene quantum, value progression, and genre obligatories.
 * **The Anatomy of Story (John Truby):** Moral arguments, designing principles, and 4-corner opposition webs.
 * **Sanderson's Laws of Magic:** Hard vs. soft systems, costs, limitations, and escalating consequences.
 * **Character Arc Anatomy (K.M. Weiland):** The Lie, the Wound, the Want vs. the Need, and transformative shift.
 * **Techniques of the Selling Writer (Dwight Swain):** Motivation-Reaction Units (MRUs) for visceral pacing.
+* **Scale-Adaptive Architecture & Onomastics:** Four complexity tiers ("Napkin to Universe"), phonotactic name generation, and deep worldbuilding across 6 ICM domains.
 * **Universal Narrative Rosetta Stone:** Instant translation across *Story Grid*, *Save the Cat!*, *Hero's Journey*, and *Story Circle* vocabularies.
 
 ---
@@ -128,8 +143,8 @@ For developers, technical authors, or curious creators who want to inspect the p
 
 * 📖 **[The Science of Narrative Authenticity](docs/methodology.md):** The *StoryScope* research, why plain folders beat vector databases, and the Interpretable Context Methodology (ICM).
 * 📜 **[Git Playbook & Creative History](docs/git_playbook.md):** How Git records the evolution of your file-first workspace, author checkpoint modes, and branch experiments.
-* ⚙️ **[Technical Architecture & CLI Reference](docs/architecture.md):** The 2.0 scene resolution architecture, state machines, schemas (`manuscript.json`, `canon.md`), and zero-dependency Node engine.
-* 📚 **[Narrative Craft Encyclopedia & Rosetta Stone](docs/craft_encyclopedia.md):** Complete catalog of the 118 OKF craft cards, theory lineages, and symptom-based search.
+* ⚙️ **[Technical Architecture & CLI Reference](docs/architecture.md):** The 2.0 flat scene pool architecture, scale-adaptive complexity tiers, 6 ICM world domains, and zero-dependency Node engine.
+* 📚 **[Narrative Craft Encyclopedia & Rosetta Stone](docs/craft_encyclopedia.md):** Complete catalog of the 127 OKF craft cards, theory lineages, and symptom-based search.
 * 🤝 **[Contributing Guide](CONTRIBUTING.md):** Architectural invariants, zero-dependency requirements, and PR checklists.
 
 ---
