@@ -36,6 +36,7 @@ last_indexed: 2026-09-05
 - [Dual Timeline Convergence: The Interlocking Mystery of Past & Present](dual_timeline_convergence.md) — `type: craft_structure`
 - [The Dual-Track Counterpoint: Symmetrical Antagonism & Narrative Cross-Cutting](dual_track_counterpoint_narrative.md) — `type: craft_structure`
 - [Dyadic Relationship Dynamics & Relational Ledgers: Tracking Interpersonal Systems](dyadic_relationship_dynamics_and_ledgers.md) — `type: craft_structure`
+- [Dynastic Succession & Contested Lineage Politics: Bloodlines, Legitimacy & Marital Leverage](dynastic_succession_and_contested_lineage_politics.md) — `type: craft_structure`
 - [Dystopian Systemic Tension: Panopticon Mechanics & Compliance Cycles](dystopian_systemic_tension.md) — `type: craft_structure`
 - [Editorial Finding Format & Confidence Scoring: Human-in-the-Loop Diagnostic Protocol](editorial_finding_format_and_confidence_scoring.md) — `type: craft_rule`
 - [Editorial Triage: Filtering Beta Feedback & Navigating Conflict](editorial_triage_and_beta_feedback_filtering.md) — `type: craft_rule`
@@ -105,12 +106,17 @@ last_indexed: 2026-09-05
 - [Series Architecture: Macro-Arcs, Lore Debt, and Value Shifts](series_architecture_and_cross_book_arcs.md) — `type: craft_structure`
 - [Setting as Dramatic Agent: Environmental Friction, Systems & Embodied Stakes](setting_as_dramatic_agent_and_constraint.md) — `type: craft_structure`
 - [The Short Story Engine: Single Effect, Compression, and Late Entry](short_story_form_and_single_effect.md) — `type: craft_structure`
+- [Spatial Transit Calculus: Travel Velocity, Logistics & Anti-Teleport Discipline](spatial_transit_calculus_and_environmental_friction.md) — `type: craft_rule`
+- [Speculative Technology Friction: Cybernetic Decay, Hardware Debt & Corporate DRM](speculative_technology_friction_and_cybernetic_decay.md) — `type: craft_structure`
 - [Keith Johnstone's Status Transactions: Dominance Choreography, Physical Space & Social Seesaw](status_transactions_and_dominance_choreography.md) — `type: craft_rule`
 - [Story Grid 5 Core Primal Shifts](story_grid_macro.md) — `type: craft_structure`
+- [Structural Blueprint Rosetta Stone: Translating Plotting Frameworks Across Beat Models](structural_blueprint_rosetta_stone.md) — `type: craft_structure`
 - [Dialogue Subtext: The Iceberg Theory & Surface-Depth Tension](subtext_and_implied_meaning.md) — `type: craft_structure`
 - [Surreal Atmosphere & Dream Logic: Synesthesia & Cognitive Destabilization](surreal_atmosphere_dream_logic.md) — `type: craft_rule`
 - [Dwight Swain's MRU Architecture & The Pacing Velocity Equation: Micro-Pacing & Compression Curves](swain_mru_and_pacing_velocity_equations.md) — `type: craft_rule`
+- [Sympathetic Institutional Antagonism: Noble Justifications & The Tragedy of Order](sympathetic_institutional_antagonism_and_moral_justification.md) — `type: craft_structure`
 - [synonyms.md](synonyms.md) — `type: uncategorized`
+- [Syntactic Cadence Dialects: Hemingway Staccato, Faulkner Periods & McCarthy Polysyndeton](syntactic_cadence_dialects_and_authorial_cadence.md) — `type: craft_rule`
 - [Syntactic Symbolism & Cumulative Sentence Rhetoric](syntactic_symbolism_and_cumulative_sentence_rhetoric.md) — `type: craft_rule`
 - [Systemic Opposition & Antagonist Logic: Beyond the Monolithic Villain](systemic_opposition_and_antagonist_logic.md) — `type: craft_rule`
 - [Tactical Onomastics: World Naming Logic, Phonotactics & Anti-Slop Discipline](tactical_onomastics_and_world_naming_systems.md) — `type: craft_structure`
@@ -124,6 +130,7 @@ last_indexed: 2026-09-05
 - [John Truby's Designing Principle, Moral Need & The 22 Building Blocks](truby_designing_principle_and_moral_argument.md) — `type: craft_structure`
 - [The Universal Narrative Rosetta Stone: Cross-School Craft Lexicon & Structural Mapping Ontology](universal_narrative_lexicon_rosetta_stone.md) — `type: craft_structure`
 - [The Unreliable Narrator: Fractured Perception, Active Gaslighting & The Breadcrumb Trial](unreliable_narrator_psychological_fracture.md) — `type: craft_structure`
+- [Unreliable Retrospective Narration: Epistemic Gaps, Self-Exoneration & Memory Erosion](unreliable_retrospective_narration_and_epistemic_gaps.md) — `type: craft_structure`
 - [Vertical Spatial Allegory: Architecture as Class Conflict & The Sub-Basement Reveal](vertical_spatial_allegory_parasite.md) — `type: craft_structure`
 - [Viewpoint-Filtered Sensory Selection: Perceptual Bias over Inventory](viewpoint_filtered_sensory_selection.md) — `type: craft_primitive`
 - [The Mythic Character Masks: Archetypal Functions & Mask-Shifting](vogler_mythic_character_masks.md) — `type: craft_structure`
