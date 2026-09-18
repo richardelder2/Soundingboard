@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soundingboard — The Author's Intelligent Sounding Board & Novel Studio</title>
+  <title>Soundingboard 2.0 — The Sovereign Author & Novel Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -95,7 +95,7 @@
       justify-content: space-between;
       padding: 0 2rem;
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(7, 9, 14, 0.7);
+      background: rgba(7, 9, 14, 0.75);
       backdrop-filter: blur(16px);
       z-index: 100;
     }
@@ -135,6 +135,18 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 600;
+    }
+
+    .version-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
+      border-radius: 999px;
+      margin-left: 6px;
+      font-weight: 700;
     }
 
     /* Pacing & Presentation Timer */
@@ -233,7 +245,7 @@
     .slide {
       position: absolute;
       width: 90vw;
-      max-width: 1280px;
+      max-width: 1300px;
       height: 82vh;
       opacity: 0;
       transform: scale(0.96) translateY(20px);
@@ -242,7 +254,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 1.5rem 2rem;
+      padding: 1.25rem 2rem;
     }
 
     .slide.active {
@@ -270,7 +282,7 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--accent-gold-light);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       width: fit-content;
     }
 
@@ -294,11 +306,11 @@
 
     h1.slide-title {
       font-family: var(--font-display);
-      font-size: 2.85rem;
+      font-size: 2.65rem;
       line-height: 1.15;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       letter-spacing: -0.5px;
     }
 
@@ -315,12 +327,16 @@
       color: var(--accent-purple);
     }
 
+    h1.slide-title span.emerald {
+      color: var(--accent-emerald);
+    }
+
     p.slide-subtitle {
-      font-size: 1.15rem;
-      line-height: 1.6;
+      font-size: 1.05rem;
+      line-height: 1.55;
       color: var(--text-muted);
-      max-width: 840px;
-      margin-bottom: 2rem;
+      max-width: 920px;
+      margin-bottom: 1.5rem;
       font-weight: 400;
     }
 
@@ -328,14 +344,14 @@
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
       width: 100%;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 1.15rem;
       width: 100%;
     }
 
@@ -349,7 +365,7 @@
     .grid-5 {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 0.85rem;
+      gap: 0.75rem;
       width: 100%;
     }
 
@@ -357,7 +373,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      padding: 1.4rem;
+      padding: 1.25rem;
       backdrop-filter: blur(12px);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
@@ -397,34 +413,34 @@
     }
 
     .card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
       display: inline-block;
     }
 
     .card-title {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .card-desc {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .pill-tag {
       display: inline-block;
       padding: 3px 8px;
       border-radius: 4px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-family: var(--font-mono);
       background: rgba(255, 255, 255, 0.06);
       color: var(--text-muted);
-      margin-top: 0.6rem;
+      margin-top: 0.5rem;
       margin-right: 4px;
     }
 
@@ -432,13 +448,13 @@
     .compare-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
       width: 100%;
     }
 
     .compare-col {
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.35rem;
       border: 1px solid var(--border-subtle);
       background: var(--bg-card);
     }
@@ -453,11 +469,11 @@
     }
 
     .compare-header {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -470,19 +486,19 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 0.75rem;
     }
 
     .feature-item {
       display: flex;
-      gap: 12px;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      gap: 10px;
+      font-size: 0.85rem;
+      line-height: 1.48;
       color: #cbd5e1;
     }
 
     .feature-item .icon {
-      font-size: 1rem;
+      font-size: 0.95rem;
       flex-shrink: 0;
       margin-top: 2px;
     }
@@ -491,7 +507,7 @@
     .mode-tabs {
       display: flex;
       gap: 10px;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .mode-tab-btn {
@@ -501,7 +517,7 @@
       border-radius: 8px;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       transition: all 0.2s;
     }
@@ -520,7 +536,7 @@
     .mode-panel.active {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     @keyframes fadeIn {
@@ -534,7 +550,7 @@
       border-radius: 8px;
       padding: 1rem;
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #e6edf3;
       line-height: 1.5;
       overflow-x: auto;
@@ -545,6 +561,7 @@
     .code-preview .comment { color: #8b949e; font-style: italic; }
     .code-preview .fn { color: #d2a8ff; }
     .code-preview .accent { color: #f2cc60; }
+    .code-preview .success { color: #7ee787; }
 
     /* Footer & Controls */
     footer.deck-footer {
@@ -575,7 +592,7 @@
     .progress-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
-      width: 12.5%;
+      width: 10%;
       transition: width 0.3s ease;
     }
 
@@ -680,7 +697,7 @@
 
     .speaker-body {
       overflow-y: auto;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       line-height: 1.6;
       color: #e2e8f0;
       max-height: 320px;
@@ -700,7 +717,7 @@
       background: rgba(192, 132, 252, 0.15);
       border-left: 2px solid var(--accent-purple);
       padding: 4px 8px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #d8b4fe;
       margin: 6px 0;
       border-radius: 0 4px 4px 0;
@@ -728,7 +745,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
     .overview-title {
@@ -739,21 +756,21 @@
 
     .overview-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
     }
 
     .overview-thumb {
       background: #111726;
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
-      padding: 1.2rem;
+      padding: 1.1rem;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 160px;
+      height: 155px;
     }
 
     .overview-thumb:hover {
@@ -769,21 +786,22 @@
 
     .thumb-num {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--accent-gold);
       font-weight: 700;
     }
 
     .thumb-title {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #fff;
       margin-top: 6px;
+      line-height: 1.35;
     }
 
     .thumb-time {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-dim);
     }
 
@@ -797,16 +815,16 @@
     }
 
     .flow-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
       transition: all 0.2s;
     }
 
@@ -817,14 +835,14 @@
     }
 
     .flow-title {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #fff;
       margin-bottom: 2px;
     }
 
     .flow-sub {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-dim);
     }
 
@@ -840,7 +858,7 @@
       border: 1px solid var(--border-subtle);
       padding: 6px 12px;
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: #cbd5e1;
       cursor: pointer;
       transition: all 0.2s;
@@ -853,8 +871,115 @@
       font-weight: 600;
     }
 
-    /* Responsiveness */
-    @media (max-width: 1024px) {
+    /* Print & PDF Export Styling */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+
+    @media print {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      html, body {
+        width: 16in !important;
+        height: auto !important;
+        background-color: #07090e !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+      }
+
+      .ambient-glow, .ambient-glow-2,
+      header.deck-header, footer.deck-footer,
+      .speaker-drawer, .overview-modal {
+        display: none !important;
+      }
+
+      .deck-viewport {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 16in !important;
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
+        position: relative !important;
+      }
+
+      .slide {
+        position: relative !important;
+        width: 16in !important;
+        height: 9in !important;
+        min-height: 9in !important;
+        max-height: 9in !important;
+        max-width: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        padding: 2.8rem 4.5rem !important;
+        box-sizing: border-box !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+      }
+
+      h1.slide-title {
+        font-size: 2.5rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      p.slide-subtitle {
+        margin-bottom: 1.25rem !important;
+        font-size: 1rem !important;
+      }
+
+      .grid-2 {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.25rem !important;
+      }
+
+      .grid-3 {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1.15rem !important;
+      }
+
+      .grid-4 {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1rem !important;
+      }
+
+      .grid-5 {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 0.75rem !important;
+      }
+
+      .mode-panel {
+        display: none !important;
+      }
+
+      .mode-panel.active {
+        display: grid !important;
+        grid-template-columns: 1.2fr 0.8fr !important;
+        gap: 1.25rem !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      .card {
+        padding: 1.1rem 1.25rem !important;
+      }
+    }
+
+    /* Screen Responsiveness Only */
+    @media screen and (max-width: 1024px) {
       .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); }
       .grid-3 { grid-template-columns: 1fr; }
       h1.slide-title { font-size: 2.1rem; }
@@ -875,16 +1000,16 @@
     <div class="brand-group">
       <div class="brand-icon">S</div>
       <div>
-        <div class="brand-title">SOUNDINGBOARD</div>
-        <div class="brand-subtitle">Narrative Production Studio</div>
+        <div class="brand-title">SOUNDINGBOARD <span class="version-pill">v2.0.0</span></div>
+        <div class="brand-subtitle">The Sovereign Author Studio</div>
       </div>
     </div>
 
-    <!-- 5-Minute Timer & Pacer -->
+    <!-- 6.5-Minute Timer & Pacer -->
     <div class="timer-container">
       <div class="timer-status-dot" id="timerDot"></div>
       <span id="timerDisplay">00:00</span>
-      <span style="color: var(--text-dim);">/ 05:00</span>
+      <span style="color: var(--text-dim);">/ 06:30</span>
       <button class="timer-btn" id="timerToggleBtn" title="Start / Pause Timer (T)">▶</button>
       <button class="timer-btn" id="timerResetBtn" title="Reset Timer">↺</button>
     </div>
@@ -898,6 +1023,10 @@
         <span>⊞ Grid</span>
         <kbd>O</kbd>
       </button>
+      <button class="btn-pill" id="btnPrint" title="Print to PDF (P)">
+        <span>📄 PDF</span>
+        <kbd>P</kbd>
+      </button>
       <button class="btn-pill" id="btnFullscreen" title="Toggle Fullscreen (F)">
         <span>⛶</span>
         <kbd>F</kbd>
@@ -909,7 +1038,7 @@
   <main class="deck-viewport">
 
     <!-- ================= SLIDE 1 ================= -->
-    <section class="slide active" id="slide-1" data-index="1" data-time="0:00 - 0:40" data-notes="Welcome everyone. Today we're looking at Soundingboard. If you've ever tried writing fiction with ChatGPT or Claude in a web browser, you know the frustration: around Chapter 3, the AI develops amnesia. Characters apologize neatly. The prose defaults to corporate clichés. And worse: you're trapped copying and pasting between a browser tab and Word. StoryScope research showed AI fiction is detectable at 94% accuracy from narrative structure alone. Soundingboard was built to break authors out of that web chat silo.">
+    <section class="slide active" id="slide-1" data-index="1" data-time="0:00 - 0:40" data-notes="Welcome everyone. Today we are introducing Soundingboard 2.0. If you have ever tried writing long-form fiction with ChatGPT or Claude in a web browser, you know the inevitable wall: around Chapter 3 or 15,000 words, the AI develops amnesia. Characters apologize neatly. Subplots get dropped. And worst of all, authors find themselves in copy-paste purgatory—prompting 'tighten the pacing' only to have the model silently rewrite and homogenize their prose. StoryScope research showed AI-generated fiction is detectable at 94% accuracy from narrative structure alone. Soundingboard was built to break novelists out of that broken web chat silo.">
       <div class="slide-badge">01 · The Web Chat Silo</div>
       <h1 class="slide-title">Writing a Novel is Hard.<br />Writing One in a <span class="highlight">Web Chat</span> is Broken.</h1>
       <p class="slide-subtitle">Why raw AI in a browser tab inevitably falls apart after 15,000 words—and why prompt engineering alone cannot fix it.</p>
@@ -920,41 +1049,41 @@
           <ul class="feature-list">
             <li class="feature-item">
               <span class="icon">🧠</span>
-              <div><strong>The Amnesia Wall:</strong> By Chapter 4, the model forgets who holds the brass key, drops your subplots, and scrambles character eye colors.</div>
+              <div><strong>The Amnesia Wall:</strong> By Chapter 4, models forget secondary characters, drop subplots, and scramble established world rules.</div>
             </li>
             <li class="feature-item">
               <span class="icon">📋</span>
-              <div><strong>Copy-Paste Purgatory:</strong> Juggling snippets between chat boxes, Word, and Google Docs, losing version history and sanity.</div>
+              <div><strong>Copy-Paste Purgatory:</strong> Juggling fragments between browser tabs, Word, and Google Docs, losing version history and sanity.</div>
             </li>
             <li class="feature-item">
               <span class="icon">🤖</span>
-              <div><strong>The 94% Structural Detectability:</strong> <em>StoryScope</em> research reveals AI novels are flagged from structure alone—unearned catharsis, neat apologies, and moralizing narrator summaries.</div>
+              <div><strong>94% Structural Detectability:</strong> <em>StoryScope</em> research proves AI fiction is flagged from structure alone—unearned catharsis, neat apologies, and flat cadence.</div>
             </li>
             <li class="feature-item">
               <span class="icon">✂️</span>
-              <div><strong>Destructive Rewrites:</strong> Prompting <em>&quot;tighten the pacing&quot;</em> causes the AI to obliterate your idiosyncratic authorial voice.</div>
+              <div><strong>The Black-Box Rewrite Trap:</strong> Prompting <em>&quot;tighten pacing&quot;</em> causes the AI to unilaterally obliterate your idiosyncratic author voice with synthetic oatmeal.</div>
             </li>
           </ul>
         </div>
 
         <div class="compare-col solution">
-          <div class="compare-header">✨ What Authors Actually Need</div>
+          <div class="compare-header">✨ What Novelists Actually Need</div>
           <ul class="feature-list">
             <li class="feature-item">
               <span class="icon">📂</span>
-              <div><strong>A Studio On Your Computer:</strong> Markdown files and clean folders you own 100% locally. Zero vendor lock-in.</div>
+              <div><strong>A Local Glass-Box Studio:</strong> Plain Markdown and JSON files on your own machine. Zero proprietary databases or subscription lock-in.</div>
             </li>
             <li class="feature-item">
               <span class="icon">🧭</span>
-              <div><strong>A Proactive Creative Concierge:</strong> An AI that reads the story state, preserves the canon, and suggests the next 2 steps instead of asking <em>&quot;How can I help?&quot;</em></div>
+              <div><strong>A Proactive Creative Concierge:</strong> An AI craft partner that tracks story state, preserves canon, and suggests 2 concrete next steps.</div>
             </li>
             <li class="feature-item">
               <span class="icon">🛡️</span>
-              <div><strong>Anti-Drift Calibration:</strong> Dynamic voice anchors that lock into your rhythm, stopping the slide into sterile corporate prose.</div>
+              <div><strong>Anti-Drift &amp; Cadence Sentry:</strong> Sub-500ms telemetry that checks sentence rhythm and tell density without modifying author words.</div>
             </li>
             <li class="feature-item">
               <span class="icon">✍️</span>
-              <div><strong>Human-in-the-Loop Agency:</strong> You hold the red pen. The AI diagnoses; it never unilaterally rewrites your art.</div>
+              <div><strong>The Sovereign Author:</strong> The human novelist always holds the red pen. The AI diagnoses and assists; it never unilaterally rewrites.</div>
             </li>
           </ul>
         </div>
@@ -962,111 +1091,116 @@
     </section>
 
     <!-- ================= SLIDE 2 ================= -->
-    <section class="slide" id="slide-2" data-index="2" data-time="0:40 - 1:20" data-notes="Enter Soundingboard: The Author's Intelligent Sounding Board and Narrative Studio. It is built on a breakthrough paper called the Interpretable Context Methodology, or ICM. The core philosophy is simple: the file system is the agent's brain. Instead of a black-box vector database where things get hallucinated, every character rule, plot beat, and world truth lives in plain, human-readable markdown files. The agent acts not as a chaotic autocomplete, but as an Executive Novel Assistant that keeps your canon straight across 80,000 words.">
-      <div class="slide-badge cyan">02 · The Paradigm Shift</div>
-      <h1 class="slide-title">What is Soundingboard?<br />The <span class="cyan">Glass-Box</span> Novel Studio.</h1>
-      <p class="slide-subtitle">A disciplined, agent-native workspace governed by the Interpretable Context Methodology (ICM, arXiv:2603.16021). Zero black-box vector databases.</p>
+    <section class="slide" id="slide-2" data-index="2" data-time="0:40 - 1:20" data-notes="Enter Soundingboard 2.0, codenamed 'The Sovereign Author.' Built upon the Interpretable Context Methodology (ICM, arXiv:2603.16021), Soundingboard completely inverts the standard AI writing paradigm. The core principle is unequivocal: The author is the novelist; the system bends to the author, never the author to the system. The file system is the agent's brain—every character sheet, world law, and beat lives in plain, human-readable markdown files. And crucially: Soundingboard has zero runtime dependencies. Everything runs natively on Node.js 18+ with sub-500ms audits.">
+      <div class="slide-badge cyan">02 · The Sovereign Author</div>
+      <h1 class="slide-title">What is Soundingboard 2.0?<br />The <span class="cyan">Sovereign Author</span> Architecture.</h1>
+      <p class="slide-subtitle">The author is the novelist; the system bends to the author, never the author to the system. Governed by the Interpretable Context Methodology (ICM).</p>
 
       <div class="grid-3">
         <div class="card cyan-top">
           <div class="card-icon">🗂️</div>
           <div class="card-title">The File System is the Brain</div>
-          <div class="card-desc">Every character sheet, world law, and chapter beat lives in plain markdown and JSON. Open any file in Obsidian, Notepad, or VS Code to see exactly what your AI knows.</div>
+          <div class="card-desc">Every character rule, world law, beat, and chapter playlist lives in human-readable Markdown and JSON. Open any file in Obsidian or VS Code to see exactly what your AI knows. Zero opaque vector DBs.</div>
           <div class="pill-tag">ICM Architecture</div>
           <div class="pill-tag">Zero Black Boxes</div>
         </div>
 
         <div class="card gold-top">
-          <div class="card-icon">⚡</div>
-          <div class="card-title">Token-Disciplined Kits</div>
-          <div class="card-desc">Instead of dumping an entire 80k-word manuscript into context, Soundingboard packs surgical chapter kits (&le; 6,000 tokens) with trailing voice anchors, focusing the model's full attention on nuance.</div>
-          <div class="pill-tag">Trailing 500w Anchor</div>
-          <div class="pill-tag">Anti-Drift</div>
+          <div class="card-icon">✍️</div>
+          <div class="card-title">The Human Red Pen Guarantee</div>
+          <div class="card-desc">Soundingboard contractually forbids autonomous AI rewrites. All editorial feedback uses The Bracket Method: quarantined suggestions with 3 clear choices (Cut, Rephrase, or Keep voice).</div>
+          <div class="pill-tag">No Silent Rewrites</div>
+          <div class="pill-tag">The Bracket Method</div>
         </div>
 
-        <div class="card purple-top">
-          <div class="card-icon">🤝</div>
-          <div class="card-title">The Creative Concierge</div>
-          <div class="card-desc">The AI is contractually bound by <code>AGENTS.md</code> to hide technical plumbing, proactively propose narrative forks, and mirror your craft lexicon—whether you speak <em>Save the Cat!</em> or <em>Story Grid</em>.</div>
-          <div class="pill-tag">Universal Lexicon</div>
-          <div class="pill-tag">Proactive Flow</div>
+        <div class="card emerald-top">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Zero Runtime Dependencies</div>
+          <div class="card-desc">Strict zero external dependency standard (<code>dependencies: {}</code> in package.json). Runs entirely on native Node.js 18+ built-ins with instant sub-500ms audits.</div>
+          <div class="pill-tag">Pure Node.js 18+</div>
+          <div class="pill-tag">&lt; 500ms Diagnostics</div>
         </div>
       </div>
 
-      <div style="margin-top: 1.25rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <div style="margin-top: 1.15rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.9rem 1.4rem; display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 1.5rem;">📜</span>
-          <div style="font-size: 0.88rem; color: #cbd5e1;">
-            <strong>Rule of Contradiction:</strong> In Soundingboard, <span style="color: var(--accent-gold);">the draft always loses to canon</span>. New facts are flagged <code>[unverified]</code> until vetted. Canon cannot be silently altered.
+          <span style="font-size: 1.4rem;">📜</span>
+          <div style="font-size: 0.85rem; color: #cbd5e1;">
+            <strong>The Sovereign Mandate:</strong> <span style="color: var(--accent-gold);">&quot;Soundingboard files contain the meaning. Git records the evolution.&quot;</span> The author owns the creative work. Git is an open historical record, never an editorial gatekeeper.
           </div>
         </div>
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-emerald); background: rgba(52, 211, 153, 0.1); padding: 4px 10px; border-radius: 6px;">
-          ✓ Single Source of Truth
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan); background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.25);">
+          ✓ Playbook #21
         </div>
       </div>
     </section>
 
     <!-- ================= SLIDE 3 ================= -->
-    <section class="slide" id="slide-3" data-index="3" data-time="1:20 - 2:05" data-notes="How does it work in practice? Soundingboard isn't another closed app you have to pay a monthly subscription for. It works inside tools you already use. If you like coding agents, it runs inside Claude Code, Google Antigravity, Cursor, or Gemini CLI. If you are a discovery writer who loves Obsidian, Scrivener, or Microsoft Word, you simply write there, and Soundingboard ingests and synchronizes your work into the studio. Behind the scenes, a zero-dependency Node.js engine handles all the telemetry, audits, and compilation.">
-      <div class="slide-badge emerald">03 · Tool Interoperability</div>
-      <h1 class="slide-title">Lives Inside Tools <span class="emerald">Already On Your Desk</span>.</h1>
-      <p class="slide-subtitle">No proprietary app lock-in. Soundingboard layers directly over your preferred editors, agents, and writing tools.</p>
+    <section class="slide" id="slide-3" data-index="3" data-time="1:20 - 2:00" data-notes="One of the biggest breakthroughs in Soundingboard 2.0 is The Writer's Room and its Inviolable Immunity Shield. Writers don't produce clean prose immediately—they write messy drafts, bullet fragments, and half-formed dialogue. In 2.0, the `writers_room/` folder is an inviolable sanctuary: background linters, automated audits, and doctor checks strictly ignore it. No nag screens, zero frontmatter overhead. Furthermore, Soundingboard connects seamlessly to whatever tools you already write in—Obsidian vaults, Scrivener, Word, or native code agents like Antigravity and Claude Code.">
+      <div class="slide-badge emerald">03 · Workspace Freedom</div>
+      <h1 class="slide-title">The Writer's Room &amp;<br /><span class="emerald">Universal Ingestion</span>.</h1>
+      <p class="slide-subtitle">Write in Obsidian, Scrivener, Word, or native code agents. An inviolable creative sanctuary with zero linter nagging.</p>
 
       <div class="grid-2">
         <div class="card emerald-top">
           <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
-            <span>🤖</span> Native Agent Environments
+            <span>🚪</span> The Writer's Room Sanctuary (<code>writers_room/</code>)
           </div>
-          <div class="card-desc" style="margin-bottom: 1rem;">
-            Soundingboard provides clear contracts (<code>AGENTS.md</code> &amp; <code>CONTEXT.md</code>) that any modern coding agent or CLI tool automatically obeys:
+          <div class="card-desc" style="margin-bottom: 0.85rem;">
+            A partitioned creative sandbox (<code>notes/</code>, <code>beats/</code>, <code>drafts/</code>, <code>inputs/</code>) built for pure creative flow:
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
-              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Claude Code &amp; Cursor</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">Agent runs terminal audits &amp; packs chapter kits natively.</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>🛡️</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">Inviolable Immunity Shield</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">Automated linters and doctor scans strictly ignore the Writer's Room. Zero automated nag screens or red ink.</div>
+              </div>
             </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
-              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Google Antigravity</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">Full IDE pairing with live artifacts and task management.</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>📝</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">Zero Frontmatter Overhead</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">Draft freely without YAML headers or rigid metadata. Frontmatter is added only when graduating scenes.</div>
+              </div>
             </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
-              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Gemini CLI / OpenRouter</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">Plug in Gemini 1.5/Pro or Claude 3.7 with zero setup hassle.</div>
-            </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
-              <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Local Ollama / Llama.cpp</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">100% private, offline narrative execution on your own GPU.</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>🎯</span>
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">Audits Only on Explicit Request</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">Linters only inspect raw WIP drafts when you specifically ask by path (e.g. <em>&quot;Audit the rhythm of `drafts/tavern.md`&quot;</em>).</div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="card gold-top">
           <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
-            <span>🖋️</span> Author Workspaces &amp; Ingestion
+            <span>🖋️</span> Universal Ingestion &amp; Tool Freedom
           </div>
-          <div class="card-desc" style="margin-bottom: 1rem;">
-            Authors write in their favorite creative environments without touching a single line of code:
+          <div class="card-desc" style="margin-bottom: 0.85rem;">
+            No proprietary app lock-in. Soundingboard layers over tools already on your desk:
           </div>
-          <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 1.2rem;">💎</span>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>💎</span>
               <div>
-                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Obsidian Vaults</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">Open the Soundingboard folder directly as an Obsidian vault to browse bi-directional character links.</div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">Obsidian Vault Mode</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">Open the workspace folder directly in Obsidian to navigate bi-directional character wikilinks and graph views.</div>
               </div>
             </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 1.2rem;">📄</span>
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>📄</span>
               <div>
-                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Scrivener &amp; MS Word Ingestion</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">Drop rough draft exports into <code>inputs/drafts/</code>. Soundingboard snapshots them immutably and extracts canon facts.</div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">External Draft Ingestion</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">Ingest Scrivener, Word (<code>.docx</code>), or Google Docs via <code>soundingboard ingest</code>. Snapshots SHA-256 hashes and harvests canon.</div>
               </div>
             </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 1.2rem;">⚙️</span>
+            <div style="background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px;">
+              <span>🤖</span>
               <div>
-                <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">Zero-Dependency Mechanical Engine</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">Lightweight Node.js CLI (<code>soundingboard.js</code>) runs audits, cadence scans, and compiles to HTML/EPUB instantly.</div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.82rem;">Native Agent Harms</div>
+                <div style="font-size: 0.74rem; color: var(--text-dim);">First-class harnesses for Google Antigravity, Claude Code, Gemini CLI, Cursor, and offline local LLMs via Ollama.</div>
               </div>
             </div>
           </div>
@@ -1075,154 +1209,227 @@
     </section>
 
     <!-- ================= SLIDE 4 ================= -->
-    <section class="slide" id="slide-4" data-index="4" data-time="2:05 - 2:50" data-notes="Soundingboard structures a novel into 5 clear, disciplined studio workspaces. Stage 01 is the Discovery Lounge: an interview where the agent captures your story bible and in-world terminology. Stage 02 is the Storyboard Wall: building the foolscap roadmap, scheduling obligatory genre scenes, and creating beat sheets. Stage 03 is the Writing Desk: drafting with trailing voice anchors. Stage 04 is the Editorial Desk: running mechanical cadence scans and AI tell audits. And Stage 05 is the Printing Press, compiling your passing chapters into clean HTML and EPUB.">
-      <div class="slide-badge purple">04 · The 5 Workspaces</div>
-      <h1 class="slide-title">The <span class="purple">5 Creative Workspaces</span> Pipeline.</h1>
-      <p class="slide-subtitle">A state machine that takes your initial spark of an idea all the way to a compiled, reader-ready publication.</p>
+    <section class="slide" id="slide-4" data-index="4" data-time="2:00 - 2:40" data-notes="In traditional writing software, files are locked into rigid directory trees: if you move a scene from Chapter 2 to Chapter 5, file paths break and links snap. Soundingboard 2.0 introduces the Scene-Atomic Architecture: the Scene is the atomic dramatic quantum. All graduated scenes live in a flat, unified pool (`manuscript/scenes/sc-XXXX.md`). Chapters in `manuscript/chapters/ch-XX.md` are flexible assembly playlists with an authored break rationale. A scene can be drafted, audited, and indexed without belonging to any chapter yet—unassigned floating scenes are 100% valid. And `manuscript.json` is a lossless derived cache rebuilt anytime with `reindex`.">
+      <div class="slide-badge gold">04 · Atomic Story Model</div>
+      <h1 class="slide-title">Scene as Dramatic Quantum.<br /><span class="highlight">Chapters as Playlists</span>.</h1>
+      <p class="slide-subtitle">Decoupling scenes from rigid directory hierarchies. Unassigned floating scenes remain fully indexed, audited, and valid.</p>
 
-      <div class="grid-5" style="margin-bottom: 1.5rem;">
+      <div class="grid-3">
+        <div class="card gold-top">
+          <div class="card-icon">⚛️</div>
+          <div class="card-title">Atomic Scene Pool</div>
+          <div class="card-desc">All graduated scenes live in a flat pool (<code>manuscript/scenes/sc-XXXX.md</code>). Write your climax first, jump between acts, or draft standalone vignettes without breaking directory paths.</div>
+          <div class="pill-tag">sc-XXXX.md</div>
+          <div class="pill-tag">Stable Identity</div>
+        </div>
+
+        <div class="card cyan-top">
+          <div class="card-icon">📑</div>
+          <div class="card-title">Chapters as Playlists</div>
+          <div class="card-desc">Chapters in <code>manuscript/chapters/ch-XX.md</code> are lightweight playlists referencing scene IDs in reading order, complete with an authored <code>break_rationale</code> explaining the dramatic tension.</div>
+          <div class="pill-tag">Playlist Arrays</div>
+          <div class="pill-tag">Authored Breaks</div>
+        </div>
+
+        <div class="card purple-top">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Lossless Derived Caching</div>
+          <div class="card-desc"><code>manuscript.json</code> is a purely derived cache rebuilt losslessly via <code>node scripts/soundingboard.js reindex</code>. Markdown files remain the sole ground truth. Zero database corruption.</div>
+          <div class="pill-tag">Lossless Reindex</div>
+          <div class="pill-tag">File-First Truth</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 1.15rem;">
+        <div class="code-preview">
+<span class="comment"># manuscript/scenes/sc-0012.md (Atomic Scene Card)</span>
+---
+<span class="keyword">id</span>: <span class="string">"sc-0012"</span>
+<span class="keyword">title</span>: <span class="string">"The Vault Confrontation"</span>
+<span class="keyword">pov</span>: <span class="string">"Kaelen"</span>
+<span class="keyword">location</span>: <span class="string">"The Lower Spire"</span>
+<span class="keyword">value_in</span>: <span class="string">"Powerless (-)"</span>
+<span class="keyword">value_out</span>: <span class="string">"Committed (+)"</span>
+<span class="keyword">threads</span>: [<span class="string">"th-spire-heist"</span>, <span class="string">"th-kaelen-debt"</span>]
+---
+        </div>
+
+        <div class="code-preview">
+<span class="comment"># manuscript/chapters/ch-03.md (Flexible Assembly Playlist)</span>
+---
+<span class="keyword">id</span>: <span class="string">"ch-03"</span>
+<span class="keyword">title</span>: <span class="string">"Into the Catacombs"</span>
+<span class="keyword">scenes</span>: [<span class="string">"sc-0008"</span>, <span class="string">"sc-0009"</span>, <span class="string">"sc-0012"</span>]
+<span class="keyword">break_rationale</span>: <span class="string">"Climactic cliffhanger: guards breach the outer door as the seal breaks."</span>
+---
+<span class="comment">// Moving sc-0012 to Chapter 4 only alters the playlist array!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 5 ================= -->
+    <section class="slide" id="slide-5" data-index="5" data-time="2:40 - 3:20" data-notes="Soundingboard guides your novel through 5 disciplined workspaces: Stage 01 Discovery builds the Story Bible and trope stack; Stage 02 Planning maps the foolscap roadmap and subplots; Stage 03 Drafting is your writing desk; Stage 04 Diagnostics runs sub-500ms cadence and tell audits; and Stage 05 Publishing compiles your manuscript into clean HTML and EPUB. Connecting Drafting to the Manuscript is Playbook #19: Scene Graduation. When a draft in the Writer's Room is ready, it graduates via 3 collaborative pathways—AI inference, author scaffold, or conversational discovery—allocating a permanent scene ID and harvesting new proper nouns into canon.">
+      <div class="slide-badge purple">05 · Lifecycle &amp; Graduation</div>
+      <h1 class="slide-title">The 5 Workspaces &amp;<br /><span class="purple">Scene Graduation</span>.</h1>
+      <p class="slide-subtitle">A disciplined, author-paced state machine from initial brainstorm to publication-grade manuscript via Playbook #19.</p>
+
+      <div class="grid-5" style="margin-bottom: 1.15rem;">
         <div class="card purple-top flow-step">
           <div class="flow-icon">🛋️</div>
           <div class="flow-title">01 · Discovery</div>
           <div class="flow-sub">The Lounge</div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Agent interviews author, builds Story Bible, genre tropes, and in-world allowlists.</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Story Bible, character DNA, trope stacks, and root author preferences.</p>
         </div>
 
         <div class="card gold-top flow-step">
           <div class="flow-icon">📋</div>
           <div class="flow-title">02 · Planning</div>
           <div class="flow-sub">Storyboard Wall</div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">1-Page Foolscap, Obligatory Scene Ledger, chapter beat sheets, and <code>manuscript.json</code>.</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">1-Page Foolscap, obligatory genre beats, thread spines, and scene cards.</p>
         </div>
 
         <div class="card cyan-top flow-step">
           <div class="flow-icon">✍️</div>
           <div class="flow-title">03 · Drafting</div>
           <div class="flow-sub">The Writing Desk</div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Active drafting with trailing 500-word voice anchors; new facts tagged <code>[unverified]</code>.</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Writer's Room sandbox + token-disciplined kits (&le; 6,000 tokens) with voice anchors.</p>
         </div>
 
         <div class="card emerald-top flow-step">
           <div class="flow-icon">🔍</div>
           <div class="flow-title">04 · Diagnostics</div>
           <div class="flow-sub">Editorial Desk</div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Proper-noun scans, cadence variance checks, tell suppression, and HITL revision playbooks.</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Sub-500ms tell scans, cadence variance, and The Bracket Method.</p>
         </div>
 
         <div class="card purple-top flow-step">
           <div class="flow-icon">🖨️</div>
           <div class="flow-title">05 · Publishing</div>
           <div class="flow-sub">Printing Press</div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Single-command compiler generates clean, validated HTML and e-reader standard EPUB.</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Multi-tier compiler generates publication-grade HTML, EPUB, and Word (.docx).</p>
         </div>
       </div>
 
-      <!-- Live Cycle Callout -->
-      <div style="background: rgba(192, 132, 252, 0.08); border: 1px solid rgba(192, 132, 252, 0.25); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <div>
-          <div style="font-weight: 700; color: #fff; font-size: 0.9rem; margin-bottom: 2px;">The Per-Chapter Production Loop (03 ⟷ 04)</div>
-          <div style="font-size: 0.8rem; color: #cbd5e1;">Stages 01 and 02 run once. Then, chapters cycle between Drafting (03) and Diagnostics (04) until every gate passes cleanly.</div>
-        </div>
-        <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-purple); background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(192, 132, 252, 0.3);">
-          planned ➔ drafted ➔ audited ➔ passed
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= SLIDE 5 ================= -->
-    <section class="slide" id="slide-5" data-index="5" data-time="2:50 - 3:35" data-notes="One of the biggest strengths of Soundingboard is that it doesn't force a one-size-fits-all workflow. An author can choose between three distinct working modes: Path A is Co-Writing, where the agent drafts scenes guided by beat sheets and voice exemplars. Path B is Solo-Writing, where the author writes all the prose themselves, and the AI acts purely as workspace custodian—updating word counts, checking continuity, and catching plot holes. And Path C is Discovery Ingestion: if you write raw chapters in Scrivener or Obsidian, Soundingboard ingests them, hashes their provenance, harvests new canon, and delivers an insightful Sounding Board Debrief.">
-      <div class="slide-badge gold">05 · Author Workflows</div>
-      <h1 class="slide-title">The <span class="highlight">3 Ways Authors Work</span> With It.</h1>
-      <p class="slide-subtitle">Whether you want an active writing partner, a silent continuity custodian, or an intake engine for discovery drafts.</p>
-
-      <div class="mode-tabs">
-        <button class="mode-tab-btn active" onclick="selectMode('pathA')">Path A · Co-Writing (Agent-Drafted)</button>
-        <button class="mode-tab-btn" onclick="selectMode('pathB')">Path B · Solo-Writing (Author-Drafted)</button>
-        <button class="mode-tab-btn" onclick="selectMode('pathC')">Path C · Discovery Ingestion (Raw Drafts)</button>
-      </div>
-
-      <!-- Path A Content -->
-      <div class="mode-panel active" id="panel-pathA">
-        <div class="card gold-top">
-          <div class="card-title">🤝 Path A: Collaborative Scene Partner</div>
-          <div class="card-desc" style="margin-bottom: 0.75rem;">
-            You brainstorm beats, emotional turns, and dialogue subtext with the agent. The agent drafts the scene against your voice guide and the trailing 500 words of the previous chapter.
+      <!-- Graduation Banner -->
+      <div style="background: rgba(192, 132, 252, 0.08); border: 1px solid rgba(192, 132, 252, 0.25); border-radius: 10px; padding: 1rem 1.4rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+          <div style="font-weight: 700; color: #fff; font-size: 0.88rem; display: flex; align-items: center; gap: 8px;">
+            <span>🎓</span> The Scene Graduation Ceremony (Playbook #19)
           </div>
-          <ul class="feature-list" style="font-size: 0.82rem;">
-            <li class="feature-item"><span class="icon">✨</span> You review and edit the draft live in chat or in your editor.</li>
-            <li class="feature-item"><span class="icon">🏷️</span> New world details are harvested and tagged <code>[unverified chN]</code> in canon.</li>
-            <li class="feature-item"><span class="icon">🔄</span> Fluid transitions: switch to Solo-Writing anytime.</li>
-          </ul>
-        </div>
-        <div class="code-preview">
-<span class="comment">// Path A: Chapter Kit Packing</span>
-<span class="keyword">const</span> kit = <span class="fn">packChapter</span>({
-  chapter: <span class="accent">4</span>,
-  max_tokens: <span class="accent">6000</span>,
-  trailing_anchor: <span class="string">"last 500w of ch03"</span>,
-  beats: <span class="string">"stages/02_planning/beats/ch04.md"</span>,
-  voice_exemplars: <span class="string">"voice_exemplars.md"</span>
-});
-<span class="comment">// Agent drafts with strict anti-drift</span>
-        </div>
-      </div>
-
-      <!-- Path B Content -->
-      <div class="mode-panel" id="panel-pathB">
-        <div class="card cyan-top">
-          <div class="card-title">🛡️ Path B: The Workspace Custodian</div>
-          <div class="card-desc" style="margin-bottom: 0.75rem;">
-            You write every single sentence yourself. You never let an AI generate a single line of your prose. The AI acts as your behind-the-scenes executive assistant.
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-purple); background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(192, 132, 252, 0.3);">
+            node scripts/soundingboard.js graduate &lt;draft&gt;
           </div>
-          <ul class="feature-list" style="font-size: 0.82rem;">
-            <li class="feature-item"><span class="icon">📊</span> Auto-tracks word count milestones in <code>manuscript.json</code>.</li>
-            <li class="feature-item"><span class="icon">👁️</span> Sentry audit: catches if a character's eye color changed or if a dagger vanished.</li>
-            <li class="feature-item"><span class="icon">🎵</span> Cadence analysis: highlights monotonous sentence lengths for your revision.</li>
-          </ul>
         </div>
-        <div class="code-preview">
-<span class="comment">// Path B: Custodian Telemetry</span>
-$ node scripts/soundingboard.js status
-<span class="string">"Chapter 4: Solo-draft detected (3,420 words)"</span>
-<span class="fn">continuity_scan</span>: <span class="accent">0 orphaned proper nouns</span>
-<span class="fn">cadence_variance</span>: <span class="string">8.2 (Healthy burstiness)</span>
-<span class="comment">// Master ledger updated automatically</span>
-        </div>
-      </div>
-
-      <!-- Path C Content -->
-      <div class="mode-panel" id="panel-pathC">
-        <div class="card purple-top">
-          <div class="card-title">📥 Path C: Discovery Vault Ingestion</div>
-          <div class="card-desc" style="margin-bottom: 0.75rem;">
-            For pantsers and discovery writers who write in Obsidian, Scrivener, or Google Docs. Drop your raw files into <code>inputs/drafts/</code> and run one command.
+        <div class="grid-3" style="gap: 10px;">
+          <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 0.76rem; color: #cbd5e1;">
+            <strong style="color: var(--accent-gold);">Path 1 (AI Inference):</strong> Analyzes draft prose, proposing POV, location, value shifts, and commandments for approval.
           </div>
-          <ul class="feature-list" style="font-size: 0.82rem;">
-            <li class="feature-item"><span class="icon">🔒</span> Immutable snapshot with SHA-256 provenance hashes.</li>
-            <li class="feature-item"><span class="icon">🌾</span> Auto-harvests characters and locations into <code>canon.md</code>.</li>
-            <li class="feature-item"><span class="icon">🪞</span> Delivers a &quot;Sounding Board Debrief&quot;: value shifts, open promises, and character presence.</li>
-          </ul>
-        </div>
-        <div class="code-preview">
-<span class="comment">// Path C: Raw Discovery Ingestion</span>
-$ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
-<span class="accent">[PROVENANCE]</span> Hash: e3b0c44298fc1c149afbf4...
-<span class="keyword">[HARVEST]</span> 4 characters, 2 factions logged to canon.md
-<span class="fn">[DEBRIEF]</span> Narrative promise opened: "The silver key"
+          <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 0.76rem; color: #cbd5e1;">
+            <strong style="color: var(--accent-cyan);">Path 2 (Author Scaffold):</strong> Injects clean frontmatter template with in-world suggestions from bible and threads commented inline.
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 0.76rem; color: #cbd5e1;">
+            <strong style="color: var(--accent-purple);">Path 3 (Conversational Chat):</strong> Discusses turning points and dramatic stakes with author, generating the resulting YAML block.
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ================= SLIDE 6 ================= -->
-    <section class="slide" id="slide-6" data-index="6" data-time="3:35 - 4:15" data-notes="Novels are messy, and authors don't write in straight lines. Soundingboard treats stages as gates, not rails. If you wake up inspired to write the climax in Chapter 12 today, go right ahead! Soundingboard backfills and reverse-engineers the upstream beat sheets. If you change a character's backstory mid-book, it logs a canon amendment with an automatic retrofit list. For series authors, a shared series folder maintains romance ladders and lore debt across books. And whenever you hit writer's block, 17 agent-native playbooks diagnose the exact problem.">
-      <div class="slide-badge cyan">06 · Nonlinearity &amp; Playbooks</div>
-      <h1 class="slide-title">Non-Linear Freedom &amp; <span class="cyan">17 Creative Playbooks</span>.</h1>
-      <p class="slide-subtitle">Stages are artifact gates, not rails. Meet the author wherever they are in their creative journey.</p>
+    <section class="slide" id="slide-6" data-index="6" data-time="3:20 - 4:00" data-notes="Every novelist works differently. Soundingboard 2.0 introduces a centralized Root Preferences profile in preferences.md that establishes your working rhythm behind the scenes. Solo Mode is the default: the author writes 100% of the words in their preferred editor, while the AI acts strictly as Master Librarian, Continuity Sentry, and Diagnostic Partner. In Hybrid Mode, you and the assistant volley beats, brainstorm forks, and bloom sensory details. Generative drafting only occurs when explicitly requested. Your preferences also govern git checkpoints, editor choice, and diagnostic strictness.">
+      <div class="slide-badge gold">06 · Author Preferences</div>
+      <h1 class="slide-title">Your Rhythm, Your Rules:<br /><span class="highlight">Author Modes &amp; preferences.md</span>.</h1>
+      <p class="slide-subtitle">A centralized profile at workspace root establishing how the AI interacts with your creative flow.</p>
+
+      <div class="mode-tabs">
+        <button class="mode-tab-btn active" onclick="selectMode('solo')">Solo Mode (Default · 100% Human Words)</button>
+        <button class="mode-tab-btn" onclick="selectMode('hybrid')">Hybrid Mode (Collaborative Volleying)</button>
+        <button class="mode-tab-btn" onclick="selectMode('generative')">Generative Mode (On-Demand Drafting)</button>
+      </div>
+
+      <!-- Solo Mode Content -->
+      <div class="mode-panel active" id="panel-solo">
+        <div class="card gold-top">
+          <div class="card-title">🛡️ Solo Mode (The First-Class Default)</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            You write 100% of the prose in your favorite editor (Obsidian, Scrivener, Word, iA Writer). The AI <em>never</em> drafts or modifies prose in your files unless explicitly commanded.
+          </div>
+          <ul class="feature-list" style="font-size: 0.8rem;">
+            <li class="feature-item"><span class="icon">📚</span> <strong>Master Librarian:</strong> Auto-indexes chapter playlists, tracks word counts, and reconciles derived caches.</li>
+            <li class="feature-item"><span class="icon">👁️</span> <strong>Continuity Sentry:</strong> Detects proper-noun misspellings, orphaned lore facts, and vanishing daggers.</li>
+            <li class="feature-item"><span class="icon">🔍</span> <strong>Diagnostic Partner:</strong> Provides cadence variance and tell density scans on completed scenes.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment"># preferences.md (Workspace Root)</span>
+<span class="keyword">working_mode</span>: <span class="string">"solo"</span>           <span class="comment"># 100% human prose</span>
+<span class="keyword">primary_editor</span>: <span class="string">"obsidian"</span>     <span class="comment"># or "word", "scrivener"</span>
+<span class="keyword">ai_prose_generation</span>: <span class="string">"never"</span>   <span class="comment"># zero autonomous text</span>
+<span class="keyword">editorial_style</span>: <span class="string">"bracket_options"</span>
+<span class="keyword">tell_tolerance</span>: <span class="string">"moderate"</span>
+<span class="keyword">git_mode</span>: <span class="string">"gentle"</span>             <span class="comment"># milestone prompts only</span>
+<span class="keyword">git_remote_push</span>: <span class="string">"ask"</span>
+        </div>
+      </div>
+
+      <!-- Hybrid Mode Content -->
+      <div class="mode-panel" id="panel-hybrid">
+        <div class="card cyan-top">
+          <div class="card-title">🤝 Hybrid Mode: Collaborative Volleying</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            You and the agent work as a high-octane writers' room team: brainstorm beat forks, unpick plot snags, interview characters, and bloom sensory settings together.
+          </div>
+          <ul class="feature-list" style="font-size: 0.8rem;">
+            <li class="feature-item"><span class="icon">💡</span> <strong>Beat Brainstorming:</strong> Volley 3 distinct narrative directions for turning points.</li>
+            <li class="feature-item"><span class="icon">🌿</span> <strong>Sensory Bloom:</strong> Infuse setting viscosity and atmospheric texture into drafted passages.</li>
+            <li class="feature-item"><span class="icon">🏷️</span> <strong>The Bracket Method:</strong> All suggestions quarantined in brackets with 3 clear choices.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment"># preferences.md (Hybrid Configuration)</span>
+<span class="keyword">working_mode</span>: <span class="string">"hybrid"</span>
+<span class="keyword">ai_prose_generation</span>: <span class="string">"collaborative"</span>
+<span class="keyword">editorial_style</span>: <span class="string">"bracket_options"</span>
+<span class="comment">// Agent generates 3 craft choices:</span>
+<span class="comment">// 1. The Cut</span>
+<span class="comment">// 2. Dramatize with action</span>
+<span class="comment">// 3. Deflect into subtext</span>
+        </div>
+      </div>
+
+      <!-- Generative Mode Content -->
+      <div class="mode-panel" id="panel-generative">
+        <div class="card purple-top">
+          <div class="card-title">⚡ Generative Mode: Explicit On-Demand Drafting</div>
+          <div class="card-desc" style="margin-bottom: 0.75rem;">
+            Scene drafting from detailed beat sheets <em>only upon the author's explicit request</em>. Governed by token-disciplined chapter kits (&le; 6,000 tokens) with trailing voice anchors.
+          </div>
+          <ul class="feature-list" style="font-size: 0.8rem;">
+            <li class="feature-item"><span class="icon">🎯</span> <strong>Strict Anti-Drift:</strong> Calibrated with trailing 500-word anchor and voice exemplar profiles.</li>
+            <li class="feature-item"><span class="icon">🏷️</span> <strong>Unverified Harvesting:</strong> New proper nouns logged tagged <code>[unverified sc-XXXX]</code>.</li>
+            <li class="feature-item"><span class="icon">🛑</span> <strong>Never Unilateral:</strong> Author reviews, approves, and graduates every scene.</li>
+          </ul>
+        </div>
+        <div class="code-preview">
+<span class="comment"># Execute On-Demand Drafting Kit</span>
+$ node scripts/soundingboard.js pack-chapter 4
+<span class="accent">[PACK]</span> Assembled Chapter 4 kit (4,820 tokens)
+<span class="keyword">[ANCHOR]</span> Last 500w of sc-0011 (Voice anchor locked)
+<span class="fn">[BEATS]</span> Loaded 5 Commandments from scene card
+<span class="comment">// Ready for explicit author drafting prompt</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 7 ================= -->
+    <section class="slide" id="slide-7" data-index="7" data-time="4:00 - 4:40" data-notes="Novels are messy, and authors do not write in straight lines. Soundingboard treats stages as artifact gates, never rails. If you wake up inspired to draft the climax today, write it! Soundingboard backfills upstream beat sheets and reconciles canon. In Soundingboard 2.0, we have expanded our arsenal to 21 codified agent-native playbooks. Instead of vague chat prompts, deterministic packers assemble surgical context kits for Getting Unstuck, Dialogue Heat, Sensory Bloom, Causal Plot Calculus, Blind Reader EKG, and the brand-new Git Creative History playbook.">
+      <div class="slide-badge cyan">07 · Creative Playbooks</div>
+      <h1 class="slide-title">Non-Linear Freedom &amp;<br /><span class="cyan">21 Creative Playbooks</span>.</h1>
+      <p class="slide-subtitle">Stages are artifact gates, not rails. Targeted craft playbooks diagnose blocks and accelerate development.</p>
 
       <div class="grid-3">
         <div class="card cyan-top">
           <div class="card-title">🔀 Out-of-Order Drafting</div>
-          <div class="card-desc">Write Chapter 12 first. Soundingboard reverse-engineers the missing beat sheets and foolscap backward from your draft, reconciling differences with you deliberately.</div>
+          <div class="card-desc">Write your climax today. Soundingboard reverse-engineers missing beat sheets and foolscap backwards from your draft, reconciling differences with you deliberately.</div>
           <div class="pill-tag">Reverse Engineering</div>
           <div class="pill-tag">Pantsing Friendly</div>
         </div>
@@ -1235,106 +1442,161 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
         </div>
 
         <div class="card gold-top">
-          <div class="card-title">🛠️ 17 Creative Playbooks</div>
-          <div class="card-desc">When blocked, run targeted playbooks rather than vague chat prompts: Unstuck, Dialogue Heat, Sensory Bloom, Scene Staging, Blind Reader EKG, and Plot Interrogator.</div>
+          <div class="card-title">🛠️ 21 Codified Playbooks</div>
+          <div class="card-desc">When blocked, run targeted playbooks rather than vague chat prompts: Unstuck, Dialogue Heat, Sensory Bloom, Causal Calculus, Blind Reader EKG, and Git History.</div>
           <div class="pill-tag">Targeted Diagnostics</div>
-          <div class="pill-tag">Zero Hallucinations</div>
+          <div class="pill-tag">Deterministic Packs</div>
         </div>
       </div>
 
       <!-- Playbook Showcase Bar -->
-      <div style="margin-top: 1.25rem; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
-        <span class="pill-tag" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3);">⚡ Getting Unstuck (3 Narrative Forks)</span>
-        <span class="pill-tag" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">🔥 Dialogue Escalation &amp; Subtext</span>
-        <span class="pill-tag" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3);">🌿 Sensory Bloom (Viscosity &amp; Setting)</span>
-        <span class="pill-tag" style="background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.3);">🩺 Blind Reader Simulator (Emotional EKG)</span>
-        <span class="pill-tag" style="background: rgba(251, 113, 133, 0.15); color: var(--accent-rose); border: 1px solid rgba(251, 113, 133, 0.3);">🕵️ Plot Interrogator ("Why don't they just...")</span>
+      <div style="margin-top: 1.15rem; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
+        <span class="pill-tag" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3);">⚡ #1 Unstuck (3 Narrative Forks)</span>
+        <span class="pill-tag" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">🔥 #2 Dialogue Escalation &amp; Heat</span>
+        <span class="pill-tag" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3);">🌿 #3 Sensory Bloom</span>
+        <span class="pill-tag" style="background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.3);">📐 #5 Causal Plot Calculus</span>
+        <span class="pill-tag" style="background: rgba(251, 113, 133, 0.15); color: var(--accent-rose); border: 1px solid rgba(251, 113, 133, 0.3);">🩺 #15 Blind Reader Simulator</span>
+        <span class="pill-tag" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3);">🛡️ #18 The Bracket Method</span>
+        <span class="pill-tag" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">🎓 #19 Scene Graduation</span>
+        <span class="pill-tag" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3);">🔍 #20 Linter Bracket</span>
+        <span class="pill-tag" style="background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.3);">📜 #21 Git Creative History</span>
       </div>
     </section>
 
-    <!-- ================= SLIDE 7 ================= -->
-    <section class="slide" id="slide-7" data-index="7" data-time="4:15 - 4:55" data-notes="This brings us to the core philosophy of Soundingboard: Narrative Authenticity and the Human-in-the-Loop Revision Playbook. Standard AI writing tools rely on autonomous rewrites. You ask it to fix the pacing, and it flattens your unique voice into corporate oatmeal. In Soundingboard, the agent is contractually forbidden from saying 'I fixed this.' Instead, when an audit flags an issue—like an explained theme or monotonous cadence—it generates a structured 3-option creative fork: Cut it, Dramatize it, or Push it into Subtext. The author chooses the direction, and the agent executes only surgical, minimal edits.">
-      <div class="slide-badge emerald">07 · Editorial Integrity</div>
-      <h1 class="slide-title">The <span class="emerald">Human-in-the-Loop</span> Revision Playbook.</h1>
-      <p class="slide-subtitle">Why autonomous AI editing ruins voice—and how Soundingboard guarantees the author always holds the red pen.</p>
+    <!-- ================= SLIDE 8 ================= -->
+    <section class="slide" id="slide-8" data-index="8" data-time="4:40 - 5:20" data-notes="This brings us to the core craft safeguard of Soundingboard 2.0: The Bracket Method (Playbooks #18 & #20). Standard AI writing tools rely on black-box rewrites: you ask for pacing help, and the model replaces three paragraphs with sanitized, uninspired text. In Soundingboard, the agent is contractually forbidden from saying 'I fixed this for you.' Instead, diagnostics quarantine suggestions in brackets right alongside the author's original prose, presenting 3 clear Human-in-the-Loop choices: Cut the friction, Rephrase with voice-preserving options, or Keep the prose as intentional author voice. The author always holds the red pen.">
+      <div class="slide-badge emerald">08 · Editorial Integrity</div>
+      <h1 class="slide-title">The Bracket Method &amp;<br /><span class="emerald">The Human Red Pen</span>.</h1>
+      <p class="slide-subtitle">Playbooks #18 &amp; #20: Eliminating black-box rewrites forever through quarantined, collaborative choice.</p>
 
       <div class="grid-2">
         <div class="card" style="border-left: 3px solid var(--accent-gold);">
-          <div class="card-title">The 4-Phase HITL Revision Cycle</div>
+          <div class="card-title">The 4-Phase Diagnostic Protocol</div>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
-              <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono);">Phase 1</span>
-              <div><strong>Objective Diagnosis:</strong> Zero text modifications. Mechanical scans flag cadence spikes, AI tells (&gt;0.50/1k words), or canon contradictions.</div>
+            <div style="display: flex; gap: 10px; font-size: 0.82rem;">
+              <span style="color: var(--accent-gold); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;">Phase 1</span>
+              <div><strong>Objective Diagnosis:</strong> Zero text alterations. Mechanical scans flag cadence monotony, AI tells (&gt;0.50/1k words), or POV voice drift.</div>
             </div>
-            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
-              <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono);">Phase 2</span>
-              <div><strong>The 3-Option Fork:</strong> Agent presents distinct craft choices (The Cut, Dramatize, Subtext Shift, or Custom Direction).</div>
+            <div style="display: flex; gap: 10px; font-size: 0.82rem;">
+              <span style="color: var(--accent-cyan); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;">Phase 2</span>
+              <div><strong>Quarantined Brackets:</strong> Suggestions are isolated in brackets <code>[AI-TELL: ...]</code> alongside verbatim author prose.</div>
             </div>
-            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
-              <span style="color: var(--accent-purple); font-weight: 700; font-family: var(--font-mono);">Phase 3</span>
-              <div><strong>Author Sign-Off:</strong> Author picks their favored option in chat. Zero prose changes occur until the author says "Proceed."</div>
+            <div style="display: flex; gap: 10px; font-size: 0.82rem;">
+              <span style="color: var(--accent-purple); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;">Phase 3</span>
+              <div><strong>The 3 Author Choices:</strong> Clear options: (1) <em>Cut</em> the friction, (2) <em>Rephrase</em> with 2–3 voice options, or (3) <em>Keep</em> as author voice.</div>
             </div>
-            <div style="display: flex; gap: 10px; font-size: 0.85rem;">
-              <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono);">Phase 4</span>
-              <div><strong>Surgical Execution:</strong> Minimal, targeted revision applied, followed by machine re-audit before gate clearance.</div>
+            <div style="display: flex; gap: 10px; font-size: 0.82rem;">
+              <span style="color: var(--accent-emerald); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;">Phase 4</span>
+              <div><strong>Author-Executed Revision:</strong> Author makes the decision. The AI never unilaterally applies silent edits.</div>
             </div>
           </div>
         </div>
 
         <div class="card" style="background: #0e1424; border: 1px solid rgba(56, 189, 248, 0.3);">
-          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-cyan); margin-bottom: 8px;">
-            [STAGE 04 REVISION PLAYBOOK SIMULATOR]
+          <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent-cyan); margin-bottom: 8px;">
+            [PLAYBOOK #18: THE BRACKET METHOD SIMULATOR]
           </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 10px;">
-            <strong style="color: var(--accent-rose);">Finding:</strong> Explained Theme at scene climax:<br />
+          <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; font-size: 0.78rem; color: #cbd5e1; margin-bottom: 10px;">
+            <strong style="color: var(--accent-rose);">Diagnostic Finding:</strong> Explained Theme / Cliché Marker:<br />
             <em style="color: #94a3b8;">&quot;She realized hope was a fragile bird in the winter dusk.&quot;</em>
           </div>
 
-          <div style="font-size: 0.78rem; font-weight: 700; color: #fff; margin-bottom: 6px;">Choose Author Strategy:</div>
+          <div style="font-size: 0.76rem; font-weight: 700; color: #fff; margin-bottom: 6px;">Choose Author Action:</div>
           <div class="fork-btn-group">
-            <button class="fork-btn selected" onclick="demoFork(this, 'cut')">Option A: The Cut</button>
-            <button class="fork-btn" onclick="demoFork(this, 'dramatize')">Option B: Dramatize</button>
-            <button class="fork-btn" onclick="demoFork(this, 'subtext')">Option C: Subtext</button>
+            <button class="fork-btn selected" onclick="demoFork(this, 'cut')">Choice 1: Cut</button>
+            <button class="fork-btn" onclick="demoFork(this, 'rephrase')">Choice 2: Rephrase (2 Options)</button>
+            <button class="fork-btn" onclick="demoFork(this, 'keep')">Choice 3: Keep Voice</button>
           </div>
 
-          <div id="forkResult" style="margin-top: 10px; background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px; font-size: 0.78rem; color: #38bdf8; font-family: var(--font-mono);">
-            &gt; SCRIPT: Delete summary sentence entirely. End scene on the cold silence of the closing door.
+          <div id="forkResult" style="margin-top: 10px; background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px; font-size: 0.76rem; color: #38bdf8; font-family: var(--font-mono); line-height: 1.45;">
+            &gt; SCRIPT [CUT]: Remove summary sentence entirely. End scene on the cold click of the deadbolt.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= SLIDE 8 ================= -->
-    <section class="slide" id="slide-8" data-index="8" data-time="4:55 - 5:25" data-notes="To wrap up: Soundingboard is not about replacing the author. Writing a compelling novel still requires human vulnerability, taste, and hard creative choices. Soundingboard simply removes the friction, protects the author's psychological ownership, and equips AI agents with 114 codified craft modules from masters like Shawn Coyne, John Truby, Brandon Sanderson, and K.M. Weiland. You get pure creative flow, an AI that acts as a real concierge, and complete ownership of your story on your own computer.">
-      <div class="slide-badge gold">08 · The Takeaway</div>
+    <!-- ================= SLIDE 9 ================= -->
+    <section class="slide" id="slide-9" data-index="9" data-time="5:20 - 6:00" data-notes="Soundingboard 2.0 provides deep telemetry that keeps complex novels on track. First, our sub-500ms diagnostics audit cadence variability, lexical tells, and Shawn Coyne's 5 Commandments. Second, Thread Diagnostics and our interactive HTML dashboard (thread_lanes.html) visualize character arcs and mystery spines with SVG trajectory lanes, flagging orphaned scenes and dormant subplots. And third, Playbook #21 introduces Git as a Creative History layer: checkpoints and change summaries occur strictly when the author says so, separating technical syntax integrity from creative uncertainty.">
+      <div class="slide-badge purple">09 · Diagnostics &amp; Git History</div>
+      <h1 class="slide-title">Sub-500ms Diagnostics,<br /><span class="purple">Thread Lanes &amp; Git History</span>.</h1>
+      <p class="slide-subtitle">Deep story telemetry that tracks subplots, guards continuity, and records creative evolution without gatekeeping.</p>
+
+      <div class="grid-3">
+        <div class="card cyan-top">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Sub-500ms Diagnostics</div>
+          <div class="card-desc">Instant CLI scans for lexical tell density (&lt; 0.50/1k words), sentence rhythm variance, emotional progression, and Shawn Coyne's 5 Commandments.</div>
+          <div class="pill-tag">soundingboard audit</div>
+          <div class="pill-tag">commandments</div>
+        </div>
+
+        <div class="card purple-top">
+          <div class="card-icon">🧶</div>
+          <div class="card-title">Thread Lanes Visualizer</div>
+          <div class="card-desc">Tracks character arcs, mystery spines, and relationship subplots. Flags dormant threads and renders interactive SVG trajectory lanes in <code>thread_lanes.html</code>.</div>
+          <div class="pill-tag">soundingboard threads</div>
+          <div class="pill-tag">Dormancy Guard</div>
+        </div>
+
+        <div class="card emerald-top">
+          <div class="card-icon">📜</div>
+          <div class="card-title">Sovereign Git History</div>
+          <div class="card-desc">Playbook #21: Git is an open historical log, not a gatekeeper. Commits occur strictly with author consent. Technical integrity is cleanly separated from creative critiques.</div>
+          <div class="pill-tag">soundingboard git</div>
+          <div class="pill-tag">Author Checkpoints</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.15rem; background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 10px; padding: 0.9rem 1.4rem; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.4rem;">🌌</span>
+          <div style="font-size: 0.85rem; color: #cbd5e1;">
+            <strong>Cascading Canon 2.0 &amp; Epistemic Queues:</strong> Links world facts to establishing scenes. Three queues track <em>Orphaned Facts</em> (cut scenes), <em>Unbound Entities</em>, and <em>Unverified Draft Tags</em> with strict spoiler thresholds.
+          </div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-emerald); background: rgba(52, 211, 153, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.25);">
+          ✓ soundingboard canon
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 10 ================= -->
+    <section class="slide" id="slide-10" data-index="10" data-time="6:00 - 6:30" data-notes="To wrap up: Soundingboard 2.0 is not about replacing the novelist. Writing a great novel still demands genuine human vulnerability, taste, and hard creative choices. Soundingboard removes the operational friction, guards your story continuity, and equips your AI craft partner with 118 codified craft modules from masters like Shawn Coyne, John Truby, Brandon Sanderson, and Dwight Swain. You get pure creative flow, an AI that acts as a real concierge, and complete sovereign ownership of your manuscript.">
+      <div class="slide-badge gold">10 · The Sovereign Takeaway</div>
       <h1 class="slide-title">Pure Creative Flow.<br />A <span class="highlight">Real Writing Concierge</span>.</h1>
       <p class="slide-subtitle">Soundingboard gives your AI agent the memory, structure, and craft rules to be a true creative partner.</p>
 
-      <div class="grid-3" style="margin-bottom: 1.5rem;">
+      <div class="grid-3" style="margin-bottom: 1.25rem;">
         <div class="card gold-top">
           <div class="card-icon">🧠</div>
-          <div class="card-title">114 Codified Craft Cards</div>
-          <div class="card-desc">Swain MRUs, Truby 4-corner opposition, Sanderson magic laws, and Story Grid 5 Commandments embedded in <code>_config/okf_craft/</code>.</div>
+          <div class="card-title">118 Standardized Craft Cards</div>
+          <div class="card-desc">Swain MRUs, Truby 4-corner opposition, Sanderson magic laws, and Story Grid 5 Commandments embedded in <code>_config/okf_craft/</code>. Searchable via CLI.</div>
+          <div class="pill-tag">soundingboard craft</div>
+          <div class="pill-tag">118 OKF Cards</div>
         </div>
 
         <div class="card cyan-top">
           <div class="card-icon">📖</div>
           <div class="card-title">Universal Rosetta Stone</div>
-          <div class="card-desc">Speak in whatever storytelling system you love. Soundingboard translates seamlessly behind the scenes without taxonomy debates.</div>
+          <div class="card-desc">Speak in whatever storytelling system you love—Story Grid, Save the Cat!, Hero's Journey, or Truby. Soundingboard mirrors your lexicon seamlessly.</div>
+          <div class="pill-tag">Zero Taxonomy Debates</div>
+          <div class="pill-tag">Rosetta Stone</div>
         </div>
 
         <div class="card emerald-top">
-          <div class="card-icon">💎</div>
-          <div class="card-title">Total Author Ownership</div>
-          <div class="card-desc">Every word and piece of state lives in your files. Zero vendor lock-in. Compile to clean HTML and EPUB with one command.</div>
+          <div class="card-icon">🩺</div>
+          <div class="card-title">Health Console &amp; Auto-Healing</div>
+          <div class="card-desc"><code>soundingboard status</code> tracks chapters and SHA-256 staleness, while <code>soundingboard doctor --fix</code> heals git, author identities, and paths backstage.</div>
+          <div class="pill-tag">soundingboard status</div>
+          <div class="pill-tag">doctor --fix</div>
         </div>
       </div>
 
-      <div style="text-align: center; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 1.25rem;">
-        <div style="font-family: var(--font-display); font-size: 1.25rem; color: #fff; margin-bottom: 6px;">
+      <div style="text-align: center; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 1.15rem;">
+        <div style="font-family: var(--font-display); font-size: 1.2rem; color: #fff; margin-bottom: 6px;">
           Ready to begin? Start the conversation in chat:
         </div>
-        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-gold); background: rgba(0,0,0,0.5); display: inline-block; padding: 6px 18px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+        <div style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--accent-gold); background: rgba(0,0,0,0.5); display: inline-block; padding: 6px 18px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
           &quot;Read AGENTS.md and let's brainstorm my novel.&quot;
         </div>
       </div>
@@ -1346,7 +1608,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
   <aside class="speaker-drawer" id="speakerDrawer">
     <div class="speaker-header">
       <div class="speaker-title">
-        <span>🎙️ 5-Minute Presentation Script</span>
+        <span>🎙️ 6.5-Minute Presentation Script</span>
       </div>
       <div class="speaker-timing" id="speakerTiming">0:00 - 0:40</div>
     </div>
@@ -1358,7 +1620,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
   <!-- Overview Grid Modal -->
   <div class="overview-modal" id="overviewModal">
     <div class="overview-header">
-      <div class="overview-title">Presentation Overview (8 Slides)</div>
+      <div class="overview-title">Presentation Overview (10 Slides · Soundingboard 2.0)</div>
       <button class="btn-pill" onclick="toggleOverview()">✕ Close <kbd>Esc</kbd></button>
     </div>
     <div class="overview-grid" id="overviewGrid">
@@ -1373,7 +1635,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
     </div>
 
     <div class="slide-counter">
-      Slide <span class="current" id="currentSlideNum">1</span> / <span id="totalSlidesNum">8</span>
+      Slide <span class="current" id="currentSlideNum">1</span> / <span id="totalSlidesNum">10</span>
     </div>
 
     <div class="deck-nav-buttons">
@@ -1388,7 +1650,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
     const totalSlides = slides.length;
     let currentIndex = 0;
 
-    // Timer state
+    // Timer state (6.5 min = 390 sec)
     let timerSeconds = 0;
     let timerInterval = null;
     let timerRunning = false;
@@ -1410,6 +1672,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
     const timerDot = document.getElementById('timerDot');
     const btnNotes = document.getElementById('btnNotes');
     const btnOverview = document.getElementById('btnOverview');
+    const btnPrint = document.getElementById('btnPrint');
     const btnFullscreen = document.getElementById('btnFullscreen');
 
     totalSlidesNum.textContent = totalSlides;
@@ -1423,9 +1686,10 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
         const time = slide.getAttribute('data-time') || '';
         const thumb = document.createElement('div');
         thumb.className = `overview-thumb ${i === currentIndex ? 'current' : ''}`;
+        const numStr = (i + 1).toString().padStart(2, '0');
         thumb.innerHTML = `
           <div>
-            <div class="thumb-num">SLIDE 0${i + 1} &bull; ${badgeEl ? badgeEl.innerText : ''}</div>
+            <div class="thumb-num">SLIDE ${numStr} &bull; ${badgeEl ? badgeEl.innerText : ''}</div>
             <div class="thumb-title">${titleEl ? titleEl.innerText.split('\n')[0].replace(/<[^>]*>?/gm, '') : 'Slide ' + (i + 1)}</div>
           </div>
           <div class="thumb-time">⏱️ ${time}</div>
@@ -1460,7 +1724,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
       // Update speaker script
       const activeSlide = slides[currentIndex];
       const notes = activeSlide.getAttribute('data-notes') || 'No notes for this slide.';
-      const timing = activeSlide.getAttribute('data-time') || '0:00 - 5:00';
+      const timing = activeSlide.getAttribute('data-time') || '0:00 - 6:30';
       speakerTiming.textContent = timing;
       speakerBody.innerHTML = `<p>${notes}</p><div class="speaker-cue">⚡ TARGET PACE: ${timing}</div>`;
 
@@ -1515,8 +1779,8 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
           timerSeconds++;
           timerDisplay.textContent = formatTime(timerSeconds);
 
-          // Pacer alert after 5 minutes (300 seconds)
-          if (timerSeconds >= 300) {
+          // Pacer alert after 6.5 minutes (390 seconds)
+          if (timerSeconds >= 390) {
             timerDisplay.style.color = '#fb7185';
             timerDot.style.background = '#fb7185';
             timerDot.style.boxShadow = '0 0 8px #fb7185';
@@ -1565,7 +1829,6 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
 
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
-      // Don't trigger shortcuts if user is typing in an input
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
 
       switch (e.key) {
@@ -1600,6 +1863,11 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
           e.preventDefault();
           toggleOverview();
           break;
+        case 'p':
+        case 'P':
+          e.preventDefault();
+          window.print();
+          break;
         case 'Escape':
           if (overviewModal.classList.contains('open')) {
             toggleOverview(false);
@@ -1617,9 +1885,11 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
           e.preventDefault();
           toggleTimer();
           break;
-        // Number keys 1-8
-        case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8':
+        case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
           goToSlide(parseInt(e.key, 10) - 1);
+          break;
+        case '0':
+          goToSlide(9);
           break;
       }
     });
@@ -1639,28 +1909,30 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
       }
     }, { passive: true });
 
-    // Interactive Mode Selector (Slide 5)
+    // Interactive Mode Selector (Slide 6)
     window.selectMode = function(modeId) {
       document.querySelectorAll('.mode-tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.mode-panel').forEach(panel => panel.classList.remove('active'));
 
-      event.target.classList.add('active');
+      if (event && event.target) {
+        event.target.classList.add('active');
+      }
       const targetPanel = document.getElementById(`panel-${modeId}`);
       if (targetPanel) targetPanel.classList.add('active');
     };
 
-    // Interactive Revision Simulator (Slide 7)
+    // Interactive Revision Simulator (Slide 8)
     window.demoFork = function(btn, option) {
       document.querySelectorAll('.fork-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       const resultEl = document.getElementById('forkResult');
 
       if (option === 'cut') {
-        resultEl.innerHTML = '&gt; <span style="color: #fb7185;">Option A (The Cut):</span> Delete summary sentence entirely. End scene on the cold silence of the closing door.';
-      } else if (option === 'dramatize') {
-        resultEl.innerHTML = '&gt; <span style="color: #fbbf24;">Option B (Dramatize):</span> Replace internal realization with physical action: &quot;She turned the small brass key twice, feeling the deadbolt catch.&quot;';
-      } else if (option === 'subtext') {
-        resultEl.innerHTML = '&gt; <span style="color: #38bdf8;">Option C (Subtext Shift):</span> Deflect into defensive dialogue: &quot;\'Winter is coming early,\' she said, checking the latch. \'That\'s all.\'&quot;';
+        resultEl.innerHTML = '&gt; <span style="color: #fb7185;">Choice 1 [THE CUT]:</span> Delete summary sentence entirely. End scene on the cold click of the deadbolt.';
+      } else if (option === 'rephrase') {
+        resultEl.innerHTML = '&gt; <span style="color: #fbbf24;">Choice 2 [REPHRASE - 2 Options]:</span><br />• <em>Option A (Action):</em> &quot;She turned the small brass key twice, feeling the tumblers lock into place.&quot;<br />• <em>Option B (Subtext):</em> &quot;\'Winter is coming early,\' she said, checking the latch. \'That\'s all.\'&quot;';
+      } else if (option === 'keep') {
+        resultEl.innerHTML = '&gt; <span style="color: #34d399;">Choice 3 [KEEP VOICE]:</span> Preserved verbatim as deliberate author voice. Quarantined flag dismissed with zero prose changes.';
       }
     };
 
@@ -1669,6 +1941,7 @@ $ node scripts/soundingboard.js ingest ./my_scrivener_draft.md
     nextBtn.addEventListener('click', nextSlide);
     btnNotes.addEventListener('click', toggleNotes);
     btnOverview.addEventListener('click', () => toggleOverview());
+    btnPrint.addEventListener('click', () => window.print());
     btnFullscreen.addEventListener('click', toggleFullscreen);
     timerToggleBtn.addEventListener('click', toggleTimer);
     timerResetBtn.addEventListener('click', resetTimer);

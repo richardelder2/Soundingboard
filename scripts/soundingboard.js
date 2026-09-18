@@ -719,7 +719,13 @@ function handlePack(type, extraArgs = []) {
     graduate: 'pack-frontmatter.js',
     'lint-bracket': 'pack-bracket.js',
     git: 'pack-git.js',
-    'git-history': 'pack-git.js'
+    'git-history': 'pack-git.js',
+    naming: 'pack-naming.js',
+    'tactical-naming': 'pack-naming.js',
+    world: 'pack-world.js',
+    worldbuilding: 'pack-world.js',
+    wiki: 'pack-world.js',
+    setting: 'pack-world.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
@@ -727,6 +733,10 @@ function handlePack(type, extraArgs = []) {
     console.log(`
 Available context packers:
   node scripts/${BIN_NAME}.js pack git [base_ref]                 Pack Git status, creative diff, preferences & Playbook #21
+  node scripts/${BIN_NAME}.js pack naming [target]                Pack world onomastic rules, cast acoustic matrix & Playbook #22
+  node scripts/${BIN_NAME}.js pack world [topic]                  Pack world codex, political economy, taboos & Playbook #23
+  node scripts/${BIN_NAME}.js pack wiki [article]                 Pack context for encyclopedic codex articles
+  node scripts/${BIN_NAME}.js pack setting [location]             Pack location dossier & environmental resistance
   node scripts/${BIN_NAME}.js pack unstuck [chapter]              Pack context for getting unstuck
   node scripts/${BIN_NAME}.js pack brainstorm [topic]             Pack lore & worldbuilding context
   node scripts/${BIN_NAME}.js pack interview <character>          Pack character voice context
@@ -1909,6 +1919,8 @@ Usage:
   node scripts/${BIN_NAME}.js git [status|summary...] Creative history & author-paced Git checkpoints
   node scripts/${BIN_NAME}.js visualizer [ekg|net]   Launch State Road AI Story Console (EKG & Cast Network)
   node scripts/${BIN_NAME}.js audio [chapter]        Audiobook acoustic & breath cadence diagnostic
+  node scripts/${BIN_NAME}.js name [options]         Tactical onomastic generator (flags: --culture, --genre, --target, --caste)
+  node scripts/${BIN_NAME}.js names [options]        (Alias for name)
   node scripts/${BIN_NAME}.js craft search <query>   Search ${getCraftModuleCount()} craft modules (flags: --stage, --genre, --scope, --json)
   node scripts/${BIN_NAME}.js okf-lint              Validate all craft modules against ICM standards
   node scripts/${BIN_NAME}.js diag [name] [args]     Run diagnostic tools (rhythm, dialogue, tense, etc.)
@@ -2046,6 +2058,28 @@ switch (command) {
   case 'pack-ingest-debrief':
     handlePack('debrief', args.slice(1));
     break;
+  case 'pack-naming':
+  case 'pack-name':
+    handlePack('naming', args.slice(1));
+    break;
+  case 'pack-world':
+  case 'pack-worldbuilding':
+    handlePack('world', args.slice(1));
+    break;
+  case 'pack-wiki':
+    handlePack('wiki', args.slice(1));
+    break;
+  case 'pack-setting':
+  case 'pack-location':
+    handlePack('setting', args.slice(1));
+    break;
+  case 'name':
+  case 'names':
+  case 'generate-name': {
+    const { runCli } = await import('./name_generator.js');
+    runCli(args.slice(1));
+    break;
+  }
   case 'pack-chapter':
     handlePackChapter(subCommand || args[1]);
     break;

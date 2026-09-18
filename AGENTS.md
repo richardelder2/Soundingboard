@@ -112,6 +112,8 @@ When an agent is present, **never invoke terminal wizard scripts**. Run the mech
 19. **Scene Frontmatter & Graduation:** Packer: `pack frontmatter <file>` | Contract: `_config/templates/scene_frontmatter_and_graduation_playbook.template.md`
 20. **The Linter Bracket Workflow:** Packer: `pack lint-bracket <file>` | Contract: `_config/templates/linter_bracket_playbook.template.md`
 21. **Git & Creative History:** Packer: `pack git [base_ref]` | Contract: `_config/templates/git_playbook.template.md`
+22. **Tactical Naming & World Onomastics:** Packer: `pack naming [target]` | Contract: `_config/templates/tactical_naming_playbook.template.md`
+23. **Tactical Worldbuilding & World Codex:** Packer: `pack world [topic]` | Contract: `_config/templates/tactical_worldbuilding_playbook.template.md`
 
 ---
 
@@ -138,7 +140,8 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `git` | `node scripts/soundingboard.js git [status\|checkpoint\|verify\|push-check]` | Creative history, change summaries, and author-paced Git checkpoints. |
 | `pack` | `node scripts/soundingboard.js pack <name> [args]` | Assemble deterministic context pack for creative playbooks. |
 | `pack-chapter` | `node scripts/soundingboard.js pack-chapter <N>` | Assemble token-disciplined drafting kit for Chapter N ($\le 6,000$ tokens). |
-| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 118 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`). |
+| `name` | `node scripts/soundingboard.js name [options]` | Tactical onomastic generator (`--culture`, `--genre`, `--target`, `--caste`). |
+| `craft` | `node scripts/soundingboard.js craft search <query>` | Search 119 OKF craft cards by symptom/concept (`--stage`, `--genre`, `--scope`). |
 | `okf-lint` | `node scripts/soundingboard.js okf-lint` | Validate all craft cards against ICM standards and token limits. |
 | `audit` | `node scripts/soundingboard.js audit [path ...]` | Scan scenes for AI prose tells, rhythm variance, and emotion modes (< 500ms). |
 | `chapter-audit`| `node scripts/soundingboard.js chapter-audit [ch]` | Multi-scene cadence variability and break efficacy audit. |

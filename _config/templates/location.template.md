@@ -4,6 +4,8 @@ id: "setting-[kebab-name]"
 name: "[Location Name]"
 parent_region: "[Parent Territory / City / Sector]"
 atmosphere_rating: "[Claustrophobic / Volatile / Decaying / Clinical / Sacred]"
+schema: 2.0
+last_modified: 2026-09-17
 ---
 
 # Location Dossier: [Location Name]
@@ -36,3 +38,12 @@ atmosphere_rating: "[Claustrophobic / Volatile / Decaying / Clinical / Sacred]"
 - **Weapons of Opportunity:** Heavy wrench on workbench, loose floorboard, broken bottle, scalpel rack.
 - **Environmental Hazards:** Exposed live wiring, crumbling balcony rail, boiling vat, sheer drop.
 - **Hidden Caches:** Secret floor compartment, false chimney brick, concealed safe behind painting.
+
+---
+
+## 5. Environmental Resistance (How the Setting Fights the Characters)
+*Per _config/okf_craft/setting_as_dramatic_agent_and_constraint.md:*
+- **Physical Resistance:** [Gravity, mud, slippery stone, freezing drafts, acoustic echoes that carry whispers]
+- **Resource Attrition:** [Depletion of flashlight battery, torch oil, clean water, or oxygen]
+- **Social Panopticon:** [Thin walls, watching servants, listening ports, reflection in mirrored surfaces]
+- **Tactical Advantage / Asymmetry:** [Who holds the high ground, who controls the only lighted area, who knows the secret egress]
