@@ -223,36 +223,53 @@ function handleInit(targetFolder) {
   // Scaffolding multi-tier universe or series layers when requested
   if (chosenForm === 'world') {
     const worldDir = path.join(targetDir, 'world');
-    const factionsDir = path.join(worldDir, 'factions');
-    fs.mkdirSync(factionsDir, { recursive: true });
+    const domains = ['cosmology', 'chronology', 'geography', 'cultures', 'economy', 'factions'];
+    domains.forEach(d => fs.mkdirSync(path.join(worldDir, d), { recursive: true }));
 
-    const worldBibleSrc = path.join(templateDir, '_config', 'templates', 'world_bible.template.md');
-    const worldBibleDest = path.join(worldDir, 'world_bible.md');
-    if (fs.existsSync(worldBibleSrc) && !fs.existsSync(worldBibleDest)) {
-      fs.copyFileSync(worldBibleSrc, worldBibleDest);
+    // Seed master ICM semantic contract
+    const worldContextSrc = path.join(templateDir, '_config', 'templates', 'world_context.template.md');
+    const worldContextDest = path.join(worldDir, 'CONTEXT.md');
+    if (fs.existsSync(worldContextSrc) && !fs.existsSync(worldContextDest)) {
+      fs.copyFileSync(worldContextSrc, worldContextDest);
     }
 
-    const worldCanonSrc = path.join(templateDir, '_config', 'templates', 'canon.template.md');
-    const worldCanonDest = path.join(worldDir, 'world_canon.md');
-    if (fs.existsSync(worldCanonSrc) && !fs.existsSync(worldCanonDest)) {
-      fs.copyFileSync(worldCanonSrc, worldCanonDest);
-    }
+    // Seed domain starter templates
+    const domainTemplates = [
+      { src: 'world_bible.template.md', dest: 'world_bible.md' },
+      { src: 'canon.template.md', dest: 'world_canon.md' },
+      { src: 'tracker_lore_debt.template.md', dest: 'tracker_world_lore_debt.md' },
+      { src: 'naming_system.template.md', dest: path.join('geography', 'naming_system.md') },
+      { src: 'pantheon_religion.template.md', dest: path.join('cosmology', 'pantheon.md') },
+      { src: 'chronology_era.template.md', dest: path.join('chronology', 'eras.md') },
+      { src: 'cultural_codes.template.md', dest: path.join('cultures', 'cultural_codes.md') },
+      { src: 'political_economy.template.md', dest: path.join('economy', 'political_economy.md') },
+      { src: 'faction_matrix.template.md', dest: path.join('factions', 'faction_matrix.md') }
+    ];
 
-    const worldLoreSrc = path.join(templateDir, '_config', 'templates', 'tracker_lore_debt.template.md');
-    const worldLoreDest = path.join(worldDir, 'tracker_world_lore_debt.md');
-    if (fs.existsSync(worldLoreSrc) && !fs.existsSync(worldLoreDest)) {
-      fs.copyFileSync(worldLoreSrc, worldLoreDest);
-    }
+    domainTemplates.forEach(({ src, dest }) => {
+      const srcPath = path.join(templateDir, '_config', 'templates', src);
+      const destPath = path.join(worldDir, dest);
+      if (fs.existsSync(srcPath) && !fs.existsSync(destPath)) {
+        fs.mkdirSync(path.dirname(destPath), { recursive: true });
+        fs.copyFileSync(srcPath, destPath);
+      }
+    });
 
     const worldReadmeDest = path.join(worldDir, 'README.md');
     if (!fs.existsSync(worldReadmeDest)) {
-      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 1)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe.\n\n- \`world_bible.md\`: Core laws of physics, magic/technology, and world constraints.\n- \`world_canon.md\`: Established historical facts across eras.\n- \`factions/\`: Global empires, bloodlines, and religious orders.\n- \`tracker_world_lore_debt.md\`: Unresolved cosmic questions.\n`, 'utf8');
+      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 3 - ICM)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe under Interpretable Context Methodology (ICM).\n\nSee \`CONTEXT.md\` for category schemas and dynamic agent retrieval rules.\n`, 'utf8');
     }
-    console.log('  ✔ Created world/ universe layer (world_bible.md, world_canon.md, factions/, tracker_world_lore_debt.md)');
+    console.log('  ✔ Created world/ universe layer (6 ICM domains, CONTEXT.md, world_bible.md, world_canon.md)');
   } else if (chosenForm === 'series') {
     const seriesDir = path.join(targetDir, 'series');
     const trackersDir = path.join(seriesDir, 'trackers');
     fs.mkdirSync(trackersDir, { recursive: true });
+
+    const seriesContextSrc = path.join(templateDir, '_config', 'templates', 'series_context.template.md');
+    const seriesContextDest = path.join(seriesDir, 'CONTEXT.md');
+    if (fs.existsSync(seriesContextSrc) && !fs.existsSync(seriesContextDest)) {
+      fs.copyFileSync(seriesContextSrc, seriesContextDest);
+    }
 
     const seriesBibleSrc = path.join(templateDir, '_config', 'templates', 'world_bible.template.md');
     const seriesBibleDest = path.join(seriesDir, 'series_bible.md');
@@ -265,7 +282,7 @@ function handleInit(targetFolder) {
     if (fs.existsSync(seriesCanonSrc) && !fs.existsSync(seriesCanonDest)) {
       fs.copyFileSync(seriesCanonSrc, seriesCanonDest);
     }
-    console.log('  ✔ Created series/ container layer (series_bible.md, series_canon.md, trackers/)');
+    console.log('  ✔ Created series/ container layer (CONTEXT.md, series_bible.md, series_canon.md, trackers/)');
   }
 
   const onboardingDir = path.join(targetDir, 'stages', '01_onboarding', 'output');
@@ -875,6 +892,14 @@ function handlePromote(targetScope, extraArgs = []) {
     const trackersDir = path.join(seriesDir, 'trackers');
     fs.mkdirSync(trackersDir, { recursive: true });
 
+    // Seed Series ICM Semantic Contract
+    const seriesContextSrc = path.join(cwd, '_config', 'templates', 'series_context.template.md');
+    const seriesContextDest = path.join(seriesDir, 'CONTEXT.md');
+    if (fs.existsSync(seriesContextSrc) && !fs.existsSync(seriesContextDest)) {
+      fs.copyFileSync(seriesContextSrc, seriesContextDest);
+      console.log(`  ✔ Created Series ICM Contract: series/CONTEXT.md`);
+    }
+
     // Elevate world/genre bible
     const localWorldBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'world_bible.md');
     const localGenreBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'genre_bible.md');
@@ -908,18 +933,28 @@ function handlePromote(targetScope, extraArgs = []) {
       } catch (e) {}
     }
 
-    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Book Series!\x1b[0m`);
+    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Book Series (Tier 2)!\x1b[0m`);
     console.log(`  • Shared series layer active at: series/`);
+    console.log(`  • Series ICM Contract governing at: series/CONTEXT.md`);
     console.log(`  • Current manuscript remains active in: stages/`);
     console.log(`  • Sibling books can now be initialized alongside this series.\n`);
   } else if (scope === 'world') {
-    // Mode B: Series -> Multi-Series Universe
-    console.log(`\x1b[34m[Promotion]\x1b[0m Promoting project to Multi-Series World Universe (Tier 1)...`);
+    // Mode B: Series / Novel -> Multi-Series World Universe (Tier 3 - ICM)
+    console.log(`\x1b[34m[Promotion]\x1b[0m Promoting project to Multi-Series World Universe (Tier 3 - ICM)...`);
 
     const worldDir = path.join(cwd, 'world');
-    const factionsDir = path.join(worldDir, 'factions');
-    fs.mkdirSync(factionsDir, { recursive: true });
+    const domains = ['cosmology', 'chronology', 'geography', 'cultures', 'economy', 'factions'];
+    domains.forEach(d => fs.mkdirSync(path.join(worldDir, d), { recursive: true }));
 
+    // Seed master ICM semantic contract
+    const worldContextSrc = path.join(cwd, '_config', 'templates', 'world_context.template.md');
+    const worldContextDest = path.join(worldDir, 'CONTEXT.md');
+    if (fs.existsSync(worldContextSrc) && !fs.existsSync(worldContextDest)) {
+      fs.copyFileSync(worldContextSrc, worldContextDest);
+      console.log(`  ✔ Seeded World Universe ICM Contract: world/CONTEXT.md`);
+    }
+
+    // Elevate world bible
     const worldBibleDest = path.join(worldDir, 'world_bible.md');
     const localBible = path.join(cwd, 'stages', '01_onboarding', 'output', 'bible', 'world_bible.md');
     const seriesBible = path.join(cwd, 'series', 'series_bible.md');
@@ -928,10 +963,14 @@ function handlePromote(targetScope, extraArgs = []) {
         fs.copyFileSync(seriesBible, worldBibleDest);
       } else if (fs.existsSync(localBible)) {
         fs.copyFileSync(localBible, worldBibleDest);
+      } else {
+        const tpl = path.join(cwd, '_config', 'templates', 'world_bible.template.md');
+        if (fs.existsSync(tpl)) fs.copyFileSync(tpl, worldBibleDest);
       }
       console.log(`  ✔ Created universal world bible: world/world_bible.md`);
     }
 
+    // Elevate world canon
     const worldCanonDest = path.join(worldDir, 'world_canon.md');
     const localCanon = path.join(cwd, 'stages', '02_planning', 'output', 'canon.md');
     const seriesCanon = path.join(cwd, 'series', 'series_canon.md');
@@ -940,9 +979,31 @@ function handlePromote(targetScope, extraArgs = []) {
         fs.copyFileSync(seriesCanon, worldCanonDest);
       } else if (fs.existsSync(localCanon)) {
         fs.copyFileSync(localCanon, worldCanonDest);
+      } else {
+        const tpl = path.join(cwd, '_config', 'templates', 'canon.template.md');
+        if (fs.existsSync(tpl)) fs.copyFileSync(tpl, worldCanonDest);
       }
       console.log(`  ✔ Created universal world canon: world/world_canon.md`);
     }
+
+    // Seed domain starter templates
+    const domainTemplates = [
+      { src: 'naming_system.template.md', dest: path.join('geography', 'naming_system.md') },
+      { src: 'pantheon_religion.template.md', dest: path.join('cosmology', 'pantheon.md') },
+      { src: 'chronology_era.template.md', dest: path.join('chronology', 'eras.md') },
+      { src: 'cultural_codes.template.md', dest: path.join('cultures', 'cultural_codes.md') },
+      { src: 'political_economy.template.md', dest: path.join('economy', 'political_economy.md') },
+      { src: 'faction_matrix.template.md', dest: path.join('factions', 'faction_matrix.md') }
+    ];
+
+    domainTemplates.forEach(({ src, dest }) => {
+      const srcPath = path.join(cwd, '_config', 'templates', src);
+      const destPath = path.join(worldDir, dest);
+      if (fs.existsSync(srcPath) && !fs.existsSync(destPath)) {
+        fs.mkdirSync(path.dirname(destPath), { recursive: true });
+        fs.copyFileSync(srcPath, destPath);
+      }
+    });
 
     const worldLoreDest = path.join(worldDir, 'tracker_world_lore_debt.md');
     const localLore = path.join(cwd, 'stages', '02_planning', 'output', 'trackers', 'lore_debt.md');
@@ -953,12 +1014,14 @@ function handlePromote(targetScope, extraArgs = []) {
 
     const worldReadmeDest = path.join(worldDir, 'README.md');
     if (!fs.existsSync(worldReadmeDest)) {
-      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 1)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe.\n\n- \`world_bible.md\`: Core laws of physics, magic/technology, and world constraints.\n- \`world_canon.md\`: Established historical facts across eras.\n- \`factions/\`: Global empires, bloodlines, and religious orders.\n- \`tracker_world_lore_debt.md\`: Unresolved cosmic questions.\n`, 'utf8');
+      fs.writeFileSync(worldReadmeDest, `# Shared Universe & World Layer (Tier 3 - ICM)\n\nThis directory holds the immutable laws of nature, magic/tech systems, cosmological timeline, and global geography shared across all series and books in this universe under Interpretable Context Methodology (ICM).\n\nSee \`CONTEXT.md\` for category schemas and dynamic agent retrieval rules.\n`, 'utf8');
     }
 
-    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Series World Universe!\x1b[0m`);
-    console.log(`  • Tier 1 World Layer active at: world/`);
-    console.log(`  • Multiple series can now co-exist and inherit these universal laws.\n`);
+    console.log(`\n\x1b[32m✔ Project successfully upgraded to Multi-Series World Universe (Tier 3 - ICM)!\x1b[0m`);
+    console.log(`  • Tier 3 World Layer active at: world/`);
+    console.log(`  • 6 ICM Domains ready: cosmology/, chronology/, geography/, cultures/, economy/, factions/`);
+    console.log(`  • World ICM Contract active at: world/CONTEXT.md`);
+    console.log(`  • Multiple series and books can now inherit these universal laws.\n`);
   }
 }
 

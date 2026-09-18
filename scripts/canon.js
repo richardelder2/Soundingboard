@@ -212,6 +212,10 @@ export function validateCanonProvenance(canonEntries, rootDir = process.cwd()) {
 
   for (const entry of canonEntries) {
     if (entry.tier === 'Template') continue;
+    // Author exceptions are sovereign truths (miracles, anomalies, lore constants)
+    if (entry.status && /exception/i.test(entry.status)) continue;
+    if (entry.establishedIn && /exception|author/i.test(entry.establishedIn)) continue;
+
     if (entry.establishedIn && /^sc-\d+/i.test(entry.establishedIn)) {
       const sceneId = entry.establishedIn.toLowerCase();
       const foundPath = findScenePath(sceneId, rootDir);

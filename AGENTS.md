@@ -22,7 +22,7 @@ You MUST follow these rules at all times:
 3. **The Writer's Room Sanctuary & Default Immunity:**
    - `writers_room/` (`notes/`, `beats/`, `drafts/`, `inputs/`) is an inviolable creative sandbox.
    - Background scans, automated doctor checks, and health monitors strictly ignore `writers_room/`.
-   - Run diagnostics on work-in-progress drafts *only when the author explicitly asks by path* (e.g. *"Audit the rhythm of `writers_room/drafts/tavern.md`"*).
+   - **On-Demand Invitation:** The author holds complete sovereignty to invite ANY tool, diagnostic, or linter into `writers_room/` on demand (e.g. *"Audit the rhythm of `writers_room/drafts/tavern.md`"*, *"Bloom sensory details for these notes"*). Tools never barge in uninvited, but are always at the author's beck and call.
 4. **Scene is the Atomic Dramatic Quantum; Chapters are Playlists:**
    - Completed scenes live in `manuscript/scenes/sc-XXXX.md`.
    - Chapters in `manuscript/chapters/ch-XX.md` are flexible assembly playlists with authored break rationales.
@@ -46,6 +46,20 @@ You MUST follow these rules at all times:
     - The author owns the creative work. The agent creates commits and pushes **only when the author says to** or authorizes.
     - Respect the author's `git_mode` (`gentle`, `quiet`, `guided`, `automatic`) and `git_remote_push` (`ask`, `manual`, `automatic`) from `preferences.md`.
     - Distinctly separate **Technical Integrity** (syntactic validity, unique IDs, playlist references) from **Creative Uncertainty** (pacing, AI tells, character motivation). Never make Git or editorial tools an editorial gatekeeper.
+12. **Scale-Adaptive Complexity & The 5 Foundational Principles ("Napkin to Universe"):**
+    - **Abstraction is a complexity valve, not a publishing contract.** A standalone epic needs deep cosmological scaffolding even if no sequels are planned; a lean novella needs minimal ceremony.
+    - **The 4 Complexity Tiers:**
+      - *Tier 0: The Napkin* (`writers_room/`): Frictionless sandbox with on-demand tools.
+      - *Tier 1: The Atomic Story* (`stages/`): Focused book with local `canon.md` and `world_bible.md` (< 4,000 tokens).
+      - *Tier 2: The Institutional Canvas* (`series/`): Multi-volume continuity, cross-book character states, and `series/CONTEXT.md`.
+      - *Tier 3: The Cosmos Universe Canvas* (`world/`): Governed by `world/CONTEXT.md` across 6 ICM semantic domains (`cosmology`, `chronology`, `geography`, `cultures`, `economy`, `factions`).
+    - **The 5 Foundational Principles:**
+      1. *Authorial Truth is Absolute:* An explicit author statement overrules all inferences, schemas, and prior drafts.
+      2. *Explicit Uncertainty > Premature Precision:* Flag ambiguities as open choices `[Option A | Option B]`; never invent facts to plug gaps.
+      3. *Inference is Never Canon:* Inferred lore remains quarantined with `[unverified]` until the author explicitly affirms it.
+      4. *Dramatic Consequences are Invitations:* Propose ripple effects and frictions as creative prompts, never as mandatory constraints.
+      5. *Intentional Exceptions are Valid:* Facts tagged `[author exception]` represent deliberate narrative sovereignty (miracles, anomalies, rule-breaks) and must never be flagged as defects.
+    - **Dynamic Context Isolation (ICM):** When assisting with planning or drafting, load *only* the specific domain triggered by the immediate dramatic scene (< 6,000 tokens). Never dump the entire `world/` folder into a prompt.
 
 ---
 
