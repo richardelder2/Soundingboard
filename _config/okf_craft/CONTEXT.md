@@ -2,7 +2,7 @@
 Per ICM §3.2, agents load targeted craft modules for stage, genre, or flag, never inlining the full library.
 
 ## 1. Stage Routing
-- **01 Onboarding (Core):** `universal_narrative_lexicon_rosetta_stone.md`, `anthropological_worldbuilding.md`
+- **01 Onboarding (Core):** `universal_narrative_lexicon_rosetta_stone.md`, `anthropological_worldbuilding.md`, `scale_adaptive_architecture_and_authorial_sovereignty.md`
   - *Specialized:* `character_arc_anatomy_lie_wound_want_need.md`, `truby_designing_principle_and_moral_argument.md`, `tenacious_writing_and_sanderson_le_guin_habits.md`, `evolutionary_affective_story_prototypes.md`, `audience_calibration_mg_ya_adult_crossover.md`, `dyadic_relationship_dynamics_and_ledgers.md`, `systemic_opposition_and_antagonist_logic.md`, `setting_as_dramatic_agent_and_constraint.md`, `research_epistemic_status_and_uncertainty_management.md`, `tactical_onomastics_and_world_naming_systems.md`
 - **02 Planning Macro:** `story_grid_macro.md`, `four_corner_opposition_and_foil_matrix.md`, `nonlinear_timeline_framework.md`, `save_the_cat_fifteen_beat_structural_blueprint.md`, `dual_timeline_convergence.md`, `act_2b_desert_crossing_and_midpoint_slog.md`
 - **02 Planning Beats:** `scene_level_five_commandments_coyne.md`, `cpocl_plan_threat_conflict_engine.md`, `chapter_architecture_and_ending_hooks.md`, `foreshadowing_architecture_and_subtle_plants.md`, `scene_sequel_aftermath_engine.md`, `chapter_openings_and_entry_vectors.md`, `chapter_endings_and_momentum_continuity.md`, `constraint_aware_drafting_and_assumptions.md`

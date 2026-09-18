@@ -65,36 +65,97 @@ export function parsePolarity(val) {
  *   sourceFile: string|null
  * }}
  */
-export function loadThreadTracker(rootDir = process.cwd()) {
-  const candidates = [
-    path.join(rootDir, 'stages', '02_planning', 'output', 'trackers', 'threads.md'),
-    path.join(rootDir, 'stages', '02_planning', 'output', 'threads.md'),
-    path.join(rootDir, '_config', 'templates', 'threads.template.md')
-  ];
+export function resolveThreadSources(rootDir = process.cwd()) {
+  const sources = [];
 
-  let sourceFile = null;
-  let raw = '';
-  for (const c of candidates) {
+  // 1. Book Local
+  const bookCandidates = [
+    path.join(rootDir, 'stages', '02_planning', 'output', 'trackers', 'threads.md'),
+    path.join(rootDir, 'stages', '02_planning', 'output', 'threads.md')
+  ];
+  for (const c of bookCandidates) {
     if (fs.existsSync(c)) {
-      sourceFile = c;
-      raw = fs.readFileSync(c, 'utf8');
+      sources.push({ level: 'Book Local', path: c });
       break;
     }
   }
 
+  // 2. Series Layer
+  const seriesCandidates = [
+    path.join(rootDir, 'series', 'trackers', 'subplots_series.md'),
+    path.join(rootDir, 'series', 'threads.md'),
+    path.join(rootDir, '..', 'series', 'trackers', 'subplots_series.md'),
+    path.join(rootDir, '..', 'series', 'threads.md')
+  ];
+  for (const c of seriesCandidates) {
+    if (fs.existsSync(c)) {
+      sources.push({ level: 'Series', path: c });
+      break;
+    }
+  }
+
+  // 3. World / Universe Layer
+  const worldCandidates = [
+    path.join(rootDir, 'world', 'tracker_world_lore_debt.md'),
+    path.join(rootDir, 'world', 'threads.md'),
+    path.join(rootDir, '..', '..', 'world', 'tracker_world_lore_debt.md'),
+    path.join(rootDir, '..', '..', 'world', 'threads.md')
+  ];
+  for (const c of worldCandidates) {
+    if (fs.existsSync(c)) {
+      sources.push({ level: 'World Universe', path: c });
+      break;
+    }
+  }
+
+  // Fallback to template if nothing found
+  if (sources.length === 0) {
+    const templatePath = path.join(rootDir, '_config', 'templates', 'threads.template.md');
+    if (fs.existsSync(templatePath)) {
+      sources.push({ level: 'Template', path: templatePath });
+    }
+  }
+
+  return sources;
+}
+
+/**
+ * Loads the thread tracker definition cascading across Book Local, Series, and World layers.
+ * @param {string} rootDir
+ * @returns {{
+ *   dormancyThresholdWords: number,
+ *   threads: Array<{
+ *     id: string,
+ *     name: string,
+ *     type: string,
+ *     spine: boolean,
+ *     tier: string,
+ *     sourceFile: string,
+ *     valueSpectrum: string,
+ *     dormancyThreshold: number|null,
+ *     status: string
+ *   }>,
+ *   sourceFile: string|null,
+ *   sources: Array<{ level: string, path: string }>
+ * }}
+ */
+export function loadThreadTracker(rootDir = process.cwd()) {
+  const sources = resolveThreadSources(rootDir);
   let globalThreshold = DEFAULT_DORMANCY_THRESHOLD;
   const threads = [];
+  const seenIds = new Set();
 
-  if (sourceFile) {
+  for (const src of sources) {
+    const raw = fs.readFileSync(src.path, 'utf8');
     let meta = {};
     try {
-      meta = parse(raw, sourceFile);
-      if (meta.dormancy_threshold_words) {
+      meta = parse(raw, src.path);
+      if (meta.dormancy_threshold_words && globalThreshold === DEFAULT_DORMANCY_THRESHOLD) {
         globalThreshold = parseInt(String(meta.dormancy_threshold_words), 10) || DEFAULT_DORMANCY_THRESHOLD;
       }
     } catch (_) {}
 
-    if (!meta.dormancy_threshold_words) {
+    if (globalThreshold === DEFAULT_DORMANCY_THRESHOLD) {
       const dtMatch = raw.match(/dormancy_threshold_words:\s*(\d+)/);
       if (dtMatch) {
         globalThreshold = parseInt(dtMatch[1], 10) || DEFAULT_DORMANCY_THRESHOLD;
@@ -105,30 +166,38 @@ export function loadThreadTracker(rootDir = process.cwd()) {
     if (Array.isArray(meta.threads)) {
       meta.threads.forEach(t => {
         if (typeof t === 'object' && t.id) {
-          threads.push({
-            id: String(t.id).trim(),
-            name: t.name || t.description || 'Main Story',
-            type: t.spine ? 'main' : (t.type || 'subplot'),
-            spine: Boolean(t.spine || /spine|main/i.test(t.type || '')),
-            valueSpectrum: t.value_spectrum || t.valueSpectrum || 'Unspecified',
-            dormancyThreshold: t.dormancy_threshold_words ? parseInt(String(t.dormancy_threshold_words), 10) : null,
-            status: t.status || 'open'
-          });
+          const id = String(t.id).trim();
+          if (!seenIds.has(id)) {
+            seenIds.add(id);
+            threads.push({
+              id,
+              name: t.name || t.description || 'Main Story',
+              type: t.spine ? 'main' : (t.type || 'subplot'),
+              spine: Boolean(t.spine || /spine|main/i.test(t.type || '')),
+              tier: src.level,
+              sourceFile: src.path,
+              valueSpectrum: t.value_spectrum || t.valueSpectrum || 'Unspecified',
+              dormancyThreshold: t.dormancy_threshold_words ? parseInt(String(t.dormancy_threshold_words), 10) : null,
+              status: t.status || 'open'
+            });
+          }
         }
       });
     }
 
-    // If no threads found in frontmatter, check for YAML block sequence
-    if (threads.length === 0) {
-      const blockMatch = raw.match(/threads:\s*\r?\n((?:[ \t]+-[ \t]+[^\r\n]*\r?\n?(?:[ \t]+[^-][^\r\n]*\r?\n?)*)+)/);
-      if (blockMatch) {
-        const itemChunks = blockMatch[1].split(/(?:^|\r?\n)[ \t]+-[ \t]+/);
-        for (const chunk of itemChunks) {
-          if (!chunk.trim()) continue;
-          const idMatch = chunk.match(/(?:^|\n)[ \t]*id:[ \t]*([^\r\n]+)/);
-          if (idMatch) {
-            const id = idMatch[1].trim().replace(/^['"]|['"]$/g, '');
+    // Check YAML block sequence in raw content
+    const blockMatch = raw.match(/threads:\s*\r?\n((?:[ \t]+-[ \t]+[^\r\n]*\r?\n?(?:[ \t]+[^-][^\r\n]*\r?\n?)*)+)/);
+    if (blockMatch) {
+      const itemChunks = blockMatch[1].split(/(?:^|\r?\n)[ \t]+-[ \t]+/);
+      for (const chunk of itemChunks) {
+        if (!chunk.trim()) continue;
+        const idMatch = chunk.match(/(?:^|\n)[ \t]*id:[ \t]*([^\r\n]+)/);
+        if (idMatch) {
+          const id = idMatch[1].trim().replace(/^['"]|['"]$/g, '');
+          if (!seenIds.has(id)) {
+            seenIds.add(id);
             const nameMatch = chunk.match(/(?:^|\n)[ \t]*name:[ \t]*([^\r\n]+)/);
+            const typeMatch = chunk.match(/(?:^|\n)[ \t]*type:[ \t]*([^\r\n]+)/);
             const spineMatch = chunk.match(/(?:^|\n)[ \t]*spine:[ \t]*([^\r\n]+)/);
             const valMatch = chunk.match(/(?:^|\n)[ \t]*value_spectrum:[ \t]*([^\r\n]+)/);
             const statMatch = chunk.match(/(?:^|\n)[ \t]*status:[ \t]*([^\r\n]+)/);
@@ -138,8 +207,10 @@ export function loadThreadTracker(rootDir = process.cwd()) {
             threads.push({
               id,
               name: nameMatch ? nameMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'Tracked Thread',
-              type: isSpine ? 'main' : 'subplot',
+              type: typeMatch ? typeMatch[1].trim() : (isSpine ? 'main' : 'subplot'),
               spine: isSpine,
+              tier: src.level,
+              sourceFile: src.path,
               valueSpectrum: valMatch ? valMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'Unspecified',
               dormancyThreshold: threshMatch ? parseInt(threshMatch[1].trim(), 10) : null,
               status: statMatch ? statMatch[1].trim().replace(/^['"]|['"]$/g, '') : 'open'
@@ -149,14 +220,15 @@ export function loadThreadTracker(rootDir = process.cwd()) {
       }
     }
 
-    // If still no threads found, parse markdown table or bullet list
-    if (threads.length === 0) {
-      const lines = raw.split(/\r?\n/);
-      for (const line of lines) {
-        if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| thread id |')) {
-          const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-          if (cells.length >= 4) {
-            const id = cells[0];
+    // Parse markdown table or bullet list
+    const lines = raw.split(/\r?\n/);
+    for (const line of lines) {
+      if (line.trim().startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('| thread id |')) {
+        const cells = line.split('|').map(c => c.trim()).filter(Boolean);
+        if (cells.length >= 4) {
+          const id = cells[0];
+          if (!seenIds.has(id)) {
+            seenIds.add(id);
             const name = cells[1];
             const type = cells[2] || 'subplot';
             const isSpine = /yes|true|spine|main/i.test(cells[3] || '') || /main/i.test(type);
@@ -167,19 +239,27 @@ export function loadThreadTracker(rootDir = process.cwd()) {
               name,
               type,
               spine: isSpine,
+              tier: src.level,
+              sourceFile: src.path,
               valueSpectrum,
               dormancyThreshold: null,
               status
             });
           }
-        } else {
-          const bMatch = line.match(/^-\s+\*\*([a-zA-Z0-9_-]+)\*\*:\s*(.*?)(\[(.*?)\])?$/);
-          if (bMatch) {
+        }
+      } else {
+        const bMatch = line.match(/^-\s+\*\*([a-zA-Z0-9_-]+)\*\*:\s*(.*?)(\[(.*?)\])?$/);
+        if (bMatch) {
+          const id = bMatch[1];
+          if (!seenIds.has(id)) {
+            seenIds.add(id);
             threads.push({
-              id: bMatch[1],
+              id,
               name: bMatch[2].trim() || 'Tracked Thread',
               type: /spine|main/i.test(bMatch[2]) ? 'main' : 'subplot',
               spine: /spine|main/i.test(bMatch[2]),
+              tier: src.level,
+              sourceFile: src.path,
               valueSpectrum: 'Unspecified',
               dormancyThreshold: null,
               status: bMatch[4] ? bMatch[4].trim() : 'open'
@@ -197,6 +277,8 @@ export function loadThreadTracker(rootDir = process.cwd()) {
       name: 'Main Story (Spine)',
       type: 'main',
       spine: true,
+      tier: 'Book Local',
+      sourceFile: sources[0]?.path || null,
       valueSpectrum: 'Hope / Despair',
       dormancyThreshold: globalThreshold,
       status: 'open'
@@ -206,7 +288,8 @@ export function loadThreadTracker(rootDir = process.cwd()) {
   return {
     dormancyThresholdWords: globalThreshold,
     threads,
-    sourceFile
+    sourceFile: sources[0]?.path || null,
+    sources
   };
 }
 
@@ -597,6 +680,8 @@ export function runThreadDiagnostics(options = {}) {
   console.log('\n========================================');
   console.log('   Narrative Thread & Subplot Ledger (SB2-P2-05)');
   console.log('========================================\n');
+  const tiersStr = tracker.sources && tracker.sources.length > 0 ? tracker.sources.map(s => s.level).join(' ➔ ') : 'Book Local';
+  console.log(`Active Tiers: ${tiersStr}`);
   console.log(`Tracked Threads: ${tracker.threads.length} | Open: ${tracker.threads.filter(t => t.status === 'open').length} | Resolved: ${tracker.threads.filter(t => t.status === 'resolved').length}\n`);
 
   // A. Orphan Guard Section
@@ -617,16 +702,16 @@ export function runThreadDiagnostics(options = {}) {
   }
 
   // C. Thread Telemetry Table
-  console.log('| Thread ID | Spine | Name | Scenes | Max Gap (Words) | Polarity Turn? | Status |');
-  console.log('|---|---|---|---|---|---|---|');
+  console.log('| Thread ID | Tier | Type | Spine | Name | Scenes | Max Gap | Turn? | Status |');
+  console.log('|---|---|---|---|---|---|---|---|---|');
   threadResults.forEach(r => {
     const t = r.thread;
     const d = r.dormancy;
     const p = r.polarity;
     const gapStr = d.maxDormancyGapWords > 0 ? `${d.maxDormancyGapWords.toLocaleString()}w` : '-';
-    const turnStr = p.hasTurn ? '✔ Turning' : (p.isMonopolar ? '⚠ Flat / Monopolar' : 'Nascent');
+    const turnStr = p.hasTurn ? '✔ Turning' : (p.isMonopolar ? '⚠ Flat' : 'Nascent');
     const badge = d.isDormant ? '\x1b[31mDORMANT\x1b[0m' : (p.isMonopolar ? '\x1b[33mREVIEW\x1b[0m' : '\x1b[32mHEALTHY\x1b[0m');
-    console.log(`| **${t.id}** | ${t.spine ? 'Yes' : 'No'} | ${t.name.slice(0, 20)} | ${d.totalAppearances} | ${gapStr} | ${turnStr} | ${badge} |`);
+    console.log(`| **${t.id}** | ${t.tier || 'Local'} | ${t.type || 'subplot'} | ${t.spine ? 'Yes' : 'No'} | ${t.name.slice(0, 18)} | ${d.totalAppearances} | ${gapStr} | ${turnStr} | ${badge} |`);
   });
   console.log('');
 
@@ -637,7 +722,7 @@ export function runThreadDiagnostics(options = {}) {
     dormantThreads.forEach(r => {
       const g = r.dormancy.worstGapRange;
       if (g) {
-        console.log(`    • [${r.thread.id}] "${r.thread.name}": silent for ${g.words.toLocaleString()} words between ${g.fromScene} and ${g.toScene}`);
+        console.log(`    • [${r.thread.id} · ${r.thread.tier || 'Local'}] "${r.thread.name}": silent for ${g.words.toLocaleString()} words between ${g.fromScene} and ${g.toScene}`);
       }
     });
     console.log('');
@@ -659,6 +744,7 @@ export function runThreadDiagnostics(options = {}) {
   markdownLines.push('# Narrative Thread Diagnostic Report');
   markdownLines.push('');
   markdownLines.push(`Generated: ${new Date().toISOString()}  |  Threshold: ${threshold.toLocaleString()} words`);
+  markdownLines.push(`**Active Tiers:** ${tiersStr}`);
   markdownLines.push(`**Scenes Scanned:** ${scenes.length}  |  **Total Words:** ${result.totalWords.toLocaleString()}  |  **Orphan Scenes:** ${orphanResult.orphans.length}`);
   markdownLines.push('');
 
@@ -672,13 +758,13 @@ export function runThreadDiagnostics(options = {}) {
   markdownLines.push('');
 
   markdownLines.push('## 2. Thread Telemetry & Polarity Progression');
-  markdownLines.push('| Thread ID | Type | Spine | Appearances | Max Gap | Polarity Turn? | Status |');
-  markdownLines.push('|---|---|---|---|---|---|---|');
+  markdownLines.push('| Thread ID | Tier | Type | Spine | Appearances | Max Gap | Polarity Turn? | Status |');
+  markdownLines.push('|---|---|---|---|---|---|---|---|');
   threadResults.forEach(r => {
     const t = r.thread;
     const d = r.dormancy;
     const p = r.polarity;
-    markdownLines.push(`| ${t.id} | ${t.type} | ${t.spine ? 'Yes' : 'No'} | ${d.totalAppearances} | ${d.maxDormancyGapWords.toLocaleString()}w | ${p.hasTurn ? 'Yes (+/-)' : (p.isMonopolar ? 'Flat' : 'Nascent')} | ${d.isDormant ? 'Dormant' : 'Active'} |`);
+    markdownLines.push(`| ${t.id} | ${t.tier || 'Local'} | ${t.type || 'subplot'} | ${t.spine ? 'Yes' : 'No'} | ${d.totalAppearances} | ${d.maxDormancyGapWords.toLocaleString()}w | ${p.hasTurn ? 'Yes (+/-)' : (p.isMonopolar ? 'Flat' : 'Nascent')} | ${d.isDormant ? 'Dormant' : 'Active'} |`);
   });
   markdownLines.push('');
 

@@ -99,6 +99,7 @@ last_indexed: 2026-09-05
 - [Brandon Sanderson's Laws of Magic System Engineering](sandersons_laws_of_magic_and_magic_system_engineering.md) — `type: craft_rule`
 - [Satirical Escalation & Institutional Irony: The Straight-Man Dynamic](satirical_escalation_blueprint.md) — `type: craft_structure`
 - [Save the Cat! The 15-Beat Structural Blueprint](save_the_cat_fifteen_beat_structural_blueprint.md) — `type: craft_structure`
+- [Scale-Adaptive Architecture: The Complexity Valve & The Five Foundational Principles of Authorial Sovereignty](scale_adaptive_architecture_and_authorial_sovereignty.md) — `type: craft_structure`
 - [The Five Commandments of the Micro-Scene: Shawn Coyne's Atomic Story Engine](scene_level_five_commandments_coyne.md) — `type: craft_structure`
 - [The Scene-Sequel Aftermath Engine: Reaction, Dilemma, Decision & Changed Intent](scene_sequel_aftermath_engine.md) — `type: craft_structure`
 - [Series Architecture: Macro-Arcs, Lore Debt, and Value Shifts](series_architecture_and_cross_book_arcs.md) — `type: craft_structure`
