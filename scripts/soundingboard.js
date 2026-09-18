@@ -742,13 +742,16 @@ function handlePack(type, extraArgs = []) {
     world: 'pack-world.js',
     worldbuilding: 'pack-world.js',
     wiki: 'pack-world.js',
-    setting: 'pack-world.js'
+    setting: 'pack-world.js',
+    dig: 'pack-dig.js',
+    'socratic-dig': 'pack-dig.js'
   };
 
   if (!type || type === 'list' || type === '--help' || type === 'help') {
     printHeader('Soundingboard Context Packers');
     console.log(`
 Available context packers:
+  node scripts/${BIN_NAME}.js pack dig [target]                   Pack Socratic discovery context (Playbook #24)
   node scripts/${BIN_NAME}.js pack git [base_ref]                 Pack Git status, creative diff, preferences & Playbook #21
   node scripts/${BIN_NAME}.js pack naming [target]                Pack world onomastic rules, cast acoustic matrix & Playbook #22
   node scripts/${BIN_NAME}.js pack world [topic]                  Pack world codex, political economy, taboos & Playbook #23
@@ -2008,6 +2011,9 @@ Usage:
   node scripts/${BIN_NAME}.js doctor [--fix]          Inspect environment and auto-heal missing tools & configs
   node scripts/${BIN_NAME}.js graduate <draft>       Graduate draft into manuscript/scenes/ with allocated ID
   node scripts/${BIN_NAME}.js reindex                Rebuild derived manuscript.json from scenes and chapters
+  node scripts/${BIN_NAME}.js redpen [--since <ref>] Audit Git changes for unbracketed prose edits
+  node scripts/${BIN_NAME}.js capture --file <path>  Normalize and index session into conversations/
+  node scripts/${BIN_NAME}.js sync-skills            Synchronize skills from .claude/ into .agents/
   node scripts/${BIN_NAME}.js export [--format=...]  Export manuscript (.html, .docx, .epub)
   node scripts/${BIN_NAME}.js compile [--all]        Compile passed chapters into manuscript.html (+ .epub via pandoc)
   `);
@@ -2136,6 +2142,10 @@ switch (command) {
   case 'pack-location':
     handlePack('setting', args.slice(1));
     break;
+  case 'pack-dig':
+  case 'pack-socratic-dig':
+    handlePack('dig', args.slice(1));
+    break;
   case 'name':
   case 'names':
   case 'generate-name': {
@@ -2149,6 +2159,15 @@ switch (command) {
   case 'okf-index':
     handleOkfIndex();
     break;
+  case 'sync-skills': {
+    const { syncSkills } = await import('./sync_skills.js');
+    console.log(`\n\x1b[1m\x1b[35m=== Synchronizing Harness Skills (.claude -> .agents) ===\x1b[0m`);
+    const res = syncSkills(process.cwd());
+    console.log(`\x1b[32m✔ Synchronized ${res.count} skills to .agents/skills/:\x1b[0m`);
+    res.skills.forEach(s => console.log(`  • /${s}`));
+    console.log('');
+    break;
+  }
   case 'audit':
     await handleAudit(args.slice(1));
     break;
@@ -2186,6 +2205,45 @@ switch (command) {
   case 'pack-git':
     handlePack('git', args.slice(1));
     break;
+  case 'redpen': {
+    const { checkGitDiffSince } = await import('./redpen.js');
+    const sinceIdx = args.indexOf('--since');
+    const commitRef = sinceIdx !== -1 && args[sinceIdx + 1] ? args[sinceIdx + 1] : 'HEAD~1';
+    console.log(`\n\x1b[1m\x1b[35m=== Red Pen Audit (since ${commitRef}) ===\x1b[0m`);
+    const violations = checkGitDiffSince(commitRef, process.cwd());
+    if (violations.length === 0) {
+      console.log('\x1b[32m✔ PASS:\x1b[0m Zero unbracketed author prose violations detected.\n');
+    } else {
+      console.error(`\x1b[31m✗ VIOLATION:\x1b[0m Found ${violations.length} files with modified author prose:`);
+      violations.forEach(v => console.error(`  • ${v.file}: ${v.details}`));
+      console.log('');
+      process.exit(1);
+    }
+    break;
+  }
+  case 'capture': {
+    const { captureSession } = await import('./capture.js');
+    const fileIdx = args.indexOf('--file');
+    const targetFile = fileIdx !== -1 ? args[fileIdx + 1] : null;
+    const harnessIdx = args.indexOf('--harness');
+    const harness = harnessIdx !== -1 ? args[harnessIdx + 1] : 'antigravity';
+
+    if (targetFile) {
+      console.log(`\n\x1b[1m\x1b[35m=== Capturing Conversation Session ===\x1b[0m`);
+      const res = captureSession(targetFile, { harness }, process.cwd());
+      if (res.success) {
+        console.log(`\x1b[32m✔ Successfully captured session:\x1b[0m ${res.outPath}`);
+        console.log(`  - Turns: ${res.turnsCount}`);
+        console.log(`  - Hash: ${res.hash.slice(0, 16)}...\n`);
+      } else {
+        console.error(`\x1b[31m✗ Error:\x1b[0m ${res.error}\n`);
+        process.exit(1);
+      }
+    } else {
+      console.log('\x1b[33mUsage: node scripts/soundingboard.js capture --file <transcript.jsonl> [--harness <name>]\x1b[0m\n');
+    }
+    break;
+  }
   case 'gate':
     handleGateCmd(subCommand || args[1], args.slice(2));
     break;

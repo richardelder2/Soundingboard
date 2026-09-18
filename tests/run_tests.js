@@ -847,6 +847,27 @@ try {
   assert(false, "Git & Creative History Suite (Playbook #21)", e.message);
 }
 
+try {
+  execSync('node tests/test_redpen.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, "Red Pen Mechanical Enforcement Suite (v2.2 LTS)");
+} catch (e) {
+  assert(false, "Red Pen Mechanical Enforcement Suite (v2.2 LTS)", e.message);
+}
+
+try {
+  execSync('node tests/test_capture.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, "Literary Conversation Provenance Suite (v2.2 LTS)");
+} catch (e) {
+  assert(false, "Literary Conversation Provenance Suite (v2.2 LTS)", e.message);
+}
+
+try {
+  execSync('node tests/test_smoke.js', { cwd: rootDir, stdio: 'inherit' });
+  assert(true, "Harness Conformance & Socratic Smoke Test (v2.2 LTS)");
+} catch (e) {
+  assert(false, "Harness Conformance & Socratic Smoke Test (v2.2 LTS)", e.message);
+}
+
 console.log('\n----------------------------------------');
 console.log(`Results: ${passed} passed, ${failed} failed`);
 console.log('----------------------------------------\n');

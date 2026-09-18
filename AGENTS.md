@@ -128,6 +128,7 @@ When an agent is present, **never invoke terminal wizard scripts**. Run the mech
 21. **Git & Creative History:** Packer: `pack git [base_ref]` | Contract: `_config/templates/git_playbook.template.md`
 22. **Tactical Naming & World Onomastics:** Packer: `pack naming [target]` | Contract: `_config/templates/tactical_naming_playbook.template.md`
 23. **Tactical Worldbuilding & World Codex:** Packer: `pack world [topic]` | Contract: `_config/templates/tactical_worldbuilding_playbook.template.md`
+24. **Socratic Discovery (/dig):** Packer: `pack dig [target]` | Contract: `_config/templates/dig_playbook.template.md`
 
 ---
 
@@ -164,5 +165,7 @@ The canonical entry point is `scripts/soundingboard.js` (`scripts/saga.js` and `
 | `canon` | `node scripts/soundingboard.js canon query "<q>"` / `check` | Query established facts, check unverified tags, and review gap queues. |
 | `threads` | `node scripts/soundingboard.js threads [--view]` | Inspect subplots, orphan guards, and visualizer (ASCII + interactive HTML). |
 | `ingest` | `node scripts/soundingboard.js ingest <file|dir>` | Ingest external raw drafts into Stage 03 with inputs/ archiving & canon. |
+| `redpen` | `node scripts/soundingboard.js redpen [--since <ref>]` | Deterministic mechanical verification of author red pen and bracket invariant. |
+| `capture` | `node scripts/soundingboard.js capture [--harness <name>]` | Capture and normalize conversation session into `conversations/` provenance ledger. |
 | `compile` | `node scripts/soundingboard.js compile [--all]` | Multi-tier compiler: assemble scenes → chapters → `manuscript.html` (+ `.epub`). |
 | `doctor` | `node scripts/soundingboard.js doctor [--fix]` | Environment and story model health diagnostic, with concierge auto-healing. |
